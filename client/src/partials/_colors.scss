@@ -1,0 +1,16 @@
+$color-primar1: #f6f6f6;
+$color-primary2: #B8B8B8; //small text and lines
+$color-primary3: lighten($color-primary2, 20%);
+$color-primary4: #808487; //mostly regular text
+
+
+$light-grey: lighten($color-primary2, 20%);
+
+$color-additional1: #66C6E9;
+$color-additional2: #FD4D4D;
+$color-additional3: #F99A71;
+$color-additional4: #9395AC;
+$color-additional5: #8BC98A;
+
+$color-background: linear-gradient(135deg, #ebebeb, #B8B8B8)
+
