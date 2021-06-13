@@ -1,0 +1,55 @@
+@use '../../partials/colors' as *;
+
+.team {
+    background-color: rgba(0,0,0,0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow-y: hidden;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__wrapper {
+        width: 1000px;
+        height: 700px;
+        padding: 2rem;
+        border-radius: 25px;
+        background: $color-primary1;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.9);
+        display: flex;
+    }
+
+    &__first-column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__card {
+        width: 250px;
+        height: 250px;
+        padding: 1rem;
+        background: white;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+        border-radius: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    &__card-img {
+        width: 100%;
+    }
+
+    &__scores {
+        background: white;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+        border-radius: 25px;
+        flex-grow: 1;
+    }
+}

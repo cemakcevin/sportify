@@ -3,33 +3,36 @@ import React from 'react';
 import axios from 'axios';
 
 import Input from '../../components/Input/Input';
+import TeamDetails from '../../components/TeamDetails/TeamDetails';
 
 import searchIcon from '../../assets/icons/search-icon.png';
 
 class SearchPage extends React.Component {
 
     state = {
-        searchedTeams: []
+        searchedTeams: [],
+        selectedTeam: null,
+        detailsEnabled: false
     }
 
     taskSetTeams = (event) => {
         event.preventDefault();
         const teamName = event.target.teamName.value;
-        console.log(teamName)
         
         axios.get("https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=" + teamName)
         .then(response => {
             console.log(response.data.teams)
             this.setState({
-                searchedTeams: response.data.teams
+                searchedTeams: response.data.teams,
+                selectedTeam: response.data.teams[2],
+                detailsEnabled: true
             })
         })
     }
 
     render() {
 
-        const {searchedTeams} = this.state;
-        console.log(searchedTeams)
+        const {searchedTeams, detailsEnabled, selectedTeam} = this.state;
 
         return (
             <main className="search">
@@ -56,6 +59,9 @@ class SearchPage extends React.Component {
                         )
                     })}
                 </div>
+                {detailsEnabled && 
+                    <TeamDetails team={selectedTeam} />
+                }
             </main>
         )
     }
