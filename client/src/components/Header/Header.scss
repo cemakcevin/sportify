@@ -1,0 +1,43 @@
+@use '../../partials/colors' as *;
+
+.header {
+    padding: 0 4rem;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+
+    &__wrapper {
+        margin: 0 auto;
+        padding: 0.5rem 0;    
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__logo {
+        height: 50px;
+    }
+
+    &__nav-container {
+        display: flex;
+        justify-content: space-between;
+        width: 20rem
+
+    }
+
+    &__link {
+        font-size: 1rem;
+        color: $color-primary4;
+        height: 100%;
+
+        &--highlighted {
+            color: $color-additional2;
+            font-weight: bold;
+        }
+    }
+
+
+}
