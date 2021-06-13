@@ -11,17 +11,74 @@
         width: 50%;
         height: 100%;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
     }
+
+    &__bar-title {
+        font-size: 2.5rem;
+        width: 350px;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    &__bar-form {
+        background: white;
+        width: 500px;
+        padding: 2rem;
+        border-radius: 25px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__bar-input {
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    &__button {
+        width: 100%;
+        padding: 1rem;
+        border-radius: 25px;
+        background: $color-additional2;
+        border: none;
+        color: white;
+    }
+
     
 
     &__result-column {
         width: 50%;
         height: 100%;
+        padding: 2rem;
         background: linear-gradient(rgba(50,50,50,0.3), rgba(50,50,50,0.3)), url("../../assets/background/football-background.jpeg");
         background-position: center;
         background-size: cover;
         opacity: 0.8;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        overflow-y: auto;
+    }
+}
+
+.card {
+    width: 200px;
+    height: 200px;
+    padding: 1rem;
+    background: rgba(255,255,255, 0.75);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.9);
+    margin-bottom: 1rem;
+
+    &__img {
+        width: 100%;
     }
 }

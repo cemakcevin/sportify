@@ -1,0 +1,37 @@
+@use '../../partials/colors' as *;
+
+.input {
+    position: relative;
+
+    &__title {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    &__textfield {
+        width: 100%;
+        padding: 1rem 1rem 1rem 3.5rem;
+        border-radius: 25px;
+        background-color: $color-primary1;
+        border: none;
+        font-size: 17px;
+    
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__icon {
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+        height: 1.5rem;
+    }
+}
+
+
+
+
+

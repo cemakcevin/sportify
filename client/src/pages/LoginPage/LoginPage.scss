@@ -23,46 +23,18 @@
     }
 
     &__form {
-        background: white;
+        background: rgba(255,255,255, 0.80);;
         opacity: 1;
         width: 500px;
         padding: 2rem;
         border-radius: 25px;
         display: flex;
         flex-direction: column;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.9);
     }
 
     &__input-container {
         margin-bottom: 1.5rem;
-        position: relative;
-    }
-
-    &__input-title {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-size: 13px;
-        font-weight: 600;
-    }
-
-    &__input {
-        width: 100%;
-        padding: 1rem 3rem;
-        border-radius: 25px;
-        background-color: $color-primary1;
-        border: none;
-        font-size: 17px;
-
-        &:focus {
-            outline: none;
-        }
-    }
-
-    &__input-icon {
-        position: absolute;
-        bottom: 16px;
-        left: 12px;
-        height: 1.5rem;
     }
 
     &__button {
@@ -70,7 +42,6 @@
         padding: 1rem;
         border-radius: 25px;
         background: $color-additional2;
-        filter: grayscale(0);
         border: none;
         color: white;
     }

@@ -1,12 +1,12 @@
-import 'Input.scss';
+import './Input.scss';
 
-function Input () {
+function Input ({className, text, type, placeholder, icon, name}) {
 
     return (
-        <label className="login__input-container">
-            <span className="login__input-title">USER NAME</span>
-            <input className="login__input" type="text" placeholder="Please type your user name..."/>
-            <img className="login__input-icon" src={userIcon} alt="user" />
+        <label className={`${className}  input`}>
+            <span className="input__title">{text}</span>
+            <input className="input__textfield" name={name} type={type} placeholder={placeholder}/>
+            <img className="input__icon" src={icon} alt="user" />
         </label>
     )
 }
