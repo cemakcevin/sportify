@@ -7,7 +7,7 @@ function LoginPage () {
 
 
     return (
-        <section className="login">
+        <main className="login">
             <h1 className="login__header">Welcome to Sportify</h1>
             <form className="login__form">
                 <label className="login__input-container">
@@ -27,7 +27,7 @@ function LoginPage () {
                 </div>
             </form>
 
-        </section>
+        </main>
     )
 }
 
