@@ -24,7 +24,7 @@ class SearchPage extends React.Component {
             console.log(response.data.teams)
             this.setState({
                 searchedTeams: response.data.teams,
-                selectedTeam: response.data.teams[0],
+                selectedTeam: response.data.teams[2],
                 detailsEnabled: true
             })
         })
@@ -46,7 +46,7 @@ class SearchPage extends React.Component {
                             icon={searchIcon}
                             name="teamName"
                         />
-                        <button className="search__button" type="password">SEARCH</button>
+                        <button className="search__button" type="submit">SEARCH</button>
                     </form>
                 </div>
                 <div className="search__result-column">

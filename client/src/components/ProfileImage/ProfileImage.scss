@@ -1,0 +1,13 @@
+@use '../../partials/colors' as *;
+
+.profile-img{
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+
+    &--color {
+        background: $color-primary4;
+        height: 2.5rem;
+        width: 2.5rem;
+    }
+}

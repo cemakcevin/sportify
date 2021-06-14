@@ -4,16 +4,42 @@ import axios from 'axios';
 
 import EventScore from '../../components/EventScore/EventScore';
 import VideoBox from '../../components/VideoBox/VideoBox';
+import CommentForm from '../../components/CommentForm/CommentForm';
+
+import cancelIcon from '../../assets/icons/cancel-icon.png'
+
+const API__KEY="8b0979907442ae756bd39495fb5eebd0";
 
 class TeamDetails extends React.Component {
 
     state = {
-        pastEvents: []
+        pastEvents: [],
+        teamNews: []
     }
 
     componentDidMount() {
         const {team} = this.props;
+        
         const teamId = team.idTeam;
+        const teamName = team.strTeam;
+
+        // axios.all([
+        //     axios.get("https://www.thesportsdb.com/api/v1/json/1/eventslast.php?id=" + teamId),
+        //     axios.get("https://gnews.io/api/v4/search?q=" + teamName + "&token=" + API__KEY + "&lang=en")
+        // ])
+        // .then(axios.spread((pastEventsResponse, teamNewsResponse) => {
+        //     const pastEvents = pastEventsResponse.data.results;
+        //     const teamNews = teamNewsResponse.data.articles;
+
+        //     this.setState({
+        //         pastEvents: pastEvents,
+        //         teamNews: teamNews
+        //     })
+            
+        // }))
+        // .catch(error => {
+        //     console.log(error);
+        // })
 
         axios.get("https://www.thesportsdb.com/api/v1/json/1/eventslast.php?id=" + teamId)
         .then(response => {
@@ -46,7 +72,12 @@ class TeamDetails extends React.Component {
                         </div>
                     </div>
                     <div className="team__second-column">
-                        
+                        <div className="team__news">
+                            <h3 className="team__news-title">Top News</h3>
+                        </div>
+                        <div className="team__comments">
+                            <CommentForm className="team__comments-form" />
+                        </div>
                     </div>
                     <div className="team__third-column">
                         <div className="team__videos">
@@ -58,6 +89,7 @@ class TeamDetails extends React.Component {
                            })} 
                         </div>
                     </div>
+                    <img className="team__cancel-icon" src={cancelIcon} alt="cancel"/>
                 </div>
             </section>
         )
