@@ -1,0 +1,43 @@
+.score {
+    font-size: 14px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+
+    &__container {
+        padding: 0.25rem 1rem 0.25rem 0;
+        border-right: 1px solid black;
+    }
+
+    &__team-container {
+        width: 150px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &--margin {
+            margin-bottom: 0.25rem;
+        }
+    }
+
+    &__team-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 120px;
+    }
+
+    &__date-container {
+        width: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__game-date {
+        text-align: center;
+    }
+    
+}

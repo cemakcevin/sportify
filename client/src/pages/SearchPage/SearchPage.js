@@ -24,7 +24,7 @@ class SearchPage extends React.Component {
             console.log(response.data.teams)
             this.setState({
                 searchedTeams: response.data.teams,
-                selectedTeam: response.data.teams[2],
+                selectedTeam: response.data.teams[0],
                 detailsEnabled: true
             })
         })
