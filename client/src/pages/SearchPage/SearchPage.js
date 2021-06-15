@@ -21,12 +21,29 @@ class SearchPage extends React.Component {
         
         axios.get("https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=" + teamName)
         .then(response => {
-            console.log(response.data.teams)
+            
             this.setState({
                 searchedTeams: response.data.teams,
-                selectedTeam: response.data.teams[2],
+            })
+        })
+    }
+
+    taskDisplayTeam = (teamId) => {
+        axios.get("https://www.thesportsdb.com/api/v1/json/1/lookupteam.php?id=" + teamId)
+        .then(response => {
+            const selectedTeam = response.data.teams[0];
+
+            this.setState({
+                selectedTeam: selectedTeam,
                 detailsEnabled: true
             })
+        })
+    }
+
+    taskEndDisplayTeam = () => {
+        
+        this.setState({
+            detailsEnabled: false
         })
     }
 
@@ -53,14 +70,17 @@ class SearchPage extends React.Component {
                     {searchedTeams.map(team => {
 
                         return(
-                            <article className="search__result-card card" >
+                            <article className="search__result-card card" onClick={() => this.taskDisplayTeam(team.idTeam)}>
                                 <img className="card__img" src={team.strTeamBadge} alt="team" />
                             </article>
                         )
                     })}
                 </div>
                 {detailsEnabled && 
-                    <TeamDetails team={selectedTeam} />
+                    <TeamDetails 
+                        team={selectedTeam} 
+                        taskEndDisplayTeam={this.taskEndDisplayTeam}
+                    />
                 }
             </main>
         )

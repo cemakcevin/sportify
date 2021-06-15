@@ -61,7 +61,9 @@
         opacity: 0.8;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: space-evenly;
+        align-content: flex-start;
+        align-items: flex-start;
         overflow-y: auto;
     }
 }
@@ -76,7 +78,8 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.9);
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    margin-right: auto;
 
     &__img {
         width: 100%;

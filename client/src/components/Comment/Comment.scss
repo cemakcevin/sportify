@@ -1,0 +1,37 @@
+@use '../../partials/colors' as *;
+
+.comment {
+    border-top: 0.0625rem solid $color-primary4;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    display: flex;
+    position: relative;
+
+    &__img {
+        margin-right: 1.5rem;
+    }
+
+    &__text-container {
+        width: 100%;
+    }
+
+    &__name-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding-bottom: 0.25rem;
+    }
+
+    &__name {
+        font-size: 14px;
+    }
+
+    &__date {
+        font-size: 13px;
+    }
+
+    &__text {
+        font-size: 13px;
+    }
+
+}
