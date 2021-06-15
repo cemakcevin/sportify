@@ -9,10 +9,10 @@ function VideoBox({className, videoSrc, videoName}) {
     
     return (
 
-        <article className={`${className} video`}>
-            <iframe className="video__frame" src={video} type="video/mp4" frameBorder="0" allowfullscreen /> 
-            <div className="video__name-container">
-                <h4 className="video__name">{videoName}</h4>
+        <article className={`${className} video-box`}>
+            <iframe className="video-box__frame" src={video} type="video/mp4" frameBorder="0" allowfullscreen /> 
+            <div className="video-box__name-container">
+                <h4 className="video-box__name">{videoName}</h4>
                 {/* <p className="video__channel">{channel}</p> */}
             </div>
         </article>

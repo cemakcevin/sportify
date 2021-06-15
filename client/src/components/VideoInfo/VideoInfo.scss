@@ -1,19 +1,29 @@
 @use '../../partials/colors' as *;
 
-.video-info {
-    width: 1050px;
-    margin: 0 auto;
-}
-
 .description {
     background: white;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
-    width: 75%;
     border-radius: 25px;
     padding: 1rem;
+    margin-bottom: 1rem;
+
+    &__header {
+        border-bottom: 1px solid $color-primary4;
+    }
 
     &__title {
         font-size: 2rem;
         margin: 2rem 0 1rem 0;
     }
+
+    &__text-container {
+        padding: 1rem 0;
+    }
+}
+
+.comments {
+    padding: 1rem;
+    background: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
 }
