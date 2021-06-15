@@ -1,0 +1,17 @@
+@use '../../partials/colors' as *;
+
+.game {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    &__video {
+        padding-top: 66px;
+    }
+
+    &__info {
+        padding: 1rem 4rem;
+        background: $color-primary1;
+        flex-grow: 1;
+    }
+}
