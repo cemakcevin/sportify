@@ -1,0 +1,12 @@
+.card {
+    padding: 1rem;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.9);
+
+    &__img {
+        width: 100%;
+    }
+}

@@ -49,8 +49,6 @@
         color: white;
     }
 
-    
-
     &__result-column {
         width: 50%;
         height: 100%;
@@ -66,22 +64,29 @@
         align-items: flex-start;
         overflow-y: auto;
     }
-}
 
-.card {
-    width: 200px;
-    height: 200px;
-    padding: 1rem;
-    background: rgba(255,255,255, 0.75);
-    border-radius: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.9);
-    margin-bottom: 2rem;
-    margin-right: auto;
-
-    &__img {
-        width: 100%;
+    &__result-card {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 2rem;
+        margin-right: auto;
+        background: rgba(255,255,255, 0.75);
     }
 }
+
+// .card {
+//     width: 200px;
+//     height: 200px;
+//     padding: 1rem;
+//     border-radius: 25px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.9);
+//     margin-bottom: 2rem;
+//     margin-right: auto;
+
+//     &__img {
+//         width: 100%;
+//     }
+// }

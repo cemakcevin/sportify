@@ -4,6 +4,7 @@ import {BrowserRouter, Redirect, Switch, Route} from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SearchPage from './pages/SearchPage/SearchPage';
 import GamePage from './pages/GamePage/GamePage';
+import HomePage from './pages/HomePage/HomePage';
 
 import Header from './components/Header/Header';
 
@@ -12,6 +13,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <Switch>
+          <Route path="/home" component={HomePage}/>
           <Route path="/login" component={LoginPage} />
           <Route path="/search" component={SearchPage} />
           <Route path="/game/:gameId" component={GamePage} />

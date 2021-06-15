@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import Input from '../../components/Input/Input';
 import TeamDetails from '../../components/TeamDetails/TeamDetails';
+import TeamCard from '../../components/TeamCard/TeamCard';
 
 import searchIcon from '../../assets/icons/search-icon.png';
 
@@ -70,9 +71,12 @@ class SearchPage extends React.Component {
                     {searchedTeams.map(team => {
 
                         return(
-                            <article className="search__result-card card" onClick={() => this.taskDisplayTeam(team.idTeam)}>
-                                <img className="card__img" src={team.strTeamBadge} alt="team" />
-                            </article>
+                            <TeamCard 
+                                className="search__result-card"
+                                taskDisplayTeam={this.taskDisplayTeam}
+                                strTeamBadge={team.strTeamBadge}
+                                teamId={team.idTeam}
+                            />
                         )
                     })}
                 </div>
