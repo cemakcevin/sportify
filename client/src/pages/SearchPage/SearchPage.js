@@ -20,17 +20,19 @@ class SearchPage extends React.Component {
         event.preventDefault();
         const teamName = event.target.teamName.value;
         
-        axios.get("https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=" + teamName)
+        axios.get("https://www.thesportsdb.com/api/v1/json/40130162/searchteams.php?t=" + teamName)
         .then(response => {
             
-            this.setState({
-                searchedTeams: response.data.teams,
-            })
+            if(response.data.teams) {
+                this.setState({
+                    searchedTeams: response.data.teams,
+                })
+            }
         })
     }
 
     taskDisplayTeam = (teamId) => {
-        axios.get("https://www.thesportsdb.com/api/v1/json/1/lookupteam.php?id=" + teamId)
+        axios.get("https://www.thesportsdb.com/api/v1/json/40130162/lookupteam.php?id=" + teamId)
         .then(response => {
             const selectedTeam = response.data.teams[0];
 

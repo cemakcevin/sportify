@@ -19,7 +19,7 @@ class GamePage extends React.Component {
     componentDidMount() {
         const videoId = "1036641"
 
-        axios.get("https://www.thesportsdb.com/api/v1/json/1/lookupevent.php?id=" + videoId)
+        axios.get("https://www.thesportsdb.com/api/v1/json/40130162/lookupevent.php?id=" + videoId)
         .then(response => {
             const currentEvent = response.data.events[0];
             const strVideo = currentEvent.strVideo && videoWatchToEmbed(currentEvent.strVideo)
@@ -30,7 +30,7 @@ class GamePage extends React.Component {
                 currentEvent: currentEvent
             })
 
-            return axios.get("https://www.thesportsdb.com/api/v1/json/1/eventspastleague.php?id=" + leagueId)
+            return axios.get("https://www.thesportsdb.com/api/v1/json/40130162/eventspastleague.php?id=" + leagueId)
         })
         .then(response => {
             const pastLeagueEvents = response.data.events;

@@ -10,10 +10,23 @@ import HomePage from './pages/HomePage/HomePage';
 
 import Header from './components/Header/Header';
 
+const token = sessionStorage.getItem("token");
+
 class App extends React.Component {
 
   state = {
     loggedIn: false
+  }
+
+  componentDidMount() {
+    
+    if(token) {
+      
+      this.setState({
+        loggedIn: true
+      })
+    }
+
   }
 
   taskLogin = (event) => {

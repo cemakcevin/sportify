@@ -4,9 +4,14 @@ import videoWatchToEmbed from '../../functions/videoWatchToEmbed';
 
 function VideoBox({className, videoSrc, videoName}) {
     
+    console.log(videoSrc)
+    if(!videoSrc) {
+        return <div></div>
+    }
+
     const video = videoWatchToEmbed(videoSrc);
     console.log(video)
-    
+
     return (
 
         <article className={`${className} video-box`}>

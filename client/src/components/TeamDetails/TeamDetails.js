@@ -12,7 +12,8 @@ import cancelIcon from '../../assets/icons/cancel-icon.png'
 import followIcon from '../../assets/icons/follow-icon.png'
 
 const API__KEY="8b0979907442ae756bd39495fb5eebd0";
-const userToken = sessionStorage.getItem("token");
+const localUrl = "http://localhost:8686";
+const token = sessionStorage.getItem("token");
 
 const comments = [
     {
@@ -52,7 +53,7 @@ class TeamDetails extends React.Component {
         const teamName = team.strTeam;
 
         axios.all([
-            axios.get("https://www.thesportsdb.com/api/v1/json/1/eventslast.php?id=" + teamId),
+            axios.get("https://www.thesportsdb.com/api/v1/json/40130162/eventslast.php?id=" + teamId),
             axios.get("https://gnews.io/api/v4/search?q=" + teamName + "&token=" + API__KEY + "&lang=en")
         ])
         .then(axios.spread((pastEventsResponse, teamNewsResponse) => {
@@ -72,6 +73,26 @@ class TeamDetails extends React.Component {
 
     taskAddToFavourites = () => {
 
+        const {idTeam, strTeam, strTeamBadge} = this.props.team;
+        const teamData = {
+            idTeam,
+            strTeam,
+            strTeamBadge
+        }
+
+        axios.post(localUrl + "/favourites",
+            teamData, 
+            {headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+              console.log(error)
+          })
+
     }
 
 
@@ -89,7 +110,7 @@ class TeamDetails extends React.Component {
                                 className="team__icon team__icon--bottom-right" 
                                 src={followIcon} 
                                 alt="cancel"
-                                onClick={this.taskAddToFavourites}
+                                onClick={() => this.taskAddToFavourites(team.idTeam, team.strTeam, team.strTeamBadge)}
                             /> 
                         </article>
                         <div className="team__scores">
