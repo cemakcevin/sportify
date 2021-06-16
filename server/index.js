@@ -2,10 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const loginRoute = require('./routes/loginRoute');
+require('dotenv').config();
 
-const PORT = 8686;
-const BACKEND_URL = "http://localhost:";
-
+const {PORT, URL} = process.env;
 
 app.use(cors())
 app.use(express.json());
@@ -16,5 +15,5 @@ app.use('/login', loginRoute);
 
 
 app.listen(PORT, () => {
-    console.log(`listening to the server ${BACKEND_URL}${PORT}`);
+    console.log(`listening to the server ${URL}${PORT}`);
 })
