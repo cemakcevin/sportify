@@ -22,7 +22,6 @@ router.route('/')
         //finding the user
         const users = readUserData();
         const user = users.find(user => user.userName === userName)
-        console.log(user)
         
         //checking if password matches
         if(user && user.password === password) {
