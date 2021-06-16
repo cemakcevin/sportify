@@ -20,6 +20,7 @@ class App extends React.Component {
 
   componentDidMount() {
     
+    //checking if logged in
     if(token) {
       
       this.setState({

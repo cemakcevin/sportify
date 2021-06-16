@@ -9,13 +9,23 @@ require('dotenv').config();
 
 router.route('/')
     .get((req, res) => {
-            
+
+        const userId = req.decode.userId;
+        
+        const favourites = readFavouritesData();
+        let userFavourites = favourites.filter(fav => fav.userId === userId);
+
+        if(!userFavourites) {
+            userFavourites = [];
+        }
+        
+        res.json(userFavourites);
+        
     })
     .post((req, res) => {
-        console.log(req.decode)
 
-        const {idTeam, strTeam, strTeamBadge} = req.body;
         const userId = req.decode.userId;
+        const {idTeam, strTeam, strTeamBadge} = req.body;
 
         const favourites = readFavouritesData();
         
@@ -55,7 +65,5 @@ router.route('/')
         const StringifiedData = JSON.stringify(data);
         fs.writeFileSync('./data/favourites.json', StringifiedData);
     }
-    
-
 
 module.exports = router;
