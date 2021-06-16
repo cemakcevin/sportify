@@ -9,8 +9,10 @@ import Comment from '../../components/Comment/Comment';
 import NewsArticle from '../../components/NewsArticle/NewsArticle';
 
 import cancelIcon from '../../assets/icons/cancel-icon.png'
+import followIcon from '../../assets/icons/follow-icon.png'
 
 const API__KEY="8b0979907442ae756bd39495fb5eebd0";
+const userToken = sessionStorage.getItem("token");
 
 const comments = [
     {
@@ -68,6 +70,10 @@ class TeamDetails extends React.Component {
         })
     }
 
+    taskAddToFavourites = () => {
+
+    }
+
 
     render () {
         const {team, taskEndDisplayTeam} = this.props;
@@ -79,6 +85,12 @@ class TeamDetails extends React.Component {
                     <div className="team__first-column">
                         <article className="team__card" >
                             <img className="team__card-img" src={team.strTeamBadge} alt="team" />
+                            <img 
+                                className="team__icon team__icon--bottom-right" 
+                                src={followIcon} 
+                                alt="cancel"
+                                onClick={this.taskAddToFavourites}
+                            /> 
                         </article>
                         <div className="team__scores">
                             <h2 className="team__scores-title">Past Games</h2>
@@ -129,11 +141,11 @@ class TeamDetails extends React.Component {
                         </div>
                     </div>
                     <img 
-                        className="team__cancel-icon" 
+                        className="team__icon team__icon--top-right" 
                         src={cancelIcon} 
                         alt="cancel"
                         onClick={taskEndDisplayTeam}
-                    />
+                    /> 
                 </div>
             </section>
         )

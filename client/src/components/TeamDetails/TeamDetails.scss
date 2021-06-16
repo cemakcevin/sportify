@@ -41,6 +41,7 @@
         justify-content: center;
         margin-bottom: 1rem;
         margin-bottom: 1.5rem;
+        position: relative;
     }
 
     &__card-img {
@@ -113,11 +114,19 @@
         overflow-y: auto;
     }
 
-    &__cancel-icon {
+    &__icon {
         height: 1.5rem;
         cursor: pointer;
         position: absolute;
-        top: 7px;
-        right: 10px;
+        
+        &--top-right {
+            top: 7px;
+            right: 10px;
+        }
+
+        &--bottom-right {
+            bottom: 7px;
+            right: 10px;
+        }
     }
 }

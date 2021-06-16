@@ -49,7 +49,7 @@ class App extends React.Component {
     
     return (
       <BrowserRouter>
-        <Header />
+        <Header loggedIn={loggedIn} />
         <Switch>
             {!loggedIn && <Route path="/login" render={(routerProps) => <LoginPage taskLogin={this.taskLogin} {...routerProps}/> } />}
             <Route path="/home" component={HomePage}/>
