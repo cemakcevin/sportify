@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const router = express.Router();
-
+const { v4: uuidv4 } = require('uuid');
 
 
 router.route('/')
@@ -21,6 +21,7 @@ router.route('/')
         const comments = readComments();
 
         const newComment = {
+            commentId: uuidv4(),
             contentId, 
             contentType, 
             userId, 
@@ -33,6 +34,25 @@ router.route('/')
         writeComments(comments);
 
         return res.status(201).json(newComment);
+
+    })
+
+
+router.route('/:contentType/:contentId')
+    .get((req, res) => {
+        const {contentId, contentType} = req.params;
+        const comments = readComments();
+
+        const contentComments = comments.filter(comment => {
+
+            if(comment.contentId === contentId && comment.contentType === contentType) {
+                return true;
+            }
+
+            return false;
+        })
+
+        return res.status(201).json(contentComments);
 
     })
 
