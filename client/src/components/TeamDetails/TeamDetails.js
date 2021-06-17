@@ -60,6 +60,8 @@ class TeamDetails extends React.Component {
             const pastEvents = pastEventsResponse.data.results;
             const teamNews = teamNewsResponse.data.articles;
 
+            console.log(pastEvents);
+
             this.setState({
                 pastEvents: pastEvents,
                 teamNews: teamNews
