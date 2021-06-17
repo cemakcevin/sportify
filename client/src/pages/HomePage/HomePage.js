@@ -12,7 +12,7 @@ import axios from 'axios';
 
 const API__KEY="8b0979907442ae756bd39495fb5eebd0";
 const localUrl = "http://localhost:8686";
-const token = sessionStorage.getItem("token");
+
 
 class HomePage extends React.Component {
 
@@ -27,9 +27,11 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
+        const token = sessionStorage.getItem("token");
+       
         axios.get(localUrl + "/favourites", {headers: {Authorization: `Bearer ${token}`}})
         .then(response => {
-
+            
             if(response.data){
                 this.setState({
                     favouriteTeams: response.data
@@ -39,7 +41,6 @@ class HomePage extends React.Component {
     }
 
     componentDidUpdate() {
-
         const {index, favouriteTeams, pastEvents, articles} = this.state;
 
         console.log(index)

@@ -13,7 +13,6 @@ import followIcon from '../../assets/icons/follow-icon.png'
 
 const API__KEY="8b0979907442ae756bd39495fb5eebd0";
 const localUrl = "http://localhost:8686";
-const token = sessionStorage.getItem("token");
 
 const comments = [
     {
@@ -74,6 +73,7 @@ class TeamDetails extends React.Component {
     }
 
     taskAddToFavourites = () => {
+        const token = sessionStorage.getItem("token");
 
         const {idTeam, strTeam, strTeamBadge} = this.props.team;
         const teamData = {

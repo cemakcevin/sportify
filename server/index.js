@@ -2,8 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const jwt = require("jsonwebtoken");
+
 const loginRoute = require('./routes/loginRoute');
 const favouritesRoute = require('./routes/favouritesRoute');
+const commentsRoute = require('./routes/commentsRoute');
 
 require('dotenv').config();
 
@@ -45,7 +47,8 @@ function getToken(req) {
 }
 
 app.use('/login', loginRoute);
-app.use('/favourites', favouritesRoute)
+app.use('/favourites', favouritesRoute);
+app.use('/comments', commentsRoute);
 
 
 app.listen(PORT, () => {

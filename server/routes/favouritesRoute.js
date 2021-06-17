@@ -5,8 +5,6 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config();
 
 
-
-
 router.route('/')
     .get((req, res) => {
 

@@ -44,12 +44,13 @@ class App extends React.Component {
 
     axios.post("http://localhost:8686/login", loginCredentials)
     .then(response => {
-      sessionStorage.setItem("token", response.data.token)
+      sessionStorage.setItem("token", response.data.token);
       
+    })
+    .then(_response => {
       this.setState({
         loggedIn: true
       })
-      
     })
     .catch(error => {
       console.log(error);
@@ -66,9 +67,9 @@ class App extends React.Component {
         <Header loggedIn={loggedIn} />
         <Switch>
             {!loggedIn && <Route path="/login" render={(routerProps) => <LoginPage taskLogin={this.taskLogin} {...routerProps}/> } />}
-            <Route path="/home" component={HomePage}/>
-            <Route path="/search" component={SearchPage} />
-            <Route path="/game/:gameId" component={GamePage} />
+            {loggedIn && <Route path="/home" component={HomePage}/> }
+            {loggedIn && <Route path="/search" component={SearchPage} /> }
+            {loggedIn && <Route path="/game/:gameId" component={GamePage} /> }
             {loggedIn ? <Redirect to="/home"/> : <Redirect to="/login"/>}
         </Switch>
       </BrowserRouter>
