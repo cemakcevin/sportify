@@ -30,7 +30,8 @@ class TeamDetails extends React.Component {
         teamComments: [],
         partOfFavourites: false,
         eventWatchedUrl: null,
-        eventWatchedId: null
+        eventWatchedId: null,
+        currentUser: {}
     }
 
     componentDidMount() {
@@ -44,19 +45,22 @@ class TeamDetails extends React.Component {
             axios.get("https://www.thesportsdb.com/api/v1/json/40130162/eventslast.php?id=" + teamId),
             // axios.get("https://gnews.io/api/v4/search?q=" + teamName + "&token=" + API__KEY + "&lang=en"),
             axios.get(localUrl + "/comments/team/" + teamId, {headers: {Authorization: `Bearer ${token}`}}),
-            axios.get(localUrl + "/favourites/" + teamId, {headers: {Authorization: `Bearer ${token}`}})
+            axios.get(localUrl + "/favourites/" + teamId, {headers: {Authorization: `Bearer ${token}`}}),
+            axios.get(localUrl + "/users" , {headers: {Authorization: `Bearer ${token}`}}),
         ])
-        .then(axios.spread((pastEventsResponse, /*teamNewsResponse,*/ teamCommentsResponse, partOfFavouritesResponse) => {
+        .then(axios.spread((pastEventsResponse, /*teamNewsResponse,*/ teamCommentsResponse, partOfFavouritesResponse, usersResponse) => {
             const pastEvents = pastEventsResponse.data.results;
             // const teamNews = teamNewsResponse.data.articles;
             const teamComments = teamCommentsResponse.data;
             const partOfFavourites = partOfFavouritesResponse.data.partOfFavourites;
+            const currentUser = usersResponse.data;
 
             this.setState({
                 pastEvents: pastEvents,
                 // teamNews: teamNews,
                 teamComments: teamComments,
-                partOfFavourites: partOfFavourites
+                partOfFavourites: partOfFavourites,
+                currentUser: currentUser
             })
             
         }))
@@ -97,7 +101,6 @@ class TeamDetails extends React.Component {
         const {idTeam} = this.props.team;
         const taskUpdateFavourites = this.props.taskUpdateFavourites;
         const token = sessionStorage.getItem("token");
-        console.log(idTeam, taskUpdateFavourites)
 
         axios.delete(localUrl + "/favourites/" + idTeam, {headers: {Authorization: `Bearer ${token}`}})
         .then(_response => {
@@ -175,7 +178,7 @@ class TeamDetails extends React.Component {
 
     render () {
         const {team, taskEndDisplayTeam} = this.props;
-        const {pastEvents, teamNews, teamComments, partOfFavourites, eventWatchedUrl, eventWatchedId} = this.state;
+        const {pastEvents, teamNews, teamComments, partOfFavourites, eventWatchedUrl, eventWatchedId, currentUser} = this.state;
 
         return (
             <section className="team">
@@ -225,7 +228,8 @@ class TeamDetails extends React.Component {
                         <div className="team__comments">
                             <CommentForm 
                                 className="team__comments-form"
-                                onSubmit={this.taskSubmitComment} 
+                                onSubmit={this.taskSubmitComment}
+                                profileUrl={currentUser.imgUrl} 
                             />
                             {teamComments.map(comment => {
                                 return(
@@ -235,6 +239,7 @@ class TeamDetails extends React.Component {
                                         name={comment.name}
                                         date={comment.timestamp}
                                         text={comment.commentText}
+                                        profileUrl={comment.imgUrl}
                                     />)
                                 })
                             }

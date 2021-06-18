@@ -28,5 +28,35 @@
         "bio": "Hey,I am Mike! New to this platform so let's be friends!",
         "imgUrl": "http://localhost:8686/profile-pics/mike-ozcan-profile.jpeg",
         "timestamp": 1623942885864
+    },
+    {
+        "userId": "cf9dcf5a-3b43-4636-aeb3-1a304e2ca28e",
+        "name": "Dave",
+        "lastName": "Claire",
+        "userName": "daveclaire",
+        "password": "123456",
+        "bio": "Hey,I am Dave! New to this platform so let's be friends!",
+        "imgUrl": "http://localhost:8686/profile-pics/dave-claire-profile.jpeg",
+        "timestamp": 1623942785864
+    },
+    {
+        "userId": "4432b2f4-a7d1-4347-8e99-837177a24c3c",
+        "name": "Judi",
+        "lastName": "Scott",
+        "userName": "judiscott",
+        "password": "123456",
+        "bio": "Hey,I am Judi! New to this platform so let's be friends!",
+        "imgUrl": "http://localhost:8686/profile-pics/judi-scott-profile.jpeg",
+        "timestamp": 1623942685864
+    },
+    {
+        "userId": "460531c2-5492-4bf4-ac4e-d5743057b7a2",
+        "name": "Sarah",
+        "lastName": "Jackson",
+        "userName": "sarahjackson",
+        "password": "123456",
+        "bio": "Hey,I am Sarah! New to this platform so let's be friends!",
+        "imgUrl": "http://localhost:8686/profile-pics/sarah-jackson-profile.jpeg",
+        "timestamp": 1623942885864
     }
 ]

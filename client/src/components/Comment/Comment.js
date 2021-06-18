@@ -3,14 +3,14 @@ import ProfileImage from "../ProfileImage/ProfileImage";
 import timeDifference from '../../functions/timeDifference';
 
 
-function Comment({className, name, date, text}) {
+function Comment({className, name, date, text, profileUrl}) {
 
     return (
         <article className={`${className} comment`}>
             <div className="comment__avatar-container">
                 <ProfileImage 
                     className="comment__img" 
-                    img={false}
+                    imgSrc={profileUrl}
                 />
             </div>
             <div className="comment__text-container">

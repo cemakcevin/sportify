@@ -35,6 +35,8 @@ router.route('/')
             strTeamBadge
         }
 
+        console.log(matchingFavourite);
+
         if(!matchingFavourite) {
             
             favourites.push(newFavourite);
@@ -55,7 +57,7 @@ router.route('/')
 
             const favourites = readFavouritesData();
 
-            const searchedTeam = favourites.find(fav => fav.idTeam === teamId);
+            const searchedTeam = favourites.find(fav => fav.idTeam === teamId && fav.userId === userId);
 
             if(searchedTeam) {
                 res.status(201).json({partOfFavourites: true});

@@ -1,13 +1,15 @@
 @use '../../partials/colors' as *;
 
-.profile-img{
+.profile-container{
     border-radius: 50%;
     height: 3rem;
     width: 3rem;
+    background: $color-primary4;
+    height: 2.5rem;
+    width: 2.5rem;
+}
 
-    &--color {
-        background: $color-primary4;
-        height: 2.5rem;
-        width: 2.5rem;
-    }
+.profile-img {
+    height: 3rem;
+    border-radius: 50%;
 }

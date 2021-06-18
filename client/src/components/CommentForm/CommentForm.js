@@ -2,14 +2,14 @@ import "./CommentForm.scss";
 
 import ProfileImage from '../ProfileImage/ProfileImage';
 
-function CommentForm ({className, onSubmit}) {
+function CommentForm ({className, onSubmit, profileUrl}) {
 
     return (
         <form className={`${className} form`} onSubmit={onSubmit}>
             <div className="form__avatar-container">
                 <ProfileImage 
                     className="form__profile-image"
-                    img={false}
+                    imgSrc={profileUrl}
                 />
             </div>
             <div className="form__container">

@@ -3,7 +3,7 @@ const router = express.Router();
 const fs = require('fs');
 require('dotenv').config();
 
-
+//personal info
 router.route('/')
     .get((req, res) => {
         const userId = req.decode.userId;
@@ -18,6 +18,7 @@ router.route('/')
         return res.status(201).json(currentUser);
     })
 
+//friend's info
 router.route('/:userId')
     .get((req, res) => {
         const userId = req.params.userId;

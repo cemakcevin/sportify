@@ -2,13 +2,13 @@ import './ProfileImage.scss'
 
 
 //component for profile images
-function ProfileImage(props) {
+function ProfileImage({className, imgSrc}) {
     let divElement;
 
-    if(props.img) {
-        divElement = <div className={`${props.className} profile-img profile-img--picture`}></div>
+    if(imgSrc) {
+        divElement = <img className={`${className} profile-img`} src={imgSrc} alt="profile"/>
     } else {
-        divElement =<div className={`${props.className} profile-img profile-img--color`}></div>
+        divElement = <div className={`${className} profile-container`}></div>
     }
 
     return (
