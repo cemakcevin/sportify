@@ -39,6 +39,25 @@ class HomePage extends React.Component {
                 })
             }  
         })
+
+        axios.all([
+            axios.get(localUrl + "/favourites", {headers: {Authorization: `Bearer ${token}`}}),
+            axios.get(localUrl + "/users", {headers: {Authorization: `Bearer ${token}`}})
+        ])
+        .then(axios.spread((favouritesResponse, profileResponse)=> {
+            
+            if(favouritesResponse.data){
+                this.setState({
+                    favouriteTeams: favouritesResponse.data,
+                    profileInfo: profileResponse.data
+                })
+            }
+            else {
+                this.setState({
+                    profileInfo: profileResponse.data
+                })
+            }  
+        }))
     }
 
     componentDidUpdate() {
@@ -130,7 +149,7 @@ class HomePage extends React.Component {
 
     render () {
 
-        const {favouriteTeams, selectedTeam, detailsEnabled, pastEvents, articles} = this.state;
+        const {favouriteTeams, selectedTeam, detailsEnabled, pastEvents, articles, profileInfo} = this.state;
         console.log(favouriteTeams)
 
         return(
@@ -138,7 +157,7 @@ class HomePage extends React.Component {
                 <div className="home__profile profile">
                     <Avatar 
                         className="profile__avatar" 
-                        avatarUrl={avatarUrl} 
+                        avatarUrl={profileInfo.imgUrl} 
                     />
                     <div className="profile__info">
     
