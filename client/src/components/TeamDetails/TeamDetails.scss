@@ -1,4 +1,5 @@
 @use '../../partials/colors' as *;
+@use '../../partials/mixins' as *;
 
 .team {
     background-color: rgba(0,0,0,0.7);
@@ -128,5 +129,37 @@
             bottom: 7px;
             right: 10px;
         }
+    }
+
+}
+
+.video-watched {
+    height: 100%;
+    width: 100%;
+    padding-top: 8rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    @include card-background;
+
+    &__back-icon {
+        height: 1.5rem;
+        cursor: pointer;
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+    }
+
+    &__expand-icon-anchor {
+        cursor: pointer;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+
+    &__expand-icon {
+        height: 1.5rem;
+        
     }
 }

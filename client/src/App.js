@@ -69,7 +69,7 @@ class App extends React.Component {
             {!loggedIn && <Route path="/login" render={(routerProps) => <LoginPage taskLogin={this.taskLogin} {...routerProps}/> } />}
             {loggedIn && <Route path="/home" component={HomePage}/> }
             {loggedIn && <Route path="/search" component={SearchPage} /> }
-            {loggedIn && <Route path="/game/:gameId" component={GamePage} /> }
+            {loggedIn && <Route path="/game/:videoId" component={GamePage} /> }
             {loggedIn ? <Redirect to="/home"/> : <Redirect to="/login"/>}
         </Switch>
       </BrowserRouter>

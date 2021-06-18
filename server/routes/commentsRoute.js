@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 router.route('/')
     .post((req, res) => {
         const userId = req.decode.userId;
-        const {contentId, contentType, userUrl, commentText} = req.body;
+        const {contentId, contentType, commentText} = req.body;
         const contentTypes = ["game", "team"];
 
         if(!commentText) {
@@ -19,13 +19,18 @@ router.route('/')
         }
 
         const comments = readComments();
+        const users = readUsers();
+
+        const user = users.find(user => user.userId === userId)
+        const {name, lastName, imgUrl} = user;
 
         const newComment = {
             commentId: uuidv4(),
             contentId, 
             contentType, 
-            userId, 
-            userUrl, 
+            userId,
+            name: name + " " + lastName,
+            imgUrl, 
             commentText,
             timestamp: Date.now() 
         }
@@ -64,6 +69,11 @@ router.route('/:contentType/:contentId')
 function readComments() {
     const comments = fs.readFileSync('./data/comments.json', "utf-8");
     return JSON.parse(comments);
+}
+
+function readUsers() {
+    const users = fs.readFileSync('./data/users.json', "utf-8");
+    return JSON.parse(users);
 }
 
 function writeComments(data) {

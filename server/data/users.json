@@ -6,7 +6,7 @@
         "userName": "cemakcevin",
         "password": "123456",
         "bio": "Hey,I am Cem! New to this platform so let's be friends!",
-        "img": "",
-        "timestamp": ""
+        "imgUrl": "http://localhost:8686/profile-pics/cem-akcevin-profile.jpeg",
+        "timestamp": 1623942895864
     }
 ]

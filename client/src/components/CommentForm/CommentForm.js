@@ -2,10 +2,10 @@ import "./CommentForm.scss";
 
 import ProfileImage from '../ProfileImage/ProfileImage';
 
-function CommentForm ({className}) {
+function CommentForm ({className, onSubmit}) {
 
     return (
-        <form className={`${className} form`}>
+        <form className={`${className} form`} onSubmit={onSubmit}>
             <div className="form__avatar-container">
                 <ProfileImage 
                     className="form__profile-image"
@@ -22,6 +22,7 @@ function CommentForm ({className}) {
                             name="input" 
                             type="text"
                             placeholder="Add a comment..."
+                            name="comment"
                         >
                         </textarea>
                     </div>

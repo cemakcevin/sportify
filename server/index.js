@@ -11,6 +11,8 @@ require('dotenv').config();
 
 const {PORT, URL, SECRET} = process.env;
 
+app.use(express.static('public'));
+
 app.use(cors())
 app.use(express.json());
 
