@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import SearchPage from './pages/SearchPage/SearchPage';
 import GamePage from './pages/GamePage/GamePage';
 import HomePage from './pages/HomePage/HomePage';
+import UserPage from './pages/UserPage/UserPage';
 
 import Header from './components/Header/Header';
 
@@ -68,6 +69,7 @@ class App extends React.Component {
         <Switch>
             {!loggedIn && <Route path="/login" render={(routerProps) => <LoginPage taskLogin={this.taskLogin} {...routerProps}/> } />}
             {loggedIn && <Route path="/home" component={HomePage}/> }
+            {loggedIn && <Route path="/user/:userId" component={UserPage}/> }
             {loggedIn && <Route path="/search" component={SearchPage} /> }
             {loggedIn && <Route path="/game/:videoId" component={GamePage} /> }
             {loggedIn ? <Redirect to="/home"/> : <Redirect to="/login"/>}

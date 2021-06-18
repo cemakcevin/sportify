@@ -1,7 +1,6 @@
-import './HomePage.scss';
+import './UserPage.scss';
 import React from 'react';
 import axios from 'axios';
-import {Link} from "react-router-dom";
 
 import Avatar from '../../components/Avatar/Avatar';
 import TeamCard from '../../components/TeamCard/TeamCard';
@@ -15,7 +14,7 @@ const API__KEY="8b0979907442ae756bd39495fb5eebd0";
 const localUrl = "http://localhost:8686";
 
 
-class HomePage extends React.Component {
+class UserPage extends React.Component {
 
 
     state = {
@@ -32,12 +31,14 @@ class HomePage extends React.Component {
 
     componentDidMount() {
         const token = sessionStorage.getItem("token");
+        const userId = this.props.match.params.userId;
+    
 
         axios.all([
-            axios.get(localUrl + "/favourites", {headers: {Authorization: `Bearer ${token}`}}),
-            axios.get(localUrl + "/users", {headers: {Authorization: `Bearer ${token}`}}),
-            axios.get(localUrl + "/friends", {headers: {Authorization: `Bearer ${token}`}}),
-            axios.get(localUrl + "/requests", {headers: {Authorization: `Bearer ${token}`}})
+            axios.get(localUrl + "/favourites/user/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
+            axios.get(localUrl + "/users/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
+            axios.get(localUrl + "/friends/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
+            axios.get(localUrl + "/requests/" + userId, {headers: {Authorization: `Bearer ${token}`}})
         ])
         .then(axios.spread((favouritesResponse, profileResponse, friendsResponse, requestsResponse)=> {
             if(favouritesResponse.data){
@@ -205,12 +206,11 @@ class HomePage extends React.Component {
                             <h3 className="friends__title">Friends</h3>
                             {friends.map(friend => {
                                 return(
-                                    <Link key={friend.friendId} to={"/user/" + friend.friendId}>
-                                        <ProfileImage 
-                                            className="friends__avatar"
-                                            imgSrc={friend.imgUrl}
+                                    <ProfileImage 
+                                        key={friend.userId}
+                                        className="friends__avatar"
+                                        imgSrc={friend.imgUrl}
                                     />
-                                    </Link>
                                 )
                             })}
                         </div>
@@ -241,4 +241,4 @@ class HomePage extends React.Component {
     
 }
 
-export default HomePage;
+export default UserPage;

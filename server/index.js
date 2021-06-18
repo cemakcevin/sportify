@@ -8,6 +8,7 @@ const favouritesRoute = require('./routes/favouritesRoute');
 const commentsRoute = require('./routes/commentsRoute');
 const usersRoute = require('./routes/usersRoute');
 const friendsRoute = require('./routes/friendsRoute');
+const requestsRoute = require('./routes/requestsRoute');
 
 require('dotenv').config();
 
@@ -55,6 +56,7 @@ app.use('/favourites', favouritesRoute);
 app.use('/comments', commentsRoute);
 app.use('/users', usersRoute);
 app.use('/friends', friendsRoute);
+app.use('/requests', requestsRoute);
 
 
 app.listen(PORT, () => {

@@ -34,8 +34,6 @@ router.route('/')
             strTeamBadge
         }
 
-        console.log(matchingFavourite);
-
         if(!matchingFavourite) {
             
             favourites.push(newFavourite);
@@ -83,6 +81,23 @@ router.route('/')
             writeFavouritesData(filteredTeams);
 
             res.status(200).send("The team is deleted from the favourites list successfully!")
+        })
+
+
+
+    router.route('/user/:userId')
+        .get((req,res) => {
+            const userId = req.params.userId;
+            const favourites = readFavouritesData();
+
+            let userFavourites = favourites.filter(fav => fav.userId === userId);
+
+            if(!userFavourites) {
+                userFavourites = [];
+            }
+            
+            res.json(userFavourites);
+
         })
 
     //functions
