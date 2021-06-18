@@ -14,7 +14,9 @@ import videoWatchToEmbed from '../../functions/videoWatchToEmbed';
 
 import cancelIcon from '../../assets/icons/cancel-icon.png'
 import followIcon from '../../assets/icons/follow-icon.png'
+import unfollowIcon from '../../assets/icons/unfollow-icon.png'
 import backIcon from '../../assets/icons/back-icon.png'
+import expandIcon from '../../assets/icons/expand-icon.png'
 
 const API__KEY="8b0979907442ae756bd39495fb5eebd0";
 const localUrl = "http://localhost:8686";
@@ -26,6 +28,7 @@ class TeamDetails extends React.Component {
         pastEvents: [],
         teamNews: [],
         teamComments: [],
+        partOfFavourites: false,
         eventWatchedUrl: null,
         eventWatchedId: null
     }
@@ -40,19 +43,20 @@ class TeamDetails extends React.Component {
         axios.all([
             axios.get("https://www.thesportsdb.com/api/v1/json/40130162/eventslast.php?id=" + teamId),
             // axios.get("https://gnews.io/api/v4/search?q=" + teamName + "&token=" + API__KEY + "&lang=en"),
-            axios.get(localUrl + "/comments/team/" + teamId, {headers: {Authorization: `Bearer ${token}`}})
+            axios.get(localUrl + "/comments/team/" + teamId, {headers: {Authorization: `Bearer ${token}`}}),
+            axios.get(localUrl + "/favourites/" + teamId, {headers: {Authorization: `Bearer ${token}`}})
         ])
-        .then(axios.spread((pastEventsResponse, /*teamNewsResponse,*/ teamCommentsResponse) => {
+        .then(axios.spread((pastEventsResponse, /*teamNewsResponse,*/ teamCommentsResponse, partOfFavouritesResponse) => {
             const pastEvents = pastEventsResponse.data.results;
             // const teamNews = teamNewsResponse.data.articles;
             const teamComments = teamCommentsResponse.data;
-
-            console.log(pastEvents);
+            const partOfFavourites = partOfFavouritesResponse.data.partOfFavourites;
 
             this.setState({
                 pastEvents: pastEvents,
                 // teamNews: teamNews,
-                teamComments: teamComments
+                teamComments: teamComments,
+                partOfFavourites: partOfFavourites
             })
             
         }))
@@ -78,12 +82,45 @@ class TeamDetails extends React.Component {
             }
         })
           .then(response => {
-            console.log(response)
+            
+            this.setState({
+                partOfFavourites: true
+            })
           })
           .catch(error => {
               console.log(error)
           })
 
+    }
+
+    taskRemoveFromFavourites = () => {
+        const {idTeam} = this.props.team;
+        const taskUpdateFavourites = this.props.taskUpdateFavourites;
+        const token = sessionStorage.getItem("token");
+        console.log(idTeam, taskUpdateFavourites)
+
+        axios.delete(localUrl + "/favourites/" + idTeam, {headers: {Authorization: `Bearer ${token}`}})
+        .then(_response => {
+            
+            if(taskUpdateFavourites) {
+                this.setState({
+                    partOfFavourites: false
+                }, 
+                () => {
+                    taskUpdateFavourites();
+                })
+            }
+            else {
+                this.setState({
+                    partOfFavourites: false
+                })
+            }
+            
+        })
+        .catch(error => {
+
+            console.log(error)
+        })
     }
 
     taskSubmitComment = (event) => {
@@ -138,7 +175,7 @@ class TeamDetails extends React.Component {
 
     render () {
         const {team, taskEndDisplayTeam} = this.props;
-        const {pastEvents, teamNews, teamComments, eventWatchedUrl, eventWatchedId} = this.state;
+        const {pastEvents, teamNews, teamComments, partOfFavourites, eventWatchedUrl, eventWatchedId} = this.state;
 
         return (
             <section className="team">
@@ -146,12 +183,23 @@ class TeamDetails extends React.Component {
                     <div className="team__first-column">
                         <article className="team__card" >
                             <img className="team__card-img" src={team.strTeamBadge} alt="team" />
+                            {partOfFavourites 
+                            ?
+                            <img 
+                                className="team__icon team__icon--bottom-right" 
+                                src={unfollowIcon} 
+                                alt="remove from favourites"
+                                onClick={this.taskRemoveFromFavourites}
+                            /> 
+                            :
                             <img 
                                 className="team__icon team__icon--bottom-right" 
                                 src={followIcon} 
-                                alt="cancel"
-                                onClick={() => this.taskAddToFavourites(team.idTeam, team.strTeam, team.strTeamBadge)}
+                                alt="add to favourites"
+                                onClick={this.taskAddToFavourites}
                             /> 
+                            }
+                            
                         </article>
                         <div className="team__scores">
                             <h2 className="team__scores-title">Past Games</h2>
@@ -224,8 +272,8 @@ class TeamDetails extends React.Component {
                             <Link className="video-watched__expand-icon-anchor" to={`/game/${eventWatchedId}`}>
                                 <img 
                                     className="video-watched__expand-icon" 
-                                    src={backIcon} 
-                                    alt="back"
+                                    src={expandIcon} 
+                                    alt="expand"
                                 />  
                             </Link>
                         </div>

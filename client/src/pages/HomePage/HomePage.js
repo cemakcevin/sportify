@@ -23,7 +23,8 @@ class HomePage extends React.Component {
         selectedTeam: null,
         detailsEnabled: false,
         pastEvents: [],
-        articles: []
+        articles: [],
+        profileInfo: {}
     }
 
     componentDidMount() {
@@ -106,6 +107,27 @@ class HomePage extends React.Component {
         })
     }
 
+    taskUpdateFavourites = () => {
+
+        const token = sessionStorage.getItem("token");
+
+        axios.get(localUrl + "/favourites", {headers: {Authorization: `Bearer ${token}`}})
+        .then(response => {
+            
+            if(response.data){
+                this.setState({
+                    favouriteTeams: response.data
+                })
+            }
+            else {
+                this.setState({
+                    favouriteTeams: []
+                })
+            } 
+
+        })
+    }
+
     render () {
 
         const {favouriteTeams, selectedTeam, detailsEnabled, pastEvents, articles} = this.state;
@@ -175,6 +197,7 @@ class HomePage extends React.Component {
                     <TeamDetails 
                         team={selectedTeam} 
                         taskEndDisplayTeam={this.taskEndDisplayTeam}
+                        taskUpdateFavourites={this.taskUpdateFavourites}
                     />
                 }
             </main>

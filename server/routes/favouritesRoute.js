@@ -46,9 +46,43 @@ router.route('/')
             res.status(400).json({message: "The favourite already exists!"})
         }
     })
-    .delete((req, res) => {
 
-    })
+
+    router.route("/:teamId")
+        .get((req,res) => {
+            const userId = req.decode.userId;
+            const teamId = req.params.teamId;
+
+            const favourites = readFavouritesData();
+
+            const searchedTeam = favourites.find(fav => fav.idTeam === teamId);
+
+            if(searchedTeam) {
+                res.status(201).json({partOfFavourites: true});
+            }
+            else {
+                res.status(201).json({partOfFavourites: false});
+            }
+        }) 
+        .delete((req, res) => {
+            const userId = req.decode.userId;
+            const teamId = req.params.teamId;
+
+            const favourites = readFavouritesData();
+
+            const filteredTeams = favourites.filter(fav => {
+
+                if(fav.idTeam === teamId && fav.userId === userId) {
+                    return false;
+                }
+
+                return true;
+            })
+
+            writeFavouritesData(filteredTeams);
+
+            res.status(200).send("The team is deleted from the favourites list successfully!")
+        })
 
     //functions
 
