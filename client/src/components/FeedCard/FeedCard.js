@@ -9,26 +9,30 @@ import likeIcon from '../../assets/icons/like-icon.png';
 import shareIcon from '../../assets/icons/share-icon.png';
 import commentIcon from '../../assets/icons/comment-icon.png';
 
-function FeedCard ({className}) {
+import dateToString from '../../functions/dateToString';
+
+function FeedCard ({className, feedContent}) {
+
+    const {contentType, commentorName, userName, imgUrl, commentText, timestamp} = feedContent;
 
     return (
         <article className={`feed-card ${className}`}>
             <div className="feed-card__info">
-                <img className="feed-card__avatar" src={avatar} alt="avatar"/>
+                <img className="feed-card__avatar" src={imgUrl} alt="avatar"/>
                 <div className="feed-card__background">
                     <div className="feed-card__name-container">
-                        <h3 className="feed-card__name">Baris Yaman</h3>
+                        <h3 className="feed-card__name">{commentorName}</h3>
                         <img className="feed-card__arrow" src={arrowIcon} alt="arrow"/>
-                        <h3 className="feed-card__name">Cem Akcevin</h3>
+                        <h3 className="feed-card__name">{userName}</h3>
                     </div>
                     <div className="feed-card__date-container">
-                        <p className="feed-card__date">2 days ago</p>
+                        <p className="feed-card__date">{dateToString(timestamp)}</p>
                         <img className="feed-card__friend-icon" src={friendIcon} alt="friend"/>
                     </div>
                 </div>
             </div>
             <div className="feed-card__comment-container">
-                <p className="feed-card__comment">Brooo did you see this thing?!</p>
+                <p className="feed-card__comment">{commentText}</p>
             </div>
             <div className="feed-card__actions">
                 <div className="feed-card__icon-container">

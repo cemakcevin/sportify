@@ -2,7 +2,7 @@ import "./FeedForm.scss";
 
 import ProfileImage from '../ProfileImage/ProfileImage';
 
-function FeedForm ({className, onSubmit, profileUrl}) {
+function FeedForm ({className, onSubmit, profileUrl, feedTitle, placeholder}) {
 
     return (
         <form className={`${className} feed-form`} onSubmit={onSubmit}>
@@ -13,7 +13,7 @@ function FeedForm ({className, onSubmit, profileUrl}) {
                 />
             </div>
             <div className="feed-form__container">
-                <label className="feed-form__title" htmlFor="input">YOUR FEED</label>
+                <label className="feed-form__title" htmlFor="input">{feedTitle}</label>
                 <div className="feed-form__input-box">
                     <div className="feed-form__input-container">
                         <input 
@@ -21,8 +21,8 @@ function FeedForm ({className, onSubmit, profileUrl}) {
                             id="input"
                             name="input" 
                             type="text"
-                            placeholder="Tell us what is top of mind..."
-                            name="comment"
+                            placeholder={placeholder}
+                            name="commentText"
                         >
                         </input>
                     </div>

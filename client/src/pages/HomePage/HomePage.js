@@ -40,22 +40,27 @@ class HomePage extends React.Component {
             axios.get(localUrl + "/favourites", {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/users", {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/friends", {headers: {Authorization: `Bearer ${token}`}}),
-            axios.get(localUrl + "/requests", {headers: {Authorization: `Bearer ${token}`}})
+            axios.get(localUrl + "/requests", {headers: {Authorization: `Bearer ${token}`}}),
+            axios.get(localUrl + "/feed/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
         ])
-        .then(axios.spread((favouritesResponse, profileResponse, friendsResponse, requestsResponse)=> {
+        .then(axios.spread((favouritesResponse, profileResponse, friendsResponse, 
+            requestsResponse, feedResponse)=> {
+
             if(favouritesResponse.data){
                 this.setState({
                     favouriteTeams: favouritesResponse.data,
                     profileInfo: profileResponse.data,
                     friends: friendsResponse.data,
-                    requests: requestsResponse.data
+                    requests: requestsResponse.data,
+                    feed: feedResponse.data
                 })
             }
             else {
                 this.setState({
                     profileInfo: profileResponse.data,
                     friends: friendsResponse.data,
-                    requests: requestsResponse.data
+                    requests: requestsResponse.data,
+                    feed: feedResponse.data
                 })
             }  
         }))
@@ -148,13 +153,38 @@ class HomePage extends React.Component {
         })
     }
 
-    taskAddPost = () => {
+    taskAddPost = (event) => {
+
+        event.preventDefault();
+    
+        const token = sessionStorage.getItem("token");
+
+        const commentText = event.target.commentText.value;
+        const contentType = "comment";
+        const userId = '';
+        
+        const commentData = {
+            userId, 
+            commentText, 
+            contentType
+        }
+        
+        axios.post(localUrl + "/feed", commentData, {headers: {Authorization: `Bearer ${token}`}})
+        .then(response => {
+            this.setState({
+                feed: response.data
+            }, () => {
+                event.target.reset();
+            })
+        })
 
     }
 
     render () {
 
-        const {favouriteTeams, selectedTeam, detailsEnabled, pastEvents, articles, profileInfo, friends, requests} = this.state;
+        const {favouriteTeams, selectedTeam, detailsEnabled, 
+            pastEvents, articles, profileInfo, friends, requests,
+            feed} = this.state;
 
         return(
             <main className="home">
@@ -187,11 +217,20 @@ class HomePage extends React.Component {
                                     className="feed__form"
                                     onSubmit={this.taskAddPost}
                                     profileUrl={profileInfo.imgUrl}
+                                    feedTitle="Your Feed"
+                                    placeholder="Tell us what is top of mind for you..."
                                 />
                             </div>
-                            <FeedCard 
-                                className="feed__card"
-                            />
+                            {feed.map(feedContent => {
+                                return (
+                                    <FeedCard 
+                                        className="feed__card"
+                                        feedContent={feedContent}
+                                        
+                                    />
+                                )
+                            })}
+                            
                         </div>
                     </div>
                 </div>

@@ -29,9 +29,15 @@
 
 .interaction {
     width: 55%;
+    height: 100%;
     padding: 2rem 0.5rem 1rem 0.5rem;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
+
+    &::-webkit-scrollbar { 
+        display: none;
+    }
 
     &__favourites {
         height: 25%;

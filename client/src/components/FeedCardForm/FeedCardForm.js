@@ -24,7 +24,7 @@ function FeedCardForm ({className, onSubmit, profileUrl}) {
                         </input>
                     </div>
                     <div className="feed-card-form__button-container">
-                        <button className="feed-card-form__button" type="submit">SUBMIT</button>
+                        <button className="feed-card-form__button" type="submit">COMMENT</button>
                     </div>
                 </div>
             </div>

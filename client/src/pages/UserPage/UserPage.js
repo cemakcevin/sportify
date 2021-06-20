@@ -9,6 +9,8 @@ import EventScore from '../../components/EventScore/EventScore';
 import NewsArticle from '../../components/NewsArticle/NewsArticle';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import IsFriend from '../../components/IsFriend/IsFriend';
+import FeedForm from '../../components/FeedForm/FeedForm';
+import FeedCard from '../../components/FeedCard/FeedCard';
 
 import lockIcon from '../../assets/icons/lock-icon.png';
 
@@ -31,7 +33,8 @@ class UserPage extends React.Component {
         friends: [],
         isFriend: null,
         isRequestSent: false,
-        isRequestReceived: false
+        isRequestReceived: false,
+        feed: []
     }
 
     componentDidMount() {
@@ -41,20 +44,23 @@ class UserPage extends React.Component {
         axios.all([
             axios.get(localUrl + "/favourites/user/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/users/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
-            axios.get(localUrl + "/friends/" + userId, {headers: {Authorization: `Bearer ${token}`}})
+            axios.get(localUrl + "/friends/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
+            axios.get(localUrl + "/feed/" + userId, {headers: {Authorization: `Bearer ${token}`}})
         ])
-        .then(axios.spread((favouritesResponse, profileResponse, friendsResponse)=> {
+        .then(axios.spread((favouritesResponse, profileResponse, friendsResponse, feedResponse)=> {
             if(favouritesResponse.data){
                 this.setState({
                     favouriteTeams: favouritesResponse.data,
                     profileInfo: profileResponse.data,
                     friends: friendsResponse.data,
+                    feed: feedResponse.data
                 })
             }
             else {
                 this.setState({
                     profileInfo: profileResponse.data,
                     friends: friendsResponse.data,
+                    feed: feedResponse.data
                 })
                 
             } 
@@ -194,10 +200,38 @@ class UserPage extends React.Component {
         })
     }
 
+    taskAddPost = (event) => {
+
+        event.preventDefault();
+    
+        const token = sessionStorage.getItem("token");
+
+        const commentText = event.target.commentText.value;
+        const contentType = "comment";
+        const userId = this.props.match.params.userId;
+        
+        const commentData = {
+            userId, 
+            commentText, 
+            contentType
+        }
+        
+        axios.post(localUrl + "/feed", commentData, {headers: {Authorization: `Bearer ${token}`}})
+        .then(response => {
+            this.setState({
+                feed: response.data
+            }, () => {
+                event.target.reset();
+            })
+        })
+
+    }
+
     render () {
 
         const {favouriteTeams, selectedTeam, detailsEnabled, 
-            pastEvents, articles, profileInfo, friends, isFriend, isRequestSent, isRequestReceived} = this.state;
+            pastEvents, articles, profileInfo, friends, isFriend, 
+            isRequestSent, isRequestReceived, feed} = this.state;
 
 
             console.log(isFriend);
@@ -250,11 +284,24 @@ class UserPage extends React.Component {
                                 </div>
                                 <div className="user-interaction__feed-container">
                                     <div className="user-interaction__feed feed">
-                
+                                        <div className="feed__card">
+                                            <FeedForm 
+                                                className="feed__form"
+                                                onSubmit={this.taskAddPost}
+                                                profileUrl={profileInfo.imgUrl}
+                                                feedTitle={`${profileInfo.name}'s Feed`}
+                                                placeholder={`Write something to ${profileInfo.name}...`}
+                                            />
+                                        </div>
+                                        {feed.map(feedContent => {
+                                            return (
+                                                <FeedCard 
+                                                    className="feed__card"
+                                                    feedContent={feedContent}
+                                                />
+                                            )
+                                        })}
                                     </div>
-                                    {/* <div className="interaction__news news">
-                
-                                    </div> */}
                                 </div>
                             </div>
                             <div className="user__updates user-updates">

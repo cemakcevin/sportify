@@ -43,8 +43,13 @@
 .user-interaction {
     width: calc(55% / 0.85);
     padding: 2rem 0.5rem 1rem 0.5rem;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
+
+    &::-webkit-scrollbar { 
+        display: none;
+    }
 
     &__favourites {
         height: 25%;
@@ -76,8 +81,6 @@
     &__feed {
         height: 100%;
         width: 100%;
-
-        @include card-background;
     }
 
     &__news {
