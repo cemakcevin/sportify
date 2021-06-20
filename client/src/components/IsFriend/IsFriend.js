@@ -4,7 +4,7 @@ import SocialButton from '../SocialButton/SocialButton';
 
 import followingIcon from '../../assets/icons/following-icon.png'
 
-function IsFriend({className, isFriend, isRequestSent, isRequestReceived, taskSendFriendRequest}) {
+function IsFriend({className, isFriend, isRequestSent, isRequestReceived, taskSendFriendRequest, taskAcceptFriendRequest}) {
 
     return(
         <div className={`${className} isfriend`}>
@@ -37,6 +37,7 @@ function IsFriend({className, isFriend, isRequestSent, isRequestReceived, taskSe
                             className="isfriend__button isfriend__button--received"
                             imgSrc={followingIcon}
                             text={"Accept Request"}
+                            onClick={taskAcceptFriendRequest}
                         />
                         :
                         <SocialButton 

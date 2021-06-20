@@ -236,6 +236,7 @@ class TeamDetails extends React.Component {
                                     <Comment 
                                         key={comment.commentId}
                                         className= "team__comment"
+                                        userId={comment.userId}
                                         name={comment.name}
                                         date={comment.timestamp}
                                         text={comment.commentText}

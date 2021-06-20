@@ -1,17 +1,21 @@
 import './Comment.scss';
+import {Link} from 'react-router-dom';
+
 import ProfileImage from "../ProfileImage/ProfileImage";
 import timeDifference from '../../functions/timeDifference';
 
 
-function Comment({className, name, date, text, profileUrl}) {
+function Comment({className, userId, name, date, text, profileUrl}) {
 
     return (
         <article className={`${className} comment`}>
             <div className="comment__avatar-container">
-                <ProfileImage 
-                    className="comment__img" 
-                    imgSrc={profileUrl}
-                />
+                <Link to={"/user/" + userId}>
+                    <ProfileImage 
+                        className="comment__img" 
+                        imgSrc={profileUrl}
+                    />
+                </Link>
             </div>
             <div className="comment__text-container">
                 <div className="comment__name-container">

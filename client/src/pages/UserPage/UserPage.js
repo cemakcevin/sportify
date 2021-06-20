@@ -166,6 +166,30 @@ class UserPage extends React.Component {
 
     taskSendFriendRequest = () => {
 
+        const token = sessionStorage.getItem("token");
+        const userId = this.props.match.params.userId;
+
+        axios.post(localUrl + '/requests', {userId}, {headers: {Authorization: `Bearer ${token}`}})
+        .then(_response => {
+            
+            this.setState({
+                isRequestSent: true
+            })
+        })
+    }
+
+    taskAcceptFriendRequest = () => {
+
+        const token = sessionStorage.getItem("token");
+        const requestorId = this.props.match.params.userId;
+
+        axios.post(localUrl + '/requests/acceptRequest', {requestorId}, {headers: {Authorization: `Bearer ${token}`}})
+        .then(_response => {
+
+            this.setState({
+                isFriend: true
+            })
+        })
     }
 
     render () {
@@ -193,6 +217,7 @@ class UserPage extends React.Component {
                                     isRequestSent={isRequestSent}
                                     isRequestReceived={isRequestReceived}
                                     taskSendFriendRequest={this.taskSendFriendRequest}
+                                    taskAcceptFriendRequest={this.taskAcceptFriendRequest}
                                 />
                             }
                         </div>
