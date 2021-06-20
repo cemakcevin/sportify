@@ -23,7 +23,15 @@
 
     &__info {
         height: calc(100% - 200px);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+
         @include card-background;
+    }
+
+    &__info-buttons {
+        margin-top: auto;
     }
 }
 

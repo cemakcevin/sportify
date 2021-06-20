@@ -32,10 +32,13 @@ router.route('/isFriend/:friendId')
         const userId = req.decode.userId;
         const friendId = req.params.friendId;
         const friends = readFriends();
+        console.log(friendId)
 
-        const userFriends = friends.find(friend => friend.userId === userId && friendId === friendId);
+        const searchedFriend = friends.find(friend => friend.userId === userId && friend.friendId === friendId);
 
-        if(userFriend){
+        console.log(searchedFriend)
+
+        if(searchedFriend){
             return res.status(201).json({isFriend: true});
         }
         else {

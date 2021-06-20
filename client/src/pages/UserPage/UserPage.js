@@ -8,6 +8,7 @@ import TeamDetails from '../../components/TeamDetails/TeamDetails';
 import EventScore from '../../components/EventScore/EventScore';
 import NewsArticle from '../../components/NewsArticle/NewsArticle';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
+import IsFriend from '../../components/IsFriend/IsFriend';
 
 
 const API__KEY="8b0979907442ae756bd39495fb5eebd0";
@@ -26,37 +27,54 @@ class UserPage extends React.Component {
         articles: [],
         profileInfo: {},
         friends: [],
-        requests: []
+        isFriend: null,
+        isRequestSent: false,
+        isRequestReceived: false
     }
 
     componentDidMount() {
         const token = sessionStorage.getItem("token");
         const userId = this.props.match.params.userId;
-    
 
         axios.all([
             axios.get(localUrl + "/favourites/user/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/users/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
-            axios.get(localUrl + "/friends/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
-            axios.get(localUrl + "/requests/" + userId, {headers: {Authorization: `Bearer ${token}`}})
+            axios.get(localUrl + "/friends/" + userId, {headers: {Authorization: `Bearer ${token}`}})
         ])
-        .then(axios.spread((favouritesResponse, profileResponse, friendsResponse, requestsResponse)=> {
+        .then(axios.spread((favouritesResponse, profileResponse, friendsResponse)=> {
             if(favouritesResponse.data){
                 this.setState({
                     favouriteTeams: favouritesResponse.data,
                     profileInfo: profileResponse.data,
                     friends: friendsResponse.data,
-                    requests: requestsResponse.data
                 })
             }
             else {
                 this.setState({
                     profileInfo: profileResponse.data,
                     friends: friendsResponse.data,
-                    requests: requestsResponse.data
                 })
-            }  
+                
+            } 
+        
+            return axios.all([
+                axios.get(localUrl + "/friends/isFriend/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
+                axios.get(localUrl + "/requests/isRequestSent/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
+                axios.get(localUrl + "/requests/isRequestReceived/" + userId, {headers: {Authorization: `Bearer ${token}`}})
+            ])
         }))
+        .then(axios.spread((isFriendResponse, isSentResponse, isRecievedResponse) => {
+            console.log(isFriendResponse, isSentResponse, isRecievedResponse);
+
+            this.setState({
+                isFriend: isFriendResponse.data.isFriend,
+                isRequestSent: isSentResponse.data.isRequestSent,
+                isRequestReceived: isRecievedResponse.data.isRequestReceived
+            })
+        }))
+        .catch(error => {
+            console.log(error)
+        })
     }
 
     componentDidUpdate() {
@@ -146,9 +164,14 @@ class UserPage extends React.Component {
         })
     }
 
+    taskSendFriendRequest = () => {
+
+    }
+
     render () {
 
-        const {favouriteTeams, selectedTeam, detailsEnabled, pastEvents, articles, profileInfo, friends, requests} = this.state;
+        const {favouriteTeams, selectedTeam, detailsEnabled, 
+            pastEvents, articles, profileInfo, friends, isFriend, isRequestSent, isRequestReceived} = this.state;
 
         return(
             <main className="home">
@@ -158,7 +181,21 @@ class UserPage extends React.Component {
                         avatarUrl={profileInfo.imgUrl} 
                     />
                     <div className="profile__info">
-    
+                        <div>Just Text</div>
+                        <div className="profile__info-buttons">
+                            {isFriend === null
+                                ?
+                                <div></div>
+                                :
+                                <IsFriend 
+                                    className=""
+                                    isFriend={isFriend}
+                                    isRequestSent={isRequestSent}
+                                    isRequestReceived={isRequestReceived}
+                                    taskSendFriendRequest={this.taskSendFriendRequest}
+                                />
+                            }
+                        </div>
                     </div>
                 </div>
                 <div className="home__interaction interaction">
@@ -210,18 +247,6 @@ class UserPage extends React.Component {
                                         key={friend.userId}
                                         className="friends__avatar"
                                         imgSrc={friend.imgUrl}
-                                    />
-                                )
-                            })}
-                        </div>
-                        <div className="friends__request-container">
-                            <h3 className="friends__title">Requests</h3>
-                            {requests.map(request => {
-                                return(
-                                    <ProfileImage 
-                                        key={request.requestorId}
-                                        className="friends__avatar"
-                                        imgSrc={request.imgUrl}
                                     />
                                 )
                             })}

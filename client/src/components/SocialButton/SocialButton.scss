@@ -1,0 +1,13 @@
+.social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: none;
+    padding: 0.5rem;
+
+    &__button-icon{
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
+}

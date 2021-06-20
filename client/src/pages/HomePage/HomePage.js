@@ -218,11 +218,13 @@ class HomePage extends React.Component {
                             <h3 className="friends__title">Requests</h3>
                             {requests.map(request => {
                                 return(
-                                    <ProfileImage 
-                                        key={request.requestorId}
-                                        className="friends__avatar"
-                                        imgSrc={request.imgUrl}
-                                    />
+                                    <Link key={request.requestorId} to={"/user/" + request.requestorId}>
+                                        <ProfileImage 
+                                            key={request.requestorId}
+                                            className="friends__avatar"
+                                            imgSrc={request.imgUrl}
+                                        />
+                                    </Link>
                                 )
                             })}
                         </div>
