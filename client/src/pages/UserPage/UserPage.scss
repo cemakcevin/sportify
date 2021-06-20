@@ -1,15 +1,20 @@
 @use '../../partials/colors' as *;
 @use '../../partials/mixins' as *;
 
-.home {
+.user {
     height: 100vh;
     padding: 66px 1rem 1rem 1rem;
     background: $color-primary1;
     display: flex;
     justify-content: flex-start;
+
+    &__profile-details {
+        width: 85%;
+        display: flex;
+    }
 }
 
-.profile {
+.user-profile {
     width: 15%;
     padding: 1rem 0.5rem 1rem 1rem;
     display: flex;
@@ -35,8 +40,8 @@
     }
 }
 
-.interaction {
-    width: 55%;
+.user-interaction {
+    width: calc(55% / 0.85);
     padding: 2rem 0.5rem 1rem 0.5rem;
     display: flex;
     flex-direction: column;
@@ -71,7 +76,6 @@
     &__feed {
         height: 100%;
         width: 100%;
-        // margin-right: 1rem;
 
         @include card-background;
     }
@@ -84,8 +88,8 @@
     }
 }
 
-.updates {
-    width: 22%;
+.user-updates {
+    width: calc(22% / 0.85);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -101,7 +105,7 @@
     }
 }
 
-.friends {
+.user-friends {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -143,5 +147,25 @@
         width: 4rem;
         height: 4rem;
         margin-bottom: 1rem;
+    }
+}
+
+.user-private {
+    padding: 1.5rem 1rem 1.5rem 0.5rem;;
+    width: 85%;
+    
+
+    &__wrapper {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        @include card-background;
+    }
+
+    &__img {
+        height: 5rem;
+        margin-right: 1rem;
     }
 }

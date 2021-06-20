@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 import logoUrl from '../../assets/icons/logo.png'
 
-function Header ({loggedIn}) {
+function Header ({loggedIn, imgUrl}) {
 
 
 
@@ -34,7 +34,7 @@ function Header ({loggedIn}) {
                             Search
                         </Link>
                         <Link to="/" className="header__link"> 
-                            About Us
+                            <img className="header__avatar" src={imgUrl} alt="avatar" />
                         </Link>
                     </nav>  
                 }

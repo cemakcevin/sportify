@@ -9,6 +9,8 @@ import TeamDetails from '../../components/TeamDetails/TeamDetails';
 import EventScore from '../../components/EventScore/EventScore';
 import NewsArticle from '../../components/NewsArticle/NewsArticle';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
+import FeedForm from '../../components/FeedForm/FeedForm';
+import FeedCard from '../../components/FeedCard/FeedCard';
 
 
 const API__KEY="8b0979907442ae756bd39495fb5eebd0";
@@ -27,7 +29,8 @@ class HomePage extends React.Component {
         articles: [],
         profileInfo: {},
         friends: [],
-        requests: []
+        requests: [],
+        feed: []
     }
 
     componentDidMount() {
@@ -145,6 +148,10 @@ class HomePage extends React.Component {
         })
     }
 
+    taskAddPost = () => {
+
+    }
+
     render () {
 
         const {favouriteTeams, selectedTeam, detailsEnabled, pastEvents, articles, profileInfo, friends, requests} = this.state;
@@ -175,11 +182,17 @@ class HomePage extends React.Component {
                     </div>
                     <div className="interaction__feed-container">
                         <div className="interaction__feed feed">
-    
+                            <div className="feed__card">
+                                <FeedForm 
+                                    className="feed__form"
+                                    onSubmit={this.taskAddPost}
+                                    profileUrl={profileInfo.imgUrl}
+                                />
+                            </div>
+                            <FeedCard 
+                                className="feed__card"
+                            />
                         </div>
-                        {/* <div className="interaction__news news">
-    
-                        </div> */}
                     </div>
                 </div>
                 <div className="home__updates updates">

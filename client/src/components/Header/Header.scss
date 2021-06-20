@@ -24,6 +24,7 @@
     &__nav-container {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         width: 20rem
 
     }
@@ -37,6 +38,13 @@
             color: $color-additional2;
             font-weight: bold;
         }
+    }
+
+    &__avatar {
+        height: 2rem;
+        border-radius: 50%;
+        object-position: center;
+        object-fit: cover;
     }
 
 

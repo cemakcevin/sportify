@@ -10,6 +10,8 @@ import NewsArticle from '../../components/NewsArticle/NewsArticle';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import IsFriend from '../../components/IsFriend/IsFriend';
 
+import lockIcon from '../../assets/icons/lock-icon.png';
+
 
 const API__KEY="8b0979907442ae756bd39495fb5eebd0";
 const localUrl = "http://localhost:8686";
@@ -197,16 +199,19 @@ class UserPage extends React.Component {
         const {favouriteTeams, selectedTeam, detailsEnabled, 
             pastEvents, articles, profileInfo, friends, isFriend, isRequestSent, isRequestReceived} = this.state;
 
+
+            console.log(isFriend);
+
         return(
-            <main className="home">
-                <div className="home__profile profile">
+            <main className="user">
+                <div className="user__profile user-profile">
                     <Avatar 
-                        className="profile__avatar" 
+                        className="user-profile__avatar" 
                         avatarUrl={profileInfo.imgUrl} 
                     />
-                    <div className="profile__info">
+                    <div className="user-profile__info">
                         <div>Just Text</div>
-                        <div className="profile__info-buttons">
+                        <div className="user-profile__info-buttons">
                             {isFriend === null
                                 ?
                                 <div></div>
@@ -223,68 +228,90 @@ class UserPage extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="home__interaction interaction">
-                    <div className="interaction__favourites">
-                        {favouriteTeams.map(team => {
-                            return (
-                                <TeamCard 
-                                    className="interaction__fav-card" 
-                                    taskDisplayTeam={this.taskDisplayTeam}
-                                    strTeamBadge={team.strTeamBadge}
-                                    teamId={team.idTeam} 
+                {isFriend === null
+                    ?
+                    <div></div>
+                    :
+                    (isFriend === true
+                        ?
+                        <div className="user__profile-details">
+                            <div className="user__interaction user-interaction">
+                                <div className="interaction__favourites">
+                                    {favouriteTeams.map(team => {
+                                        return (
+                                            <TeamCard 
+                                                className="user-interaction__fav-card" 
+                                                taskDisplayTeam={this.taskDisplayTeam}
+                                                strTeamBadge={team.strTeamBadge}
+                                                teamId={team.idTeam} 
+                                            />
+                                        )
+                                    })} 
+                                </div>
+                                <div className="user-interaction__feed-container">
+                                    <div className="user-interaction__feed feed">
+                
+                                    </div>
+                                    {/* <div className="interaction__news news">
+                
+                                    </div> */}
+                                </div>
+                            </div>
+                            <div className="user__updates user-updates">
+                                <div className="user-updates__container">
+                                    {pastEvents.map(event => {
+                                        return <EventScore event={event} />
+                                    })}
+                                </div>
+                                <div className="user-updates__container">
+                                    {articles.map(article => {
+                                        return (
+                                            <NewsArticle 
+                                                className="team__news-article" 
+                                                newsArticle={article} 
+                                            />
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                            <div className="user__friends user-friends">
+                                <div className="user-friends__wrapper">
+                                    <div className="user-friends__container">
+                                        <h3 className="friends__title">Friends</h3>
+                                        {friends.map(friend => {
+                                            return(
+                                                <ProfileImage 
+                                                    key={friend.userId}
+                                                    className="user-friends__avatar"
+                                                    imgSrc={friend.imgUrl}
+                                                />
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+                            {detailsEnabled && 
+                                <TeamDetails 
+                                    team={selectedTeam} 
+                                    taskEndDisplayTeam={this.taskEndDisplayTeam}
+                                    taskUpdateFavourites={this.taskUpdateFavourites}
                                 />
-                            )
-                        })} 
-                    </div>
-                    <div className="interaction__feed-container">
-                        <div className="interaction__feed feed">
-    
+                            }
                         </div>
-                        {/* <div className="interaction__news news">
-    
-                        </div> */}
-                    </div>
-                </div>
-                <div className="home__updates updates">
-                    <div className="updates__container">
-                        {pastEvents.map(event => {
-                            return <EventScore event={event} />
-                        })}
-                    </div>
-                    <div className="updates__container">
-                        {articles.map(article => {
-                            return (
-                                <NewsArticle 
-                                    className="team__news-article" 
-                                    newsArticle={article} 
-                                />
-                            )
-                        })}
-                    </div>
-                </div>
-                <div className="home__friends friends">
-                    <div className="friends__wrapper">
-                        <div className="friends__container">
-                            <h3 className="friends__title">Friends</h3>
-                            {friends.map(friend => {
-                                return(
-                                    <ProfileImage 
-                                        key={friend.userId}
-                                        className="friends__avatar"
-                                        imgSrc={friend.imgUrl}
-                                    />
-                                )
-                            })}
+                        :
+                        <div className="user__private user-private">
+                            <div className="user-private__wrapper">
+                                <img className="user-private__img" src={lockIcon} alt="lock"/>
+                                <div className="user-private__card">    
+                                    <h3 className="user-private__title">This Account is Private</h3>
+                                    <p className="user-private__text">Send a friend request to this account to see their details.</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                {detailsEnabled && 
-                    <TeamDetails 
-                        team={selectedTeam} 
-                        taskEndDisplayTeam={this.taskEndDisplayTeam}
-                        taskUpdateFavourites={this.taskUpdateFavourites}
-                    />
+                    )
                 }
+                
+                
             </main>
         )
     }

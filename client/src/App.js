@@ -12,11 +12,13 @@ import UserPage from './pages/UserPage/UserPage';
 import Header from './components/Header/Header';
 
 const token = sessionStorage.getItem("token");
+const localUrl = "http://localhost:8686"
 
 class App extends React.Component {
 
   state = {
-    loggedIn: false
+    loggedIn: false,
+    currentUser: null
   }
 
   componentDidMount() {
@@ -43,17 +45,22 @@ class App extends React.Component {
       password
     }
 
-    axios.post("http://localhost:8686/login", loginCredentials)
+    axios.post(localUrl + "/login", loginCredentials)
     .then(response => {
-      sessionStorage.setItem("token", response.data.token);
+      const token = response.data.token;
+      sessionStorage.setItem("token", token);
       
+      return axios.get(localUrl + "/users", {headers: {Authorization: `Bearer ${token}`}})
     })
-    .then(_response => {
+    .then(response => {
+      
       this.setState({
-        loggedIn: true
+        loggedIn: true,
+        currentUser: response.data
       })
     })
     .catch(error => {
+
       console.log(error);
     })
 
@@ -61,11 +68,11 @@ class App extends React.Component {
 
   render() {
 
-    const {loggedIn} = this.state;
+    const {loggedIn, currentUser} = this.state;
     
     return (
       <BrowserRouter>
-        <Header loggedIn={loggedIn} />
+        <Header loggedIn={loggedIn} imgUrl={currentUser && currentUser.imgUrl} />
         <Switch>
             {!loggedIn && <Route path="/login" render={(routerProps) => <LoginPage taskLogin={this.taskLogin} {...routerProps}/> } />}
             {loggedIn && <Route path="/home" component={HomePage}/> }

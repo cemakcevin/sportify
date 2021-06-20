@@ -1,0 +1,73 @@
+.feed-card {
+
+    &__info {
+        display: flex;
+        align-items: center;
+    }
+
+    &__avatar {
+        height: 3rem;
+        width: 3rem;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center;
+        margin-right: 0.5rem;
+    }
+
+    &__name-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.25rem;
+    }
+
+    &__name {
+        margin-right: 0.25rem;
+        font-size: 1rem;
+    }
+
+    &__arrow {
+        height: 0.75rem;
+        margin-right: 0.25rem;
+    }
+
+    &__date-container {
+        display: flex;
+        align-items: center;
+    }
+
+    &__date {
+        margin-right: 0.5rem;
+        font-size: 1rem;
+    }
+
+    &__friend-icon {
+        height: 0.75rem;
+    }
+
+    &__comment-container {
+        padding: 1rem 0;
+    }
+
+    &__comment {
+        font-size: 1.25rem;
+    }
+
+    &__actions {
+        display: flex;
+        padding: 1rem 0;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+
+    &__icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: calc(100% / 3);
+    }
+
+    &__icon {
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
+}
