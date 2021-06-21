@@ -16,6 +16,10 @@ class SearchPage extends React.Component {
         detailsEnabled: false
     }
 
+    componentDidMount() {
+        this.props.taskUpdateUrl(this.props.match.url)
+    }
+
     taskSetTeams = (event) => {
         event.preventDefault();
         const teamName = event.target.teamName.value;

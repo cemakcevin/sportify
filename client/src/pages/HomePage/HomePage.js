@@ -35,6 +35,8 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
+        this.props.taskUpdateUrl(this.props.match.url)
+
         const token = sessionStorage.getItem("token");
 
         axios.all([

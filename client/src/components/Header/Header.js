@@ -1,10 +1,24 @@
 import './Header.scss';
-import {Link} from 'react-router-dom';
+import {NavLink, Link} from 'react-router-dom';
 
 import logoUrl from '../../assets/icons/logo.png'
 
-function Header ({loggedIn, imgUrl}) {
+function Header ({loggedIn, imgUrl, url}) {
 
+    let myProfileActive, searchActive;
+
+    if(url.includes('/home')){
+        myProfileActive = "header__link--highlighted";
+        searchActive = "";
+    }
+    else if(url.includes('/search')) {
+        myProfileActive = "";
+        searchActive = "header__link--highlighted";
+    }
+    else {
+        myProfileActive = "";
+        searchActive = "";
+    }
 
 
     return (
@@ -15,27 +29,27 @@ function Header ({loggedIn, imgUrl}) {
                 </Link>
                 {!loggedIn ?
                     <nav className="header__nav-container">
-                        <Link to="/" className="header__link header__link--highlighted"> 
+                        <NavLink to="/" className="header__link header__link--highlighted"> 
                             Login
-                        </Link>
-                        <Link to="/" className="header__link"> 
+                        </NavLink>
+                        <NavLink to="/" className="header__link"> 
                             Register
-                        </Link>
-                        <Link to="/" className="header__link"> 
+                        </NavLink>
+                        <NavLink to="/" className="header__link"> 
                             About Us
-                        </Link>
+                        </NavLink>
                     </nav>
                     :
                     <nav className="header__nav-container">
-                        <Link to="/" className="header__link header__link--highlighted"> 
+                        <NavLink to="/" className={`header__link ${myProfileActive}`}> 
                             My Profile
-                        </Link>
-                        <Link to="/search" className="header__link"> 
+                        </NavLink>
+                        <NavLink to="/search" className={`header__link ${searchActive}`}> 
                             Search
-                        </Link>
-                        <Link to="/" className="header__link"> 
+                        </NavLink>
+                        <NavLink to="/" className="header__link"> 
                             <img className="header__avatar" src={imgUrl} alt="avatar" />
-                        </Link>
+                        </NavLink>
                     </nav>  
                 }
             </div>

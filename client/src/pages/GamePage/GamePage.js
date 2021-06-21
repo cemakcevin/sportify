@@ -28,6 +28,7 @@ class GamePage extends React.Component {
     }
 
     componentDidMount() {
+        this.props.taskUpdateUrl(this.props.match.url)
 
         const videoId = this.props.match.params.videoId;
         const token = sessionStorage.getItem("token");

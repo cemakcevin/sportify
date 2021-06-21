@@ -18,16 +18,25 @@ class App extends React.Component {
 
   state = {
     loggedIn: false,
-    currentUser: null
+    currentUser: null,
+    url: ""
   }
 
-  componentDidMount() {
+  componentDidMount(_prevProsp, prevState) {
     
+    console.log(prevState);
+
     //checking if logged in
     if(token) {
-      
-      this.setState({
-        loggedIn: true
+
+      axios.get(localUrl + "/users", {headers: {Authorization: `Bearer ${token}`}})
+      .then(response => {
+
+        this.setState({
+          loggedIn: true,
+          currentUser: response.data
+        })
+
       })
     }
 
@@ -66,18 +75,32 @@ class App extends React.Component {
 
   }
 
+  taskUpdateUrl = (url) => {
+
+    this.setState({
+      url: url
+    })
+
+  }
+
   render() {
 
-    const {loggedIn, currentUser} = this.state;
+    const {loggedIn, currentUser, url} = this.state;
     
     return (
       <BrowserRouter>
-        <Header loggedIn={loggedIn} imgUrl={currentUser && currentUser.imgUrl} />
+        <Header 
+          loggedIn={loggedIn} 
+          imgUrl={currentUser && currentUser.imgUrl} 
+          url={url}
+        />
         <Switch>
             {!loggedIn && <Route path="/login" render={(routerProps) => <LoginPage taskLogin={this.taskLogin} {...routerProps}/> } />}
-            {loggedIn && <Route path="/home" component={HomePage}/> }
-            {loggedIn && <Route path="/user/:userId" component={UserPage}/> }
-            {loggedIn && <Route path="/search" component={SearchPage} /> }
+            {loggedIn && <Route path="/home" render={(routerProps) => <HomePage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
+            {loggedIn && <Route path="/user/:userId" render={(routerProps) => <UserPage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
+            {loggedIn && <Route path="/search" render={(routerProps) => <SearchPage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
+
+            {/* {loggedIn && <Route path="/search" component={SearchPage} /> } */}
             {loggedIn && <Route path="/game/:videoId" component={GamePage} /> }
             {loggedIn ? <Redirect to="/home"/> : <Redirect to="/login"/>}
         </Switch>

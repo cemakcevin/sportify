@@ -10,8 +10,8 @@
     z-index: 1;
 
     &__wrapper {
-        margin: 0 auto;
-        padding: 0.5rem 0;    
+        margin: 0 auto;  
+        height: 69px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -25,7 +25,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 20rem
+        width: 20rem;
+        height: 100%;
 
     }
 
@@ -33,9 +34,22 @@
         font-size: 1rem;
         color: $color-primary4;
         height: 100%;
+        width: 80px;
+        display: block;
+        border-bottom: 2px solid none;
+        border-top: 2px solid none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            color: $color-additional2;
+            border-bottom: 2px solid $color-additional2;
+        }
 
         &--highlighted {
             color: $color-additional2;
+            border-bottom: 2px solid $color-additional2;
             font-weight: bold;
         }
     }
