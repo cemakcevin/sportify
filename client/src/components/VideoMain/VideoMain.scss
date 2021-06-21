@@ -16,5 +16,8 @@
         height: 28.125rem;
         margin: 0;
         
+        &--disabled {
+            pointer-events: none;
+        }
     }
 }

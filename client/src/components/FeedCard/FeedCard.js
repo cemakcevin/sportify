@@ -2,16 +2,19 @@ import './FeedCard.scss';
 
 import FeedCardForm from '../FeedCardForm/FeedCardForm';
 import ContentActions from '../ContentActions/ContentActions';
+import VideoMain from '../VideoMain/VideoMain';
 
 import avatar from '../../assets/pictures/profile.jpeg';
 import arrowIcon from '../../assets/icons/arrow-icon.png';
 import friendIcon from '../../assets/icons/friend-icon.png';
 
 import dateToString from '../../functions/dateToString';
+import videoWatchToEmbed from '../../functions/videoWatchToEmbed';
 
-function FeedCard ({className, feedContent}) {
+function FeedCard ({className, feedContent, taskTakeToGamePage}) {
 
-    const {contentType, commentorName, userName, imgUrl, commentText, timestamp} = feedContent;
+    const {contentType, commentorName, userName, imgUrl, commentText, timestamp, 
+        idEvent, strEvent, intHomeScore, intAwayScore, strVideo} = feedContent;
 
     return (
         <article className={`feed-card ${className}`}>
@@ -32,6 +35,11 @@ function FeedCard ({className, feedContent}) {
             <div className="feed-card__comment-container">
                 <p className="feed-card__comment">{commentText}</p>
             </div>
+            {idEvent &&
+                <div className="feed-card__video-container" onClick={() => taskTakeToGamePage(idEvent)}>
+                    <VideoMain className="feed-card__video" videoSrc={videoWatchToEmbed(strVideo)} disabled={true}/>
+                </div>
+            }
             <ContentActions 
                 className="feed-card__actions"
             />

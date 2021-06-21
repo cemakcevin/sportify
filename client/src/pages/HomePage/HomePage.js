@@ -180,6 +180,11 @@ class HomePage extends React.Component {
 
     }
 
+    taskTakeToGamePage = (idEvent) => {
+
+        this.props.history.push('/game/' + idEvent);
+    }
+
     render () {
 
         const {favouriteTeams, selectedTeam, detailsEnabled, 
@@ -226,7 +231,7 @@ class HomePage extends React.Component {
                                     <FeedCard 
                                         className="feed__card"
                                         feedContent={feedContent}
-                                        
+                                        taskTakeToGamePage={this.taskTakeToGamePage}
                                     />
                                 )
                             })}

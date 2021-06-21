@@ -29,6 +29,7 @@ class UserPage extends React.Component {
         detailsEnabled: false,
         pastEvents: [],
         articles: [],
+        currentUser: {},
         profileInfo: {},
         friends: [],
         isFriend: null,
@@ -44,13 +45,15 @@ class UserPage extends React.Component {
         axios.all([
             axios.get(localUrl + "/favourites/user/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/users/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
+            axios.get(localUrl + "/users", {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/friends/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/feed/" + userId, {headers: {Authorization: `Bearer ${token}`}})
         ])
-        .then(axios.spread((favouritesResponse, profileResponse, friendsResponse, feedResponse)=> {
+        .then(axios.spread((favouritesResponse, profileResponse, currentUserResponse, friendsResponse, feedResponse)=> {
             if(favouritesResponse.data){
                 this.setState({
                     favouriteTeams: favouritesResponse.data,
+                    currentUser: currentUserResponse.data,
                     profileInfo: profileResponse.data,
                     friends: friendsResponse.data,
                     feed: feedResponse.data
@@ -58,6 +61,7 @@ class UserPage extends React.Component {
             }
             else {
                 this.setState({
+                    currentUser: currentUserResponse.data,
                     profileInfo: profileResponse.data,
                     friends: friendsResponse.data,
                     feed: feedResponse.data
@@ -227,10 +231,15 @@ class UserPage extends React.Component {
 
     }
 
+    taskTakeToGamePage = (idEvent) => {
+
+        this.props.history.push('/game/' + idEvent);
+    }
+
     render () {
 
         const {favouriteTeams, selectedTeam, detailsEnabled, 
-            pastEvents, articles, profileInfo, friends, isFriend, 
+            pastEvents, articles, profileInfo, currentUser, friends, isFriend, 
             isRequestSent, isRequestReceived, feed} = this.state;
 
 
@@ -288,7 +297,7 @@ class UserPage extends React.Component {
                                             <FeedForm 
                                                 className="feed__form"
                                                 onSubmit={this.taskAddPost}
-                                                profileUrl={profileInfo.imgUrl}
+                                                profileUrl={currentUser.imgUrl}
                                                 feedTitle={`${profileInfo.name}'s Feed`}
                                                 placeholder={`Write something to ${profileInfo.name}...`}
                                             />
@@ -298,6 +307,7 @@ class UserPage extends React.Component {
                                                 <FeedCard 
                                                     className="feed__card"
                                                     feedContent={feedContent}
+                                                    taskTakeToGamePage={this.taskTakeToGamePage}
                                                 />
                                             )
                                         })}

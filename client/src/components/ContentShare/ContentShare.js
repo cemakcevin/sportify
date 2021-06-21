@@ -9,12 +9,12 @@ import backIcon from '../../assets/icons/back-icon.png'
 import ProfileImage from '../ProfileImage/ProfileImage';
 
 function ContentShare({className, currentUser, taskCancelContentShare, 
-    taskFilterFriends, taskBackToPrevious, taskEnableVideoPost, videoSharePost, 
+    taskFilterFriends, taskBackToPrevious, taskEnableVideoPost, taskSubmitSharePost, videoSharePost, 
     searchedValue, friends, selectedFriend}) {
 
     return (
         <div className={`${className} contentshare`}>
-            <form className="contentshare__wrapper">
+            <form className="contentshare__wrapper" onSubmit={taskSubmitSharePost}>
                 <h2 className="contentshare__title">Share on a Friend's Profile</h2>
                 <Input 
                     className="contentshare__input"
@@ -30,6 +30,7 @@ function ContentShare({className, currentUser, taskCancelContentShare,
                     return (
                         <div className="contentshare__friend" onClick={() => taskEnableVideoPost(friend)}>
                             <ProfileImage className="contentshare__friend-img" imgSrc={friend.imgUrl}/>
+                            <p className="contentshare__friend-name">{friend.friendName}</p>
                             <img className="contentshare__friend-icon" src={arrowRightIcon} alt="friend" />
                         </div>
                     )

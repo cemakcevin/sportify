@@ -237,6 +237,44 @@ class GamePage extends React.Component {
        
     }
 
+    taskSubmitSharePost = (event) => {
+        
+        event.preventDefault();
+
+        const token = sessionStorage.getItem("token");
+
+        const commentText = event.target.post.value;
+        const {currentEvent, selectedFriend} = this.state;
+
+        const VideoPostData = {
+            userId: selectedFriend.friendId,
+            commentText,
+            contentType: "video",
+            idEvent: currentEvent.idEvent,
+            strEvent: currentEvent.strEvent,
+            intHomeScore: currentEvent.intHomeScore,
+            intAwayScore: currentEvent.intAwayScore,
+            strVideo: currentEvent.strVideo
+        }
+
+        axios.post(localUrl + "/feed", VideoPostData, {headers: {Authorization: `Bearer ${token}`}})
+        .then(_response => {
+
+            event.target.reset();
+
+            const {friends} = this.state;
+
+            this.setState({
+                videoShare: false,
+                videoSharePost: false,
+                filteredFriends: friends,
+                selectedFriend: {},
+                searchedValue: ""
+            })
+        })
+
+    }
+
     render () {
 
         const {strVideo, currentEvent, pastLeagueEvents, 
@@ -281,6 +319,7 @@ class GamePage extends React.Component {
                         taskFilterFriends={this.taskFilterFriends}
                         taskBackToPrevious={this.taskBackToPrevious}
                         taskEnableVideoPost={this.taskEnableVideoPost}
+                        taskSubmitSharePost={this.taskSubmitSharePost}
                         videoSharePost={videoSharePost}
                         searchedValue={searchedValue}
                         friends={filteredFriends}

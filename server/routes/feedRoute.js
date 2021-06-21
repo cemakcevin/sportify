@@ -9,7 +9,9 @@ router.route('/')
     .post((req, res) => {
         
         let commentorId = req.decode.userId;
-        let {userId, commentText, contentType} = req.body;
+        let {userId, commentText, contentType, 
+            idEvent, strEvent, intHomeScore, 
+            intAwayScore, strVideo} = req.body;
 
 
         if(!commentText) {
@@ -27,27 +29,29 @@ router.route('/')
 
         const feed = readFeed();
 
-        if(contentType === "comment") {
-            const feedContent = {
-                feedId: uuidv4(),
-                userId,
-                commentorId,
-                contentType,
-                commentorName: commentor.name + " " + commentor.lastName,
-                userName: user.name + " " + user.lastName,
-                imgUrl: commentor.imgUrl,
-                commentText,
-                timestamp: Date.now()
-            }
-
-            feed.unshift(feedContent);
-            writeFeed(feed);
-
-            const userFeed = feed.filter(content => content.userId === userId);
-
-            res.status(200).json(userFeed)
+        const feedContent = {
+            feedId: uuidv4(),
+            userId,
+            commentorId,
+            contentType,
+            commentorName: commentor.name + " " + commentor.lastName,
+            userName: user.name + " " + user.lastName,
+            imgUrl: commentor.imgUrl,
+            commentText,
+            timestamp: Date.now(),
+            idEvent, 
+            strEvent, 
+            intHomeScore, 
+            intAwayScore, 
+            strVideo
         }
 
+        feed.unshift(feedContent);
+        writeFeed(feed);
+
+        const userFeed = feed.filter(content => content.userId === userId);
+
+        res.status(200).json(userFeed)
         
     })
 

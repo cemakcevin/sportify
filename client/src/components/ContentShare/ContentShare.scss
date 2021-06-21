@@ -40,7 +40,6 @@
     &__friend {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         padding: 0.25rem 0;
 
         &:hover {
@@ -51,6 +50,11 @@
     &__friend-img {
         height: 3rem;
         width: 3rem;
+        margin-right: 2rem;
+    }
+
+    &__friend-name {
+        margin-right: auto;
     }
 
     &__friend-icon {

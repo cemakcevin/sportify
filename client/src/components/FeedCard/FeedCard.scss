@@ -48,6 +48,12 @@
         padding: 1rem 0;
     }
 
+    &__video-container {
+        padding: 1rem 0.5rem;
+        cursor: pointer;
+        z-index: 2;
+    }
+
     &__comment {
         font-size: 1.25rem;
     }
