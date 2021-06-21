@@ -7,8 +7,8 @@ const { v4: uuidv4 } = require('uuid');
 router.route('/')
     .post((req, res) => {
         const userId = req.decode.userId;
-        const {contentId, contentType, commentText} = req.body;
-        const contentTypes = ["game", "team"];
+        const {contentId, contentType, commentText, receiverId} = req.body;
+        const contentTypes = ["game", "team", "feed"];
 
         if(!commentText) {
             return res.status(400).json({error: "There is no text written for comments!"})
@@ -32,14 +32,32 @@ router.route('/')
             name: name + " " + lastName,
             imgUrl, 
             commentText,
-            timestamp: Date.now() 
+            timestamp: Date.now(),
+            receiverId 
         }
 
-        comments.push(newComment);
+        comments.unshift(newComment);
         writeComments(comments);
 
         return res.status(201).json(newComment);
 
+    })
+
+
+
+router.route('/feedComments/:userId')
+    .get((req, res) => {
+
+        let userId = req.params.userId;
+
+        if(userId === "currentUser") {
+            userId = req.decode.userId;
+        }
+
+        const comments = readComments();
+        const userFeedComments = comments.filter(comment => comment.contentType === "feed" && comment.receiverId === userId);
+
+        res.status(201).json(userFeedComments);
     })
 
 

@@ -30,7 +30,8 @@ class HomePage extends React.Component {
         profileInfo: {},
         friends: [],
         requests: [],
-        feed: []
+        feed: [],
+        feedComments: []
     }
 
     componentDidMount() {
@@ -41,10 +42,13 @@ class HomePage extends React.Component {
             axios.get(localUrl + "/users", {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/friends", {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/requests", {headers: {Authorization: `Bearer ${token}`}}),
-            axios.get(localUrl + "/feed/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+            axios.get(localUrl + "/feed/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}}),
+            axios.get(localUrl + "/comments/feedComments/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
         ])
         .then(axios.spread((favouritesResponse, profileResponse, friendsResponse, 
-            requestsResponse, feedResponse)=> {
+            requestsResponse, feedResponse, feedCommentsResponse)=> {
+
+                console.log(feedCommentsResponse)
 
             if(favouritesResponse.data){
                 this.setState({
@@ -52,7 +56,8 @@ class HomePage extends React.Component {
                     profileInfo: profileResponse.data,
                     friends: friendsResponse.data,
                     requests: requestsResponse.data,
-                    feed: feedResponse.data
+                    feed: feedResponse.data,
+                    feedComments: feedCommentsResponse.data
                 })
             }
             else {
@@ -60,7 +65,8 @@ class HomePage extends React.Component {
                     profileInfo: profileResponse.data,
                     friends: friendsResponse.data,
                     requests: requestsResponse.data,
-                    feed: feedResponse.data
+                    feed: feedResponse.data,
+                    feedComments: feedCommentsResponse.data
                 })
             }  
         }))
@@ -180,6 +186,40 @@ class HomePage extends React.Component {
 
     }
 
+    taskAddCommentToPost = (event) => {
+
+        event.preventDefault();
+
+        const token = sessionStorage.getItem("token");
+
+        const commentText = event.target.commentText.value;
+        const contentId = event.target.contentId.value;
+        const contentType = event.target.contentType.value;
+        const receiverId = event.target.receiverId.value;
+
+        const feedCommentData = {
+            contentId, 
+            contentType, 
+            commentText, 
+            receiverId
+        }
+
+        axios.post(localUrl + "/comments", feedCommentData, {headers: {Authorization: `Bearer ${token}`}})
+        .then(_response => {
+
+            return axios.get(localUrl + "/comments/feedComments/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+        })
+        .then(response => {
+
+            this.setState({
+                feedComments: response.data
+            }, () => {
+
+                event.target.reset();
+            })
+        })
+    }
+
     taskTakeToGamePage = (idEvent) => {
 
         this.props.history.push('/game/' + idEvent);
@@ -189,7 +229,7 @@ class HomePage extends React.Component {
 
         const {favouriteTeams, selectedTeam, detailsEnabled, 
             pastEvents, articles, profileInfo, friends, requests,
-            feed} = this.state;
+            feed, feedComments} = this.state;
 
         return(
             <main className="home">
@@ -231,7 +271,9 @@ class HomePage extends React.Component {
                                     <FeedCard 
                                         className="feed__card"
                                         feedContent={feedContent}
+                                        feedComments={feedComments}
                                         taskTakeToGamePage={this.taskTakeToGamePage}
+                                        taskAddCommentToPost={this.taskAddCommentToPost}
                                     />
                                 )
                             })}
@@ -266,7 +308,7 @@ class HomePage extends React.Component {
                                         <ProfileImage 
                                             className="friends__avatar"
                                             imgSrc={friend.imgUrl}
-                                    />
+                                        />
                                     </Link>
                                 )
                             })}
