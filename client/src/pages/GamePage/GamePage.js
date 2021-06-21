@@ -19,9 +19,11 @@ class GamePage extends React.Component {
         pastLeagueEvents: [],
         videoComments:[],
         currentUser: {},
-        videoShare: true,
+        videoShare: false,
+        videoSharePost: false,
         friends: [],
         filteredFriends: [],
+        selectedFriend: {},
         searchedValue: ""
     }
 
@@ -182,10 +184,24 @@ class GamePage extends React.Component {
         })
     }
 
+    taskEnableVideoPost = (friend) => {
+        this.setState({
+            videoSharePost: true,
+            selectedFriend: friend
+        })
+    }
+
     taskCancelVideoShare = () => {
 
         this.setState({
-            videoShare: false
+            videoShare: false,
+            videoSharePost: false
+        })
+    }
+
+    taskBackToPrevious = () => {
+        this.setState({
+            videoSharePost: false
         })
     }
 
@@ -196,7 +212,9 @@ class GamePage extends React.Component {
         this.setState({
             [name]: value
         }, () => {
+
             const {searchedValue, friends} = this.state;
+
             const filteredFriends = friends.filter(friend => {
 
                 const friendName = friend.friendName.toLowerCase();
@@ -222,7 +240,8 @@ class GamePage extends React.Component {
     render () {
 
         const {strVideo, currentEvent, pastLeagueEvents, 
-            videoComments, currentUser, videoShare, searchedValue, filteredFriends} = this.state;
+            videoComments, currentUser, videoShare, videoSharePost, 
+            searchedValue, filteredFriends, selectedFriend} = this.state;
 
         return (
             <main className="game">
@@ -257,10 +276,15 @@ class GamePage extends React.Component {
                 {videoShare && 
                     <ContentShare 
                         className="game__videoshare"
+                        currentUser={currentUser}
                         taskCancelContentShare={this.taskCancelVideoShare}
                         taskFilterFriends={this.taskFilterFriends}
+                        taskBackToPrevious={this.taskBackToPrevious}
+                        taskEnableVideoPost={this.taskEnableVideoPost}
+                        videoSharePost={videoSharePost}
                         searchedValue={searchedValue}
                         friends={filteredFriends}
+                        selectedFriend={selectedFriend}
                     />
                 }  
             </main>

@@ -5,9 +5,13 @@ import Input from '../Input/Input';
 import cancelIcon from '../../assets/icons/cancel-icon.png'
 import searchIcon from '../../assets/icons/search-icon.png'
 import arrowRightIcon from '../../assets/icons/arrow-right-icon.png'
+import backIcon from '../../assets/icons/back-icon.png'
 import ProfileImage from '../ProfileImage/ProfileImage';
 
-function ContentShare({className, taskCancelContentShare, taskFilterFriends, searchedValue, friends}) {
+function ContentShare({className, currentUser, taskCancelContentShare, 
+    taskFilterFriends, taskBackToPrevious, taskEnableVideoPost, videoSharePost, 
+    searchedValue, friends, selectedFriend}) {
+
     return (
         <div className={`${className} contentshare`}>
             <form className="contentshare__wrapper">
@@ -24,13 +28,31 @@ function ContentShare({className, taskCancelContentShare, taskFilterFriends, sea
                 <h3 className="contentshare__subtitle">Friends</h3>
                 {friends.map(friend => {
                     return (
-                        <div className="contentshare__friend">
+                        <div className="contentshare__friend" onClick={() => taskEnableVideoPost(friend)}>
                             <ProfileImage className="contentshare__friend-img" imgSrc={friend.imgUrl}/>
                             <img className="contentshare__friend-icon" src={arrowRightIcon} alt="friend" />
                         </div>
                     )
                 })}
                 <img className="contentshare__cancel" src={cancelIcon} alt="cancel" onClick={taskCancelContentShare}/>
+                {videoSharePost && 
+                    <div className="contentshare__post-container">
+                        <h2 className="contentshare__title">Create a Post</h2>
+                        <div className="contentshare__input-post-container">
+                            <ProfileImage className="contentshare__user-img" imgSrc={currentUser.imgUrl}/>
+                            <Input 
+                                className="contentshare__input-post"
+                                type="text"
+                                placeholder={`Write something to ${selectedFriend.friendName}...`}
+                                icon={searchIcon}
+                                name="post"
+                            />
+                        </div>
+                        <button className="contentshare__button" type="submit">POST</button>
+                        <img className="contentshare__back" src={backIcon} alt="cancel" onClick={taskBackToPrevious}/>
+                        <img className="contentshare__cancel" src={cancelIcon} alt="cancel" onClick={taskCancelContentShare}/>
+                    </div>
+                }
             </form>
         </div>
     )

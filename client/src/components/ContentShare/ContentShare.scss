@@ -64,4 +64,50 @@
         right: 1rem;
         top: 1rem;
     }
+
+    &__post-container {
+        height: 100%;
+        width: 100%;
+        padding: 4rem 2rem 2rem 2rem;
+        background: white;
+        border-radius: 25px;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+    }
+
+    &__input-post-container {
+        display: flex;
+        align-items: center;
+    }
+
+    &__input-post {
+        flex-grow: 1;
+    }
+
+    &__user-img {
+        width: 3rem;
+        height: 3rem;
+        margin-right: 0.5rem;
+    }
+
+    &__button {
+        margin-top: auto;
+        padding: 1rem;
+        border-radius: 25px;
+        background: $color-additional2;
+        border: none;
+        color: white;
+    }
+
+    &__back {
+        height: 1rem;
+        cursor: pointer;
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+    }
 }
