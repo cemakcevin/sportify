@@ -5,19 +5,16 @@ import ContentActions from '../ContentActions/ContentActions';
 import VideoMain from '../VideoMain/VideoMain';
 import FeedCardComment from '../FeedCardComment/FeedCardComment';
 
-import avatar from '../../assets/pictures/profile.jpeg';
 import arrowIcon from '../../assets/icons/arrow-icon.png';
 import friendIcon from '../../assets/icons/friend-icon.png';
 
 import dateToString from '../../functions/dateToString';
 import videoWatchToEmbed from '../../functions/videoWatchToEmbed';
 
-function FeedCard ({className, feedContent, feedComments, taskTakeToGamePage, taskAddCommentToPost}) {
+function FeedCard ({className, feedContent, feedComments, taskTakeToGamePage, taskAddCommentToPost, userAvatar}) {
 
     const {feedId, userId, commentorName, userName, imgUrl, commentText, timestamp, 
         idEvent, strEvent, intHomeScore, intAwayScore, strVideo} = feedContent;
-    
-        console.log(feedComments)
 
     const cardComments = feedComments.filter(comment => comment.contentId === feedId)
 
@@ -65,7 +62,7 @@ function FeedCard ({className, feedContent, feedComments, taskTakeToGamePage, ta
             <FeedCardForm 
                 className="feed-card__form"
                 onSubmit={taskAddCommentToPost}
-                profileUrl={avatar}
+                profileUrl={userAvatar}
                 contentId={feedId}
                 receiverId={userId}
             />

@@ -35,7 +35,8 @@ class UserPage extends React.Component {
         isFriend: null,
         isRequestSent: false,
         isRequestReceived: false,
-        feed: []
+        feed: [],
+        feedComments: []
     }
 
     componentDidMount() {
@@ -47,16 +48,19 @@ class UserPage extends React.Component {
             axios.get(localUrl + "/users/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/users", {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/friends/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
-            axios.get(localUrl + "/feed/" + userId, {headers: {Authorization: `Bearer ${token}`}})
+            axios.get(localUrl + "/feed/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
+            axios.get(localUrl + "/comments/feedComments/" + userId, {headers: {Authorization: `Bearer ${token}`}})
         ])
-        .then(axios.spread((favouritesResponse, profileResponse, currentUserResponse, friendsResponse, feedResponse)=> {
+        .then(axios.spread((favouritesResponse, profileResponse, currentUserResponse, 
+            friendsResponse, feedResponse, feedCommentsResponse)=> {
             if(favouritesResponse.data){
                 this.setState({
                     favouriteTeams: favouritesResponse.data,
                     currentUser: currentUserResponse.data,
                     profileInfo: profileResponse.data,
                     friends: friendsResponse.data,
-                    feed: feedResponse.data
+                    feed: feedResponse.data,
+                    feedComments: feedCommentsResponse.data
                 })
             }
             else {
@@ -64,7 +68,8 @@ class UserPage extends React.Component {
                     currentUser: currentUserResponse.data,
                     profileInfo: profileResponse.data,
                     friends: friendsResponse.data,
-                    feed: feedResponse.data
+                    feed: feedResponse.data,
+                    feedComments: feedCommentsResponse.data
                 })
                 
             } 
@@ -76,7 +81,6 @@ class UserPage extends React.Component {
             ])
         }))
         .then(axios.spread((isFriendResponse, isSentResponse, isRecievedResponse) => {
-            console.log(isFriendResponse, isSentResponse, isRecievedResponse);
 
             this.setState({
                 isFriend: isFriendResponse.data.isFriend,
@@ -231,6 +235,41 @@ class UserPage extends React.Component {
 
     }
 
+    taskAddCommentToPost = (event) => {
+
+        event.preventDefault();
+
+        const token = sessionStorage.getItem("token");
+        const userId = this.props.match.params.userId;
+
+        const commentText = event.target.commentText.value;
+        const contentId = event.target.contentId.value;
+        const contentType = event.target.contentType.value;
+        const receiverId = event.target.receiverId.value;
+
+        const feedCommentData = {
+            contentId, 
+            contentType, 
+            commentText, 
+            receiverId
+        }
+
+        axios.post(localUrl + "/comments", feedCommentData, {headers: {Authorization: `Bearer ${token}`}})
+        .then(_response => {
+
+            return axios.get(localUrl + "/comments/feedComments/" + userId, {headers: {Authorization: `Bearer ${token}`}})
+        })
+        .then(response => {
+
+            this.setState({
+                feedComments: response.data
+            }, () => {
+
+                event.target.reset();
+            })
+        })
+    }
+
     taskTakeToGamePage = (idEvent) => {
 
         this.props.history.push('/game/' + idEvent);
@@ -240,7 +279,7 @@ class UserPage extends React.Component {
 
         const {favouriteTeams, selectedTeam, detailsEnabled, 
             pastEvents, articles, profileInfo, currentUser, friends, isFriend, 
-            isRequestSent, isRequestReceived, feed} = this.state;
+            isRequestSent, isRequestReceived, feed, feedComments} = this.state;
 
 
             console.log(isFriend);
@@ -307,7 +346,10 @@ class UserPage extends React.Component {
                                                 <FeedCard 
                                                     className="feed__card"
                                                     feedContent={feedContent}
+                                                    feedComments={feedComments}
                                                     taskTakeToGamePage={this.taskTakeToGamePage}
+                                                    taskAddCommentToPost={this.taskAddCommentToPost}
+                                                    userAvatar={currentUser.imgUrl}
                                                 />
                                             )
                                         })}
