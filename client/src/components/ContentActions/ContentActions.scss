@@ -1,0 +1,21 @@
+.actions {
+    display: flex;
+    padding: 1rem 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+
+    &__icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: calc(100% / 3);
+    }
+
+    &__icon {
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
+}
+
+
+

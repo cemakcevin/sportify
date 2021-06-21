@@ -9,7 +9,6 @@ router.route('/')
         const userId = req.decode.userId;
         const friends = readFriends();
 
-
         const userFriends = friends.filter(friend => friend.userId === userId);
 
         return res.status(201).json(userFriends);

@@ -7,9 +7,6 @@
     padding: 1rem;
     margin-bottom: 1rem;
 
-    &__header {
-        border-bottom: 1px solid $color-primary4;
-    }
 
     &__title {
         font-size: 2rem;
@@ -18,6 +15,7 @@
 
     &__text-container {
         padding: 1rem 0;
+        border-top: 1px solid $color-primary4
     }
 }
 

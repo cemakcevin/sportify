@@ -1,0 +1,67 @@
+@use '../../partials/colors' as *;
+
+.contentshare {
+    background-color: rgba(0,0,0,0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow-y: hidden;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__wrapper {
+        width: 600px;
+        height: 600px;
+        padding: 2rem;
+        border-radius: 25px;
+        background: white;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.9);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    &__title {
+        margin-bottom: 1rem;
+    }
+
+    &__input {
+        margin-bottom: 2rem;
+    }
+
+    &__subtitle {
+        margin-bottom: 1rem;
+    }
+
+    &__friend {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.25rem 0;
+
+        &:hover {
+            background: $color-primary1;
+        }
+    }
+
+    &__friend-img {
+        height: 3rem;
+        width: 3rem;
+    }
+
+    &__friend-icon {
+        height: 1.5rem;
+    }
+
+    &__cancel {
+        height: 1.25rem;
+        cursor: pointer;
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
+}

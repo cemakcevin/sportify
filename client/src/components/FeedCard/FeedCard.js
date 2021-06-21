@@ -1,13 +1,11 @@
 import './FeedCard.scss';
 
 import FeedCardForm from '../FeedCardForm/FeedCardForm';
+import ContentActions from '../ContentActions/ContentActions';
 
 import avatar from '../../assets/pictures/profile.jpeg';
 import arrowIcon from '../../assets/icons/arrow-icon.png';
 import friendIcon from '../../assets/icons/friend-icon.png';
-import likeIcon from '../../assets/icons/like-icon.png';
-import shareIcon from '../../assets/icons/share-icon.png';
-import commentIcon from '../../assets/icons/comment-icon.png';
 
 import dateToString from '../../functions/dateToString';
 
@@ -34,21 +32,9 @@ function FeedCard ({className, feedContent}) {
             <div className="feed-card__comment-container">
                 <p className="feed-card__comment">{commentText}</p>
             </div>
-            <div className="feed-card__actions">
-                <div className="feed-card__icon-container">
-                   <img className="feed-card__icon" src={likeIcon} alt="like" />
-                   <p className="feed-card__icon-text">Like</p> 
-                </div>
-                <div className="feed-card__icon-container">
-                   <img className="feed-card__icon" src={commentIcon} alt="like" />
-                   <p className="feed-card__icon-text">Comment</p> 
-                </div>
-                <div className="feed-card__icon-container">
-                   <img className="feed-card__icon" src={shareIcon} alt="like" />
-                   <p className="feed-card__icon-text">Share</p> 
-                </div>
-
-            </div>
+            <ContentActions 
+                className="feed-card__actions"
+            />
             <FeedCardForm 
                 className="feed-card__form"
                 onSubmit=""

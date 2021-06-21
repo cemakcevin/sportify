@@ -2,8 +2,9 @@ import './VideoInfo.scss';
 
 import CommentForm from '../CommentForm/CommentForm';
 import Comment from '../Comment/Comment';
+import ContentActions from '../ContentActions/ContentActions';
 
-function VideoInfo({className , currentEvent, comments, taskSubmitComment}) {
+function VideoInfo({className , currentEvent, currentUser, comments, taskSubmitComment, taskShareVideo}) {
 
     const {strLeague, strEvent, strDescriptionEN, intHomeScore, intAwayScore} = currentEvent;
     
@@ -13,15 +14,22 @@ function VideoInfo({className , currentEvent, comments, taskSubmitComment}) {
                 <header className="description__header">
                     <h1 className="description__title">{strLeague}: {strEvent}</h1>
                 </header>
-                <div className="description__text-container">
-                    <p className="description__text">{strDescriptionEN}</p>
-                </div>
+                {strDescriptionEN && 
+                    <div className="description__text-container">
+                        <p className="description__text">{strDescriptionEN}</p>
+                    </div>
+                }       
+                <ContentActions 
+                    className="description__actions"
+                    taskShareVideo={taskShareVideo}
+                />
             </section>
             <div className="video-info__comments comments">
                 <h2 className="comments__title">Comments</h2>
                 <CommentForm 
                     className="comments__form" 
                     onSubmit={taskSubmitComment}
+                    profileUrl={currentUser.imgUrl}
                 />
                 {comments.map(comment => {
                     return(
@@ -32,6 +40,7 @@ function VideoInfo({className , currentEvent, comments, taskSubmitComment}) {
                             name={comment.name}
                             date={comment.timestamp}
                             text={comment.commentText}
+                            profileUrl={comment.imgUrl}
                         />)
                     })
                 }
