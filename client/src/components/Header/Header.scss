@@ -54,6 +54,19 @@
         }
     }
 
+    &__link-avatar {
+        font-size: 1rem;
+        color: $color-primary4;
+        height: 100%;
+        width: 80px;
+        display: block;
+        border-bottom: 2px solid none;
+        border-top: 2px solid none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     &__avatar {
         height: 2rem;
         border-radius: 50%;

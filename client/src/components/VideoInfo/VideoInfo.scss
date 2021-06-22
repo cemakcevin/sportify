@@ -13,9 +13,22 @@
         margin: 2rem 0 1rem 0;
     }
 
+    &__sub-title-container {
+        padding-bottom: 1rem;
+        display: flex;
+    }
+
+    &__sub-title {
+        margin-right: 1rem;
+    }
+
+    &__date {
+        color: $color-primary2;
+    }
+
     &__text-container {
         padding: 1rem 0;
-        border-top: 1px solid $color-primary4
+        border-top: 1px solid $color-primary4;
     }
 }
 

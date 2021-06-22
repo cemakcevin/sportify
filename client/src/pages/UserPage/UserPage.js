@@ -13,6 +13,10 @@ import FeedForm from '../../components/FeedForm/FeedForm';
 import FeedCard from '../../components/FeedCard/FeedCard';
 
 import lockIcon from '../../assets/icons/lock-icon.png';
+import homeIcon from '../../assets/icons/home-icon.png';
+import locationIcon from '../../assets/icons/location-icon.png';
+
+import timeDifference from '../../functions/timeDifference';
 
 
 const API__KEY="8b0979907442ae756bd39495fb5eebd0";
@@ -294,7 +298,17 @@ class UserPage extends React.Component {
                         avatarUrl={profileInfo.imgUrl} 
                     />
                     <div className="user-profile__info">
-                        <div>Just Text</div>
+                        <h3 className="profile__name">{profileInfo.name} {profileInfo.lastName}</h3>
+                        <p className="profile__date">Joined {timeDifference(profileInfo.timestamp)}</p>
+                        <p className="profile__description">{profileInfo.description}</p>
+                        <div className="profile__location-container">
+                            <img className="profile__location-icon" src={homeIcon} alt="location"/>
+                            <p className="profile__location">Lives in <span className="profile__bold">{profileInfo.location}</span></p>
+                        </div> 
+                        <div className="profile__location-container">
+                            <img className="profile__location-icon" src={locationIcon} alt="location"/>
+                            <p className="profile__location">From <span className="profile__bold">{profileInfo.from}</span></p>
+                        </div>
                         <div className="user-profile__info-buttons">
                             {isFriend === null
                                 ?

@@ -12,6 +12,10 @@ import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import FeedForm from '../../components/FeedForm/FeedForm';
 import FeedCard from '../../components/FeedCard/FeedCard';
 
+import homeIcon from '../../assets/icons/home-icon.png';
+import locationIcon from '../../assets/icons/location-icon.png';
+
+import timeDifference from '../../functions/timeDifference';
 
 const API__KEY="8b0979907442ae756bd39495fb5eebd0";
 const localUrl = "http://localhost:8686";
@@ -35,7 +39,7 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.taskUpdateUrl(this.props.match.url)
+        this.props.taskUpdateUrl(this.props.match.url);
 
         const token = sessionStorage.getItem("token");
 
@@ -241,7 +245,17 @@ class HomePage extends React.Component {
                         avatarUrl={profileInfo.imgUrl} 
                     />
                     <div className="profile__info">
-    
+                        <h3 className="profile__name">{profileInfo.name} {profileInfo.lastName}</h3>
+                        <p className="profile__date">Joined {timeDifference(profileInfo.timestamp)}</p>
+                        <p className="profile__description">{profileInfo.description}</p>
+                        <div className="profile__location-container">
+                            <img className="profile__location-icon" src={homeIcon} alt="location"/>
+                            <p className="profile__location">Lives in <span className="profile__bold">{profileInfo.location}</span></p>
+                        </div> 
+                        <div className="profile__location-container">
+                            <img className="profile__location-icon" src={locationIcon} alt="location"/>
+                            <p className="profile__location">From <span className="profile__bold">{profileInfo.from}</span></p>
+                        </div> 
                     </div>
                 </div>
                 <div className="home__interaction interaction">
@@ -276,6 +290,7 @@ class HomePage extends React.Component {
                                         feedComments={feedComments}
                                         taskTakeToGamePage={this.taskTakeToGamePage}
                                         taskAddCommentToPost={this.taskAddCommentToPost}
+                                        userAvatar={profileInfo.imgUrl}
                                     />
                                 )
                             })}

@@ -47,7 +47,7 @@ function Header ({loggedIn, imgUrl, url}) {
                         <NavLink to="/search" className={`header__link ${searchActive}`}> 
                             Search
                         </NavLink>
-                        <NavLink to="/" className="header__link"> 
+                        <NavLink to="/" className="header__link-avatar"> 
                             <img className="header__avatar" src={imgUrl} alt="avatar" />
                         </NavLink>
                     </nav>  

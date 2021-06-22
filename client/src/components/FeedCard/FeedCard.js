@@ -27,8 +27,6 @@ function FeedCard ({className, feedContent, feedComments, taskTakeToGamePage, ta
                         <h3 className="feed-card__name">{commentorName}</h3>
                         {commentorName !== userName ? <img className="feed-card__arrow" src={arrowIcon} alt="arrow"/> : <div></div>}
                         {commentorName !== userName ? <h3 className="feed-card__name">{userName}</h3> : <div></div>}
-                        {/* <img className="feed-card__arrow" src={arrowIcon} alt="arrow"/>
-                        <h3 className="feed-card__name">{userName}</h3> */}
                     </div>
                     <div className="feed-card__date-container">
                         <p className="feed-card__date">{dateToString(timestamp)}</p>

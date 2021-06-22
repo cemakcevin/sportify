@@ -99,9 +99,7 @@ class App extends React.Component {
             {loggedIn && <Route path="/home" render={(routerProps) => <HomePage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
             {loggedIn && <Route path="/user/:userId" render={(routerProps) => <UserPage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
             {loggedIn && <Route path="/search" render={(routerProps) => <SearchPage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
-
-            {/* {loggedIn && <Route path="/search" component={SearchPage} /> } */}
-            {loggedIn && <Route path="/game/:videoId" component={GamePage} /> }
+            {loggedIn && <Route path="/game/:videoId" render={(routerProps) => <GamePage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
             {loggedIn ? <Redirect to="/home"/> : <Redirect to="/login"/>}
         </Switch>
       </BrowserRouter>
