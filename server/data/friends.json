@@ -34,5 +34,17 @@
     "friendId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
     "friendName": "Cem Akcevin",
     "imgUrl": "http://localhost:8686/profile-pics/cem-akcevin-profile.jpeg"
+  },
+  {
+    "userId": "cf9dcf5a-3b43-4636-aeb3-1a304e2ca28e",
+    "friendId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
+    "friendName": "Cem Akcevin",
+    "imgUrl": "http://localhost:8686/profile-pics/cem-akcevin-profile.jpeg"
+  },
+  {
+    "userId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
+    "friendId": "cf9dcf5a-3b43-4636-aeb3-1a304e2ca28e",
+    "friendName": "Dave Claire",
+    "imgUrl": "http://localhost:8686/profile-pics/dave-claire-profile.jpeg"
   }
 ]

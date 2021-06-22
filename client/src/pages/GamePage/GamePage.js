@@ -1,6 +1,7 @@
 import './GamePage.scss';
 import React from 'react';
 import axios from 'axios';
+import io from 'socket.io-client';
 
 import VideoMain from '../../components/VideoMain/VideoMain';
 import VideoInfo from '../../components/VideoInfo/VideoInfo';
@@ -10,6 +11,7 @@ import ContentShare from '../../components/ContentShare/ContentShare';
 import videoWatchToEmbed from '../../functions/videoWatchToEmbed';
 
 const localUrl = "http://localhost:8686";
+let socket;
 
 class GamePage extends React.Component {
 
@@ -28,6 +30,15 @@ class GamePage extends React.Component {
     }
 
     componentDidMount() {
+        
+        socket = io.connect('localhost:8686');
+        socket.on('gameCommentUpdates', ({videoComments}) => {
+            console.log("HAAAAAAAAAAAAAAAAAAAAAAA");
+            this.setState({
+                videoComments: videoComments
+            })
+        })
+        
         this.props.taskUpdateUrl(this.props.match.url);
 
         const videoId = this.props.match.params.videoId;
@@ -85,8 +96,6 @@ class GamePage extends React.Component {
         const videoId = this.props.match.params.videoId;
         const prevVideoId = prevProps.match.params.videoId;
 
-        console.log(prevVideoId, "and", videoId)
-
         if(videoId !== prevVideoId) {
             
             const token = sessionStorage.getItem("token");
@@ -140,6 +149,10 @@ class GamePage extends React.Component {
         
     }
 
+    componentWillUnmount() {
+        socket.off('gameCommentUpdates');
+    }
+
     taskSubmitComment = (event) => {
 
         event.preventDefault();
@@ -164,6 +177,10 @@ class GamePage extends React.Component {
 
             this.setState({
                 videoComments: response.data
+            }, () => {
+
+                socket.emit('gameComment', {videoComments: response.data});
+                
             })
         })
         .catch(error => {
