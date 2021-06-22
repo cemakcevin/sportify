@@ -16,8 +16,9 @@ import homeIcon from '../../assets/icons/home-icon.png';
 import locationIcon from '../../assets/icons/location-icon.png';
 
 import timeDifference from '../../functions/timeDifference';
+import getTeamNames from '../../functions/getTeamNames';
 
-const API__KEY="8b0979907442ae756bd39495fb5eebd0";
+const API__KEY="dd7ed4159ce8b1df6d8cbadaa67c7cdf";
 const localUrl = "http://localhost:8686";
 
 
@@ -40,7 +41,6 @@ class HomePage extends React.Component {
 
     componentDidMount() {
         this.props.taskUpdateUrl(this.props.match.url);
-
         const token = sessionStorage.getItem("token");
 
         axios.all([
@@ -49,12 +49,10 @@ class HomePage extends React.Component {
             axios.get(localUrl + "/friends", {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/requests", {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/feed/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}}),
-            axios.get(localUrl + "/comments/feedComments/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+            axios.get(localUrl + "/comments/feedComments/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}}),
         ])
         .then(axios.spread((favouritesResponse, profileResponse, friendsResponse, 
             requestsResponse, feedResponse, feedCommentsResponse)=> {
-
-                console.log(feedCommentsResponse)
 
             if(favouritesResponse.data){
                 this.setState({
@@ -74,52 +72,49 @@ class HomePage extends React.Component {
                     feed: feedResponse.data,
                     feedComments: feedCommentsResponse.data
                 })
-            }  
+            }
+            
+            
+
+            // 
         }))
     }
 
     componentDidUpdate() {
-        const {index, favouriteTeams, pastEvents, articles} = this.state;
+        // const {index, favouriteTeams, pastEvents, articles} = this.state;
 
-        console.log(index)
-        if(index < favouriteTeams.length) {
+        // if(index < favouriteTeams.length) {
 
-            const teamId = favouriteTeams[index].idTeam;
-            const teamName = favouriteTeams[index].strTeam;
+        //     const teamId = favouriteTeams[index].idTeam;
+        //     const teamName = favouriteTeams[index].strTeam;
 
-            setTimeout(axios.all([
-                axios.get("https://www.thesportsdb.com/api/v1/json/40130162/eventslast.php?id=" + teamId),
-                axios.get("https://gnews.io/api/v4/search?q=" + teamName + "&token=" + API__KEY + "&lang=en")
-            ]).then(axios.spread((pastEventsResponse, teamNewsResponse) => {
+        //     setTimeout(axios.all([
+        //         axios.get("https://www.thesportsdb.com/api/v1/json/40130162/eventslast.php?id=" + teamId),
+        //         axios.get("https://gnews.io/api/v4/search?q=" + teamName + "&token=" + API__KEY + "&lang=en")
+        //     ]).then(axios.spread((pastEventsResponse, teamNewsResponse) => {
 
-                let newPastEvents = pastEventsResponse.data.results;
-                let newArticles = teamNewsResponse.data.articles;
+        //         let newPastEvents = pastEventsResponse.data.results;
+        //         let newArticles = teamNewsResponse.data.articles;
 
-                newPastEvents = newPastEvents.map(event => {
-                    const {strHomeTeam, strAwayTeam, intHomeScore, intAwayScore, dateEvent, strVideo, strFilename} = event;
-                    return {strHomeTeam, strAwayTeam, intHomeScore, intAwayScore, dateEvent, strVideo, strFilename};
-                })
+        //         newPastEvents = newPastEvents.map(event => {
+        //             const {strHomeTeam, strAwayTeam, intHomeScore, intAwayScore, dateEvent, strVideo, strFilename} = event;
+        //             return {strHomeTeam, strAwayTeam, intHomeScore, intAwayScore, dateEvent, strVideo, strFilename};
+        //         })
 
-                newArticles = newArticles.map(article => {
-                    const {title, image, url} = article;
-                    return {title, image, url};
-                })
-
-                // const {strHomeTeam, strAwayTeam, intHomeScore, intAwayScore, dateEvent, strVideo, strFilename} = pastEventsResponse.data.results;
-                // const {title, image, url} = teamNewsResponse.data.articles;
-
-                // const newPastEvents = {strHomeTeam, strAwayTeam, intHomeScore, intAwayScore, dateEvent, strVideo, strFilename};
-                // const newArticles = {title, image, url};
-
-                this.setState({
-                    index: index + 1,
-                    pastEvents: [...pastEvents, ...newPastEvents],
-                    articles: [...articles, ...newArticles]
-                })
-            })) ,1000)
+        //         newArticles = newArticles.map(article => {
+        //             const {title, image, url} = article;
+        //             return {title, image, url};
+        //         })
+                
+        //         this.setState({
+        //             index: index + 1,
+        //             pastEvents: [...pastEvents, ...newPastEvents],
+        //             articles: [...articles, ...newArticles]
+        //         })
+        //     })) ,1000)
             
 
-        }
+        // }
         
         
         

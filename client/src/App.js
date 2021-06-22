@@ -8,6 +8,7 @@ import SearchPage from './pages/SearchPage/SearchPage';
 import GamePage from './pages/GamePage/GamePage';
 import HomePage from './pages/HomePage/HomePage';
 import UserPage from './pages/UserPage/UserPage';
+import ActualUserPage from './pages/ActualUserPage/ActualUserPage';
 
 import Header from './components/Header/Header';
 
@@ -22,9 +23,8 @@ class App extends React.Component {
     url: ""
   }
 
-  componentDidMount(_prevProsp, prevState) {
+  componentDidMount() {
     
-    console.log(prevState);
 
     //checking if logged in
     if(token) {
@@ -96,8 +96,8 @@ class App extends React.Component {
         />
         <Switch>
             {!loggedIn && <Route path="/login" render={(routerProps) => <LoginPage taskLogin={this.taskLogin} {...routerProps}/> } />}
-            {loggedIn && <Route path="/home" render={(routerProps) => <HomePage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
-            {loggedIn && <Route path="/user/:userId" render={(routerProps) => <UserPage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
+            {loggedIn && <Route path="/home" render={(routerProps) => <ActualUserPage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
+            {loggedIn && <Route path="/user/:userId" render={(routerProps) => <ActualUserPage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
             {loggedIn && <Route path="/search" render={(routerProps) => <SearchPage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
             {loggedIn && <Route path="/game/:videoId" render={(routerProps) => <GamePage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
             {loggedIn ? <Redirect to="/home"/> : <Redirect to="/login"/>}

@@ -145,6 +145,10 @@
         overflow-y: scroll;
 
         @include card-background;
+
+        &::-webkit-scrollbar { 
+            display: none;
+        }
     }
 }
 

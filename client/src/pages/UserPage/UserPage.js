@@ -287,9 +287,6 @@ class UserPage extends React.Component {
             pastEvents, articles, profileInfo, currentUser, friends, isFriend, 
             isRequestSent, isRequestReceived, feed, feedComments} = this.state;
 
-
-            console.log(isFriend);
-
         return(
             <main className="user">
                 <div className="user__profile user-profile">

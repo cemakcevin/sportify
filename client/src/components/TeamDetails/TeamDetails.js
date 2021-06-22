@@ -2,6 +2,7 @@ import './TeamDetails.scss';
 import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import io from 'socket.io-client';
 
 import EventScore from '../../components/EventScore/EventScore';
 import VideoBox from '../../components/VideoBox/VideoBox';
@@ -18,8 +19,9 @@ import unfollowIcon from '../../assets/icons/unfollow-icon.png'
 import backIcon from '../../assets/icons/back-icon.png'
 import expandIcon from '../../assets/icons/expand-icon.png'
 
-const API__KEY="8b0979907442ae756bd39495fb5eebd0";
+const API__KEY="dd7ed4159ce8b1df6d8cbadaa67c7cdf";
 const localUrl = "http://localhost:8686";
+let socket;
 
 
 class TeamDetails extends React.Component {
@@ -35,11 +37,23 @@ class TeamDetails extends React.Component {
     }
 
     componentDidMount() {
+
         const {team} = this.props;
         const token = sessionStorage.getItem("token");
         
         const teamId = team.idTeam;
         const teamName = team.strTeam;
+        
+        socket = io.connect(localUrl);
+        socket.on("teamCommentsUpdate", () => {
+            axios.get(localUrl + "/comments/team/" + teamId, {headers: {Authorization: `Bearer ${token}`}})
+            .then(response => {
+                this.setState({
+                    teamComments: response.data,
+                   
+                })
+            })
+        })
 
         axios.all([
             axios.get("https://www.thesportsdb.com/api/v1/json/40130162/eventslast.php?id=" + teamId),
@@ -67,6 +81,10 @@ class TeamDetails extends React.Component {
         .catch(error => {
             console.log(error);
         })
+    }
+
+    componentWillUnmount() {
+        socket.off("teamCommentsUpdate");
     }
 
     taskAddToFavourites = () => {
@@ -150,6 +168,8 @@ class TeamDetails extends React.Component {
 
             this.setState({
                 teamComments: response.data
+            }, () => {
+                socket.emit("teamComment", {teamComments: response.data})
             })
         })
         .catch(error => {

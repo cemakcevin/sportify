@@ -34,6 +34,11 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('gameCommentUpdates', {videoComments})
     })
 
+    socket.on('teamComment', ({teamComments}) => {
+        //sending the data to rest of the sockets
+        socket.broadcast.emit('teamCommentsUpdate', {teamComments})
+    })
+
 })
 
 
