@@ -16,6 +16,7 @@ let socket;
 class GamePage extends React.Component {
 
     state = {
+        index: 0,
         strVideo: "",
         currentEvent: {},
         pastLeagueEvents: [],
@@ -337,6 +338,7 @@ class GamePage extends React.Component {
                                 return(
                                     <VideoBox 
                                         key={event.idEvent}
+                                        className="game__side-video"
                                         videoSrc={event.strVideo} 
                                         videoName={event.strFilename}
                                         videoId={event.idEvent}

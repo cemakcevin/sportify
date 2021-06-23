@@ -19,6 +19,12 @@
 
     &__logo {
         height: 50px;
+        transition: transform 0.3s, opacity 0.3s;
+
+        &:hover {
+            transform: scale(1.1);
+            opacity: 0.7;
+        }
     }
 
     &__nav-container {
@@ -36,11 +42,12 @@
         height: 100%;
         width: 80px;
         display: block;
-        border-bottom: 2px solid none;
-        border-top: 2px solid none;
+        border-bottom: 2px solid white;
+        border-top: 2px solid white;
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: color 0.3s, border-bottom 0.3s;
 
         &:hover {
             color: $color-additional2;
@@ -60,8 +67,6 @@
         height: 100%;
         width: 80px;
         display: block;
-        border-bottom: 2px solid none;
-        border-top: 2px solid none;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -73,6 +78,12 @@
         border-radius: 50%;
         object-position: center;
         object-fit: cover;
+        transition: transform 0.3s, opacity;
+
+        &:hover {
+            transform: scale(1.1);
+            opacity: 0.7;
+        }
     }
 
 

@@ -14,7 +14,7 @@
     }
 }
 
-.user-profile {
+.profile {
     width: 15%;
     padding: 1rem 0.5rem 1rem 1rem;
     display: flex;
@@ -77,7 +77,7 @@
     }
 }
 
-.user-interaction {
+.interaction {
     width: calc(55% / 0.85);
     padding: 2rem 0.5rem 1rem 0.5rem;
     overflow-y: auto;
@@ -108,6 +108,13 @@
         margin-bottom: auto;
         display: inline-block;
         background-color: $color-primary1;
+        transition: transform 0.3s, opacity 0.3s;
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.1);
+            opacity: 0.7;
+        }
     }
 
     &__feed-container {
@@ -128,7 +135,7 @@
     }
 }
 
-.user-updates {
+.updates {
     width: calc(22% / 0.85);
     display: flex;
     flex-direction: column;
@@ -147,9 +154,19 @@
             display: none;
         }
     }
+
+    &__news-article {
+        margin-bottom: 1rem;
+        transition: transform 0.3s, opacity 0.3s;
+
+        &:hover {
+            transform: scale(1.05);
+            opacity: 0.7;
+        }
+    }
 }
 
-.user-friends {
+.friends {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -194,7 +211,7 @@
     }
 }
 
-.user-private {
+.private {
     padding: 1.5rem 1rem 1.5rem 0.5rem;;
     width: 85%;
     

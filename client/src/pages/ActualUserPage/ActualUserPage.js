@@ -319,6 +319,7 @@ class ActualUserPage extends React.Component {
                     console.log(favouritesResponse, friendsResponse, feedResponse, feedCommentsResponse)
                     if(favouritesResponse.data){
                         this.setState({
+                            index: 0,
                             favouriteTeams: favouritesResponse.data,
                             friends: friendsResponse.data,
                             requests: requestsResponse.data,
@@ -329,12 +330,13 @@ class ActualUserPage extends React.Component {
                     }
                     else {
                         this.setState({
+                            index:0,
                             friends: friendsResponse.data,
                             requests: requestsResponse.data,
                             feed: feedResponse.data,
                             feedComments: feedCommentsResponse.data,
                             isFriend: true
-                        },() =>  console.log("yess"))
+                        })
                         
                     } 
                 }))
@@ -392,6 +394,7 @@ class ActualUserPage extends React.Component {
                     friendsResponse, feedResponse, feedCommentsResponse)=> {
                     if(favouritesResponse.data){
                         this.setState({
+                            index: 0,
                             favouriteTeams: favouritesResponse.data,
                             currentUser: currentUserResponse.data,
                             profileInfo: profileResponse.data,
@@ -403,6 +406,7 @@ class ActualUserPage extends React.Component {
                     }
                     else {
                         this.setState({
+                            index: 0,
                             currentUser: currentUserResponse.data,
                             profileInfo: profileResponse.data,
                             currentIsProfile: false,
@@ -432,6 +436,42 @@ class ActualUserPage extends React.Component {
                 })
             }
         } 
+        else {
+
+            const {index, favouriteTeams, pastEvents, articles} = this.state;
+
+            if(index < favouriteTeams.length) {
+
+                const teamId = favouriteTeams[index].idTeam;
+                const teamName = favouriteTeams[index].strTeam;
+
+                setTimeout(axios.all([
+                    axios.get("https://www.thesportsdb.com/api/v1/json/40130162/eventslast.php?id=" + teamId),
+                    axios.get("https://gnews.io/api/v4/search?q=" + teamName + "&token=" + API__KEY + "&lang=en")
+                ]).then(axios.spread((pastEventsResponse, teamNewsResponse) => {
+
+                    let newPastEvents = pastEventsResponse.data.results;
+                    let newArticles = teamNewsResponse.data.articles;
+
+                    newPastEvents = newPastEvents.map(event => {
+                        const {strHomeTeam, strAwayTeam, intHomeScore, intAwayScore, dateEvent, strVideo, strFilename} = event;
+                        return {strHomeTeam, strAwayTeam, intHomeScore, intAwayScore, dateEvent, strVideo, strFilename};
+                    })
+
+                    newArticles = newArticles.map(article => {
+                        const {title, image, url} = article;
+                        return {title, image, url};
+                    })
+                    
+                    this.setState({
+                        index: index + 1,
+                        pastEvents: [...pastEvents, ...newPastEvents],
+                        articles: [...articles, ...newArticles]
+                    })
+                })) ,2000)
+
+            }
+        }
     }
 
     componentWillUnmount() {
@@ -613,12 +653,12 @@ class ActualUserPage extends React.Component {
 
         return(
             <main className="user">
-                <div className="user__profile user-profile">
+                <div className="user__profile profile">
                     <Avatar 
-                        className="user-profile__avatar" 
+                        className="profile__avatar" 
                         avatarUrl={profileInfo.imgUrl} 
                     />
-                    <div className="user-profile__info">
+                    <div className="profile__info">
                         <h3 className="profile__name">{profileInfo.name} {profileInfo.lastName}</h3>
                         <p className="profile__date">Joined {timeDifference(profileInfo.timestamp)}</p>
                         <p className="profile__description">{profileInfo.description}</p>
@@ -631,7 +671,7 @@ class ActualUserPage extends React.Component {
                             <p className="profile__location">From <span className="profile__bold">{profileInfo.from}</span></p>
                         </div>
                         {!currentIsProfile && 
-                            <div className="user-profile__info-buttons">
+                            <div className="profile__info-buttons">
                                 {isFriend === null
                                     ?
                                     <div></div>
@@ -656,12 +696,12 @@ class ActualUserPage extends React.Component {
                     (isFriend === true
                         ?
                         <div className="user__profile-details">
-                            <div className="user__interaction user-interaction">
+                            <div className="user__interaction interaction">
                                 <div className="interaction__favourites">
                                     {favouriteTeams.map(team => {
                                         return (
                                             <TeamCard 
-                                                className="user-interaction__fav-card" 
+                                                className="interaction__fav-card" 
                                                 taskDisplayTeam={this.taskDisplayTeam}
                                                 strTeamBadge={team.strTeamBadge}
                                                 teamId={team.idTeam} 
@@ -669,8 +709,8 @@ class ActualUserPage extends React.Component {
                                         )
                                     })} 
                                 </div>
-                                <div className="user-interaction__feed-container">
-                                    <div className="user-interaction__feed feed">
+                                <div className="interaction__feed-container">
+                                    <div className="interaction__feed feed">
                                         <div className="feed__card">
                                             {currentIsProfile
                                             ?
@@ -706,26 +746,26 @@ class ActualUserPage extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="user__updates user-updates">
-                                <div className="user-updates__container">
+                            <div className="user__updates updates">
+                                <div className="updates__container">
                                     {pastEvents.map(event => {
                                         return <EventScore event={event} />
                                     })}
                                 </div>
-                                <div className="user-updates__container">
+                                <div className="updates__container">
                                     {articles.map(article => {
                                         return (
                                             <NewsArticle 
-                                                className="team__news-article" 
+                                                className="updates__news-article" 
                                                 newsArticle={article} 
                                             />
                                         )
                                     })}
                                 </div>
                             </div>
-                            <div className="user__friends user-friends">
-                                <div className="user-friends__wrapper">
-                                    <div className="user-friends__container">
+                            <div className="user__friends friends">
+                                <div className="friends__wrapper">
+                                    <div className="friends__container">
                                         <h3 className="friends__title">Friends</h3>
                                         {friends.map(friend => {
                                             return(
@@ -763,12 +803,12 @@ class ActualUserPage extends React.Component {
                             }
                         </div>
                         :
-                        <div className="user__private user-private">
-                            <div className="user-private__wrapper">
-                                <img className="user-private__img" src={lockIcon} alt="lock"/>
-                                <div className="user-private__card">    
-                                    <h3 className="user-private__title">This Account is Private</h3>
-                                    <p className="user-private__text">Send a friend request to this account to see their details.</p>
+                        <div className="user__private private">
+                            <div className="private__wrapper">
+                                <img className="private__img" src={lockIcon} alt="lock"/>
+                                <div className="private__card">    
+                                    <h3 className="private__title">This Account is Private</h3>
+                                    <p className="private__text">Send a friend request to this account to see their details.</p>
                                 </div>
                             </div>
                         </div>

@@ -47,6 +47,12 @@
         background: $color-additional2;
         border: none;
         color: white;
+        transition: background 0.3s;
+        cursor: pointer;
+
+        &:hover {
+            background: $color-additional3;
+        }
     }
 
     &__result-column {
@@ -71,6 +77,12 @@
         margin-bottom: 2rem;
         margin-right: auto;
         background: rgba(255,255,255, 0.75);
+        cursor: pointer;
+        transition: transform 0.3s;
+
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 }
 

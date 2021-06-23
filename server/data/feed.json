@@ -1,37 +1,5 @@
 [
   {
-    "feedId": "310209a2-4504-4e8a-b2e3-15905b0dbef0",
-    "userId": "a5006c58-fe89-4d02-9e2a-b72a4d725055",
-    "commentorId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
-    "contentType": "video",
-    "commentorName": "Cem Akcevin",
-    "userName": "Can Akcevin",
-    "imgUrl": "http://localhost:8686/profile-pics/cem-akcevin-profile.jpeg",
-    "commentText": "Dude, check this game out!",
-    "timestamp": 1624462530134,
-    "idEvent": "1134705",
-    "strEvent": "Miami Heat vs Milwaukee Bucks",
-    "intHomeScore": "103",
-    "intAwayScore": "120",
-    "strVideo": "https://www.youtube.com/watch?v=czlliTog_PY"
-  },
-  {
-    "feedId": "af2f5486-8ba5-4479-a232-7afa271d8318",
-    "userId": "a5006c58-fe89-4d02-9e2a-b72a4d725055",
-    "commentorId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
-    "contentType": "video",
-    "commentorName": "Cem Akcevin",
-    "userName": "Can Akcevin",
-    "imgUrl": "http://localhost:8686/profile-pics/cem-akcevin-profile.jpeg",
-    "commentText": "Dude, check this game out!",
-    "timestamp": 1624462165966,
-    "idEvent": "1134705",
-    "strEvent": "Miami Heat vs Milwaukee Bucks",
-    "intHomeScore": "103",
-    "intAwayScore": "120",
-    "strVideo": "https://www.youtube.com/watch?v=czlliTog_PY"
-  },
-  {
     "feedId": "0d674a96-e4bb-40d9-8568-a908d2a9b4e6",
     "userId": "a5006c58-fe89-4d02-9e2a-b72a4d725055",
     "commentorId": "460531c2-5492-4bf4-ac4e-d5743057b7a2",

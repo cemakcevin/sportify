@@ -62,6 +62,12 @@
         color: white;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
         font-size: 12px;
+        cursor: pointer;
+        transition: background, 0.3s;
+
+        &:hover {
+            background: $color-additional3;
+        }
     }
 
 }

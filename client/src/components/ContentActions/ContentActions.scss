@@ -2,15 +2,21 @@
 
 .actions {
     display: flex;
-    padding: 1rem 0;
     border-top: 1px solid $color-primary4;
     border-bottom: 1px solid $color-primary4;
 
     &__icon-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         width: calc(100% / 3);
+        padding: 1rem 0;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.3s;
+
+        &:hover {
+            background: $color-primary2;
+        }
     }
 
     &__icon {

@@ -272,6 +272,7 @@ class TeamDetails extends React.Component {
                                return (
                                     <VideoBox 
                                         key={event.idEvent}
+                                        className="team__video"
                                         videoSrc={event.strVideo} 
                                         videoName={event.strFilename}
                                         videoId={event.idEvent}

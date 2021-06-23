@@ -44,6 +44,13 @@
         background: $color-additional2;
         border: none;
         color: white;
+
+        transition: background 0.3s;
+        cursor: pointer;
+
+        &:hover {
+            background: $color-additional3;
+        }
     }
 
     &__message-container {
