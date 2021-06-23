@@ -29,20 +29,30 @@ class GamePage extends React.Component {
         searchedValue: ""
     }
 
-    componentDidMount() {
+    componentDidMount(prevProps, _prevState) {
+
+        const url = this.props.match.url;
+        const previousUrl = prevProps && prevProps.match.url;
+
+        if(url !== previousUrl) {
+            this.props.taskUpdateUrl(this.props.match.url);
+        }
+
+        const token = sessionStorage.getItem("token");
+        const videoId = this.props.match.params.videoId;
         
         socket = io.connect('localhost:8686');
         socket.on('gameCommentUpdates', ({videoComments}) => {
-            console.log("HAAAAAAAAAAAAAAAAAAAAAAA");
-            this.setState({
-                videoComments: videoComments
-            })
-        })
         
-        this.props.taskUpdateUrl(this.props.match.url);
+            axios.get(localUrl + "/comments/game/" + videoId, {headers: {Authorization: `Bearer ${token}`}})
+            .then(response => {
+                this.setState({
+                    videoComments: response.data
+                })
+            })
+            
+        })
 
-        const videoId = this.props.match.params.videoId;
-        const token = sessionStorage.getItem("token");
 
         axios.all([
             axios.get("https://www.thesportsdb.com/api/v1/json/40130162/lookupevent.php?id=" + videoId),
@@ -91,7 +101,14 @@ class GamePage extends React.Component {
         })
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps, _prevState) {
+
+        const url = this.props.match.url;
+        const previousUrl = prevProps && prevProps.match.url;
+
+        if(url !== previousUrl) {
+            this.props.taskUpdateUrl(this.props.match.url);
+        }
 
         const videoId = this.props.match.params.videoId;
         const prevVideoId = prevProps.match.params.videoId;

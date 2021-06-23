@@ -57,21 +57,21 @@ class TeamDetails extends React.Component {
 
         axios.all([
             axios.get("https://www.thesportsdb.com/api/v1/json/40130162/eventslast.php?id=" + teamId),
-            // axios.get("https://gnews.io/api/v4/search?q=" + teamName + "&token=" + API__KEY + "&lang=en"),
+            axios.get("https://gnews.io/api/v4/search?q=" + teamName + "&token=" + API__KEY + "&lang=en"),
             axios.get(localUrl + "/comments/team/" + teamId, {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/favourites/" + teamId, {headers: {Authorization: `Bearer ${token}`}}),
             axios.get(localUrl + "/users" , {headers: {Authorization: `Bearer ${token}`}}),
         ])
-        .then(axios.spread((pastEventsResponse, /*teamNewsResponse,*/ teamCommentsResponse, partOfFavouritesResponse, usersResponse) => {
+        .then(axios.spread((pastEventsResponse, teamNewsResponse, teamCommentsResponse, partOfFavouritesResponse, usersResponse) => {
             const pastEvents = pastEventsResponse.data.results;
-            // const teamNews = teamNewsResponse.data.articles;
+            const teamNews = teamNewsResponse.data.articles;
             const teamComments = teamCommentsResponse.data;
             const partOfFavourites = partOfFavouritesResponse.data.partOfFavourites;
             const currentUser = usersResponse.data;
 
             this.setState({
                 pastEvents: pastEvents,
-                // teamNews: teamNews,
+                teamNews: teamNews,
                 teamComments: teamComments,
                 partOfFavourites: partOfFavourites,
                 currentUser: currentUser

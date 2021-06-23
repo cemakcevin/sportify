@@ -2,6 +2,7 @@ import './ActualUserPage.scss';
 import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import io from 'socket.io-client';
 
 import Avatar from '../../components/Avatar/Avatar';
 import TeamCard from '../../components/TeamCard/TeamCard';
@@ -20,8 +21,9 @@ import locationIcon from '../../assets/icons/location-icon.png';
 import timeDifference from '../../functions/timeDifference';
 
 
-const API__KEY="8b0979907442ae756bd39495fb5eebd0";
+const API__KEY="dd7ed4159ce8b1df6d8cbadaa67c7cdf";
 const localUrl = "http://localhost:8686";
+let socket;
 
 
 class ActualUserPage extends React.Component {
@@ -46,16 +48,53 @@ class ActualUserPage extends React.Component {
         feedComments: []
     }
 
-    componentDidMount() {
-        this.props.taskUpdateUrl(this.props.match.url);
+    componentDidMount(prevProps, _prevState) {
+
+        const url = this.props.match.url;
+        const previousUrl = prevProps && prevProps.match.url;
+
+        if(url !== previousUrl) {
+            this.props.taskUpdateUrl(this.props.match.url);
+        }
 
         const token = sessionStorage.getItem("token");
         let userId = this.props.match.params.userId;
 
-        console.log(userId)
+        socket = io.connect(localUrl);
 
         if(!userId) {
-            console.log(userId);
+
+            socket.on("feedPostUpdate", () => {
+                axios.get(localUrl + "/feed/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+                .then(response => {
+                    
+                    this.setState({
+                        feed: response.data
+                    })
+                })
+            });
+
+            socket.on("feedPostCommentUpdate", () => {
+                axios.get(localUrl + "/comments/feedComments/"  + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+                .then(response => {
+                    
+                    this.setState({
+                        feedComments: response.data
+                    })
+                })
+            });
+
+            socket.on("friendRequestUpdate", () => {
+                axios.get(localUrl + "/requests", {headers: {Authorization: `Bearer ${token}`}})
+                .then(response => {
+
+                    this.setState({
+                        requests: response.data,
+                    })
+                })
+            });
+
+            socket.off("friendAcceptUpdate");
 
             axios.get(localUrl + "/users", {headers: {Authorization: `Bearer ${token}`}})
             .then(response => {
@@ -67,8 +106,6 @@ class ActualUserPage extends React.Component {
                     currentUser: response.data,
                     profileInfo: response.data,
                     currentIsProfile: true
-                }, () => {
-                    console.log(this.state.currentUser)
                 })
 
                 return axios.all([
@@ -80,7 +117,7 @@ class ActualUserPage extends React.Component {
                 ])
             })
             .then(axios.spread((favouritesResponse, friendsResponse, requestsResponse, feedResponse, feedCommentsResponse)=> {
-                console.log(favouritesResponse, friendsResponse, feedResponse, feedCommentsResponse)
+                
                 if(favouritesResponse.data){
                     this.setState({
                         favouriteTeams: favouritesResponse.data,
@@ -89,7 +126,7 @@ class ActualUserPage extends React.Component {
                         feed: feedResponse.data,
                         feedComments: feedCommentsResponse.data,
                         isFriend: true
-                    }, () => console.log("yess"))
+                    })
                 }
                 else {
                     this.setState({
@@ -107,6 +144,46 @@ class ActualUserPage extends React.Component {
             })
         }
         else {
+
+            socket.on("feedPostUpdate", () => {
+                axios.get(localUrl + "/feed/" + userId, {headers: {Authorization: `Bearer ${token}`}})
+                .then(response => {
+                    
+                    this.setState({
+                        feed: response.data
+                    })
+                })
+            });
+
+            socket.on("feedPostCommentUpdate", () => {
+                axios.get(localUrl + "/comments/feedComments/"  + userId, {headers: {Authorization: `Bearer ${token}`}})
+                .then(response => {
+                    
+                    this.setState({
+                        feedComments: response.data
+                    })
+                })
+            });
+
+            socket.on("friendAcceptUpdate", () => {
+
+                console.log("it is working");
+                axios.all([
+                    axios.get(localUrl + "/friends/isFriend/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
+                    axios.get(localUrl + "/friends/" + userId, {headers: {Authorization: `Bearer ${token}`}})
+                ])
+                .then(axios.spread((isFriendResponse, friendsResponse) => {
+                    console.log(isFriendResponse.data, friendsResponse.data)
+                    
+                    this.setState({
+                        isFriend: isFriendResponse.data,
+                        friends: friendsResponse.data
+                    })
+                }))
+            });
+
+            socket.off("friendRequestUpdate");
+
             axios.all([
                 axios.get(localUrl + "/favourites/user/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
                 axios.get(localUrl + "/users/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
@@ -162,17 +239,59 @@ class ActualUserPage extends React.Component {
         
     }
 
-    componentDidUpdate(prevPros, prevState) {
+    componentDidUpdate(prevProps, _prevState) {
+        
+        const url = this.props.match.url;
+        const previousUrl = prevProps && prevProps.match.url;
+
+        if(url !== previousUrl) {
+            this.props.taskUpdateUrl(this.props.match.url);
+        }
 
         const token = sessionStorage.getItem("token");
 
         const userId = this.props.match.params.userId;
-        const prevUserId = prevPros.match.params.userId;
+        const prevUserId = prevProps.match.params.userId;
 
         if(userId !== prevUserId) {
 
+            socket.off("feedPostUpdate");
+            socket.off("feedPostCommentUpdate");
+            socket.off("friendRequestUpdate");
+            socket.off("friendAcceptUpdate");
+
             if(!userId) {
-                console.log(userId);
+
+                socket.on("feedPostUpdate", () => {
+                
+                    axios.get(localUrl + "/feed/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+                    .then(response => {
+                        
+                        this.setState({
+                            feed: response.data
+                        })
+                    })
+                })
+                
+                socket.on("feedPostCommentUpdate", () => {
+                    axios.get(localUrl + "/comments/feedComments/"  + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+                    .then(response => {
+                        
+                        this.setState({
+                            feedComments: response.data
+                        })
+                    })
+                })
+
+                socket.on("friendRequestUpdate", () => {
+                    axios.get(localUrl + "/requests", {headers: {Authorization: `Bearer ${token}`}})
+                    .then(response => {
+                        
+                        this.setState({
+                            requests: response.data
+                        })
+                    })
+                })
     
                 axios.get(localUrl + "/users", {headers: {Authorization: `Bearer ${token}`}})
                 .then(response => {
@@ -224,6 +343,43 @@ class ActualUserPage extends React.Component {
                 })
             }
             else {
+
+                socket.on("feedPostUpdate", () => {
+                
+                    axios.get(localUrl + "/feed/" + userId, {headers: {Authorization: `Bearer ${token}`}})
+                    .then(response => {
+                        
+                        this.setState({
+                            feed: response.data
+                        })
+                    })
+                });
+
+                socket.on("feedPostCommentUpdate", () => {
+                    axios.get(localUrl + "/comments/feedComments/"  + userId, {headers: {Authorization: `Bearer ${token}`}})
+                    .then(response => {
+                        
+                        this.setState({
+                            feedComments: response.data
+                        })
+                    })
+                });
+
+                socket.on("friendAcceptUpdate", () => {
+                    console.log("it is working");
+                    axios.all([
+                        axios.get(localUrl + "/friends/isFriend/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
+                        axios.get(localUrl + "/friends/" + userId, {headers: {Authorization: `Bearer ${token}`}})
+                    ])
+                    .then(axios.spread((isFriendResponse, friendsResponse) => {
+                        console.log(isFriendResponse.data, friendsResponse.data)
+                        this.setState({
+                            isFriend: isFriendResponse.data,
+                            friends: friendsResponse.data
+                        })
+                    }))
+                });
+
                 axios.all([
                     axios.get(localUrl + "/favourites/user/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
                     axios.get(localUrl + "/users/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
@@ -275,51 +431,15 @@ class ActualUserPage extends React.Component {
                     console.log(error)
                 })
             }
-        }
-    //     const {index, favouriteTeams, pastEvents, articles} = this.state;
+        } 
+    }
 
-    //     console.log(index)
-    //     if(index < favouriteTeams.length) {
+    componentWillUnmount() {
 
-    //         const teamId = favouriteTeams[index].idTeam;
-    //         const teamName = favouriteTeams[index].strTeam;
-
-    //         setTimeout(axios.all([
-    //             axios.get("https://www.thesportsdb.com/api/v1/json/40130162/eventslast.php?id=" + teamId),
-    //             axios.get("https://gnews.io/api/v4/search?q=" + teamName + "&token=" + API__KEY + "&lang=en")
-    //         ]).then(axios.spread((pastEventsResponse, teamNewsResponse) => {
-
-    //             let newPastEvents = pastEventsResponse.data.results;
-    //             let newArticles = teamNewsResponse.data.articles;
-
-    //             newPastEvents = newPastEvents.map(event => {
-    //                 const {strHomeTeam, strAwayTeam, intHomeScore, intAwayScore, dateEvent, strVideo, strFilename} = event;
-    //                 return {strHomeTeam, strAwayTeam, intHomeScore, intAwayScore, dateEvent, strVideo, strFilename};
-    //             })
-
-    //             newArticles = newArticles.map(article => {
-    //                 const {title, image, url} = article;
-    //                 return {title, image, url};
-    //             })
-
-    //             // const {strHomeTeam, strAwayTeam, intHomeScore, intAwayScore, dateEvent, strVideo, strFilename} = pastEventsResponse.data.results;
-    //             // const {title, image, url} = teamNewsResponse.data.articles;
-
-    //             // const newPastEvents = {strHomeTeam, strAwayTeam, intHomeScore, intAwayScore, dateEvent, strVideo, strFilename};
-    //             // const newArticles = {title, image, url};
-
-    //             this.setState({
-    //                 index: index + 1,
-    //                 pastEvents: [...pastEvents, ...newPastEvents],
-    //                 articles: [...articles, ...newArticles]
-    //             })
-    //         })) ,1000)
-            
-
-    //     }
-        
-        
-        
+        socket.off("feedPostUpdate");
+        socket.off("feedPostCommentUpdate");
+        socket.off("friendRequestUpdate");
+        socket.off("friendAcceptUpdate");
     }
 
     taskDisplayTeam = (teamId) => {
@@ -374,6 +494,9 @@ class ActualUserPage extends React.Component {
             
             this.setState({
                 isRequestSent: true
+            }, () => {
+
+                socket.emit("friendRequest");
             })
         })
     }
@@ -390,6 +513,9 @@ class ActualUserPage extends React.Component {
 
             this.setState({
                 isFriend: true
+            }, () => {
+
+                socket.emit("friendAccept");
             })
         })
     }
@@ -418,6 +544,8 @@ class ActualUserPage extends React.Component {
                 feed: response.data
             }, () => {
                 event.target.reset();
+
+                socket.emit("feedPost", {feed: response.data});
             })
         })
 
@@ -456,6 +584,7 @@ class ActualUserPage extends React.Component {
             }, () => {
 
                 event.target.reset();
+                socket.emit("feedPostComment", {feedComments: response.data})
             })
         })
     }

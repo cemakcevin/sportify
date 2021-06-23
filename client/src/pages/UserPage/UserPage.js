@@ -19,7 +19,7 @@ import locationIcon from '../../assets/icons/location-icon.png';
 import timeDifference from '../../functions/timeDifference';
 
 
-const API__KEY="8b0979907442ae756bd39495fb5eebd0";
+const API__KEY="dd7ed4159ce8b1df6d8cbadaa67c7cdf";
 const localUrl = "http://localhost:8686";
 
 

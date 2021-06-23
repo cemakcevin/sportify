@@ -23,7 +23,7 @@ const {PORT, URL, SECRET} = process.env;
 
 app.use(express.static('public'));
 
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 
 //socket connection
@@ -31,13 +31,33 @@ io.on('connection', (socket) => {
 
     socket.on('gameComment', ({videoComments}) => {
         //sending the data to rest of the sockets
-        socket.broadcast.emit('gameCommentUpdates', {videoComments})
+        socket.broadcast.emit('gameCommentUpdates', {videoComments});
     })
 
     socket.on('teamComment', ({teamComments}) => {
         //sending the data to rest of the sockets
-        socket.broadcast.emit('teamCommentsUpdate', {teamComments})
+        socket.broadcast.emit('teamCommentsUpdate', {teamComments});
     })
+
+    socket.on('feedPost', ({feed}) => {
+        //sending the data to rest of the sockets
+        socket.broadcast.emit('feedPostUpdate', {feed});
+    })
+
+    socket.on('feedPostComment', ({feedComments}) => {
+        //sending the data to rest of the sockets
+        socket.broadcast.emit('feedPostCommentUpdate', {feedComments});
+    })
+
+    socket.on("friendRequest", () => {
+
+        socket.broadcast.emit('friendRequestUpdate');
+    });
+
+    socket.on("friendAccept", () => {
+        
+        socket.broadcast.emit('friendAcceptUpdate');
+    });
 
 })
 
