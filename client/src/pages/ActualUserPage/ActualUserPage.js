@@ -507,16 +507,27 @@ class ActualUserPage extends React.Component {
 
         const token = sessionStorage.getItem("token");
         const requestorId = profileInfo.userId;
+        
 
         axios.post(localUrl + '/requests/acceptRequest', {requestorId}, {headers: {Authorization: `Bearer ${token}`}})
         .then(_response => {
 
-            this.setState({
-                isFriend: true
-            }, () => {
+            return axios.all([
+                axios.get(localUrl + "/friends/" + requestorId, {headers: {Authorization: `Bearer ${token}`}}),
+                axios.get(localUrl + "/requests/" + requestorId, {headers: {Authorization: `Bearer ${token}`}}),
+            ])
+            .then(axios.spread((friendsResponse, requestResponse) => {
 
-                socket.emit("friendAccept");
-            })
+                this.setState({
+                    isFriend: true,
+                    friends: friendsResponse.data,
+                    requests: requestResponse.data
+                }, () => {
+    
+                    socket.emit("friendAccept");
+                })
+
+            }))
         })
     }
 

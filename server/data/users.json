@@ -47,7 +47,7 @@
         "description": "Die Hard Leafs Fan | Amateur Sports Commentator | Know a bit of Every Sport",
         "bio": "Hey,I am Dave! New to this platform so let's be friends!",
         "location": "Toronto, Canada",
-        "from": "Istanbul, Turkey",
+        "from": "London, UK",
         "imgUrl": "http://localhost:8686/profile-pics/dave-claire-profile.jpeg",
         "timestamp": 1623942785864
     },
@@ -60,7 +60,7 @@
         "description": "Die Hard Leafs Fan | Amateur Sports Commentator | Know a bit of Every Sport",
         "bio": "Hey,I am Judi! New to this platform so let's be friends!",
         "location": "Toronto, Canada",
-        "from": "Istanbul, Turkey",
+        "from": "London, UK",
         "imgUrl": "http://localhost:8686/profile-pics/judi-scott-profile.jpeg",
         "timestamp": 1623942685864
     },
@@ -73,8 +73,47 @@
         "description": "Die Hard Leafs Fan | Amateur Sports Commentator | Know a bit of Every Sport",
         "bio": "Hey,I am Sarah! New to this platform so let's be friends!",
         "location": "Toronto, Canada",
-        "from": "Istanbul, Turkey",
+        "from": "Atlanta, Georgia",
         "imgUrl": "http://localhost:8686/profile-pics/sarah-jackson-profile.jpeg",
+        "timestamp": 1623942885864
+    },
+    {
+        "userId": "14770eff-629f-4a30-aae9-abe48cb29090",
+        "name": "James",
+        "lastName": "Stevens",
+        "userName": "jamesstevens",
+        "password": "123456",
+        "description": "Die Hard Leafs Fan | Amateur Sports Commentator | Know a bit of Every Sport",
+        "bio": "Hey,I am James! New to this platform so let's be friends!",
+        "location": "Montreal, Quebec",
+        "from": "Montreal, Quebec",
+        "imgUrl": "http://localhost:8686/profile-pics/james-stevens-profile.jpeg",
+        "timestamp": 1623942885864
+    },
+    {
+        "userId": "c05bbeef-44aa-458d-974a-de3ef8369f23",
+        "name": "Moh",
+        "lastName": "Tahle",
+        "userName": "mohtahle",
+        "password": "123456",
+        "description": "Die Hard Leafs Fan | Amateur Sports Commentator | Know a bit of Every Sport",
+        "bio": "Hey,I am Moh! New to this platform so let's be friends!",
+        "location": "New York, New York",
+        "from": "Montreal, Quebec",
+        "imgUrl": "http://localhost:8686/profile-pics/moh-tahle-profile.jpeg",
+        "timestamp": 1623942885864
+    },
+    {
+        "userId": "faa3fa7b-6edd-47fd-ac0c-eeb4f911f150",
+        "name": "Jordana",
+        "lastName": "Kirstin",
+        "userName": "jordanakirstin",
+        "password": "123456",
+        "description": "Die Hard Leafs Fan | Amateur Sports Commentator | Know a bit of Every Sport",
+        "bio": "Hey,I am Moh! New to this platform so let's be friends!",
+        "location": "Miami, Florida",
+        "from": "Atlanta, Georgia",
+        "imgUrl": "http://localhost:8686/profile-pics/jordana-kirstin-profile.jpeg",
         "timestamp": 1623942885864
     }
 ]
