@@ -12,6 +12,15 @@
       background-color: $color-additional2;
       color: white;
       width: 100%;
+      cursor: pointer;
+
+      &--send-request {
+            transition: background-color 0.3s;
+
+        &:hover {
+            background-color: $color-additional3;
+        }
+      }
 
       &--friends{
           margin-bottom: 0.5rem;
@@ -24,6 +33,11 @@
 
       &--received {
           background-color: $color-additional3;
+          transition: background-color 0.3s;
+
+          &:hover {
+              background-color: $color-primary4;
+          }
       }
   }
 }
