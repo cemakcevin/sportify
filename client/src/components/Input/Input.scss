@@ -6,17 +6,17 @@
     &__title {
         display: block;
         margin-bottom: 0.5rem;
-        font-size: 13px;
+        font-size: 0.8125rem;
         font-weight: 600;
     }
 
     &__textfield {
         width: 100%;
         padding: 1rem 1rem 1rem 3.5rem;
-        border-radius: 25px;
+        border-radius: 1.5625rem;
         background-color: $color-primary1;
         border: none;
-        font-size: 17px;
+        font-size: 1.0625rem;
     
         &:focus {
             outline: none;
@@ -25,8 +25,8 @@
 
     &__icon {
         position: absolute;
-        bottom: 16px;
-        left: 16px;
+        bottom: 1rem;
+        left: 1rem;
         height: 1.5rem;
     }
 }

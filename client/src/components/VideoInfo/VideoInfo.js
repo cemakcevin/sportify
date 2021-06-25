@@ -6,7 +6,7 @@ import ContentActions from '../ContentActions/ContentActions';
 
 function VideoInfo({className , currentEvent, currentUser, comments, taskSubmitComment, taskShareVideo}) {
 
-    const {strLeague, strEvent, strDescriptionEN, intHomeScore, intAwayScore, dateEvent} = currentEvent;
+    const {strLeague, strEvent, strDescriptionEN, dateEvent} = currentEvent;
     
     return (
         <div className={`${className} video-info`}>

@@ -14,7 +14,7 @@ import videoWatchToEmbed from '../../functions/videoWatchToEmbed';
 function FeedCard ({className, feedContent, feedComments, taskTakeToGamePage, taskAddCommentToPost, userAvatar}) {
 
     const {feedId, userId, commentorName, userName, imgUrl, commentText, timestamp, 
-        idEvent, strEvent, intHomeScore, intAwayScore, strVideo} = feedContent;
+        idEvent, strVideo} = feedContent;
 
     const cardComments = feedComments.filter(comment => comment.contentId === feedId)
 
@@ -49,6 +49,7 @@ function FeedCard ({className, feedContent, feedComments, taskTakeToGamePage, ta
                 return (
                     <FeedCardComment 
                         className="feed-card__comment"
+                        key={comment.userId}
                         userId={comment.userId}
                         name={comment.name}
                         date={comment.timestamp}

@@ -65,7 +65,7 @@ class UserPage extends React.Component {
         if(!userId) {
 
             socket.on("feedPostUpdate", () => {
-                axios.get(localUrl + "/feed/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+                axios.get(localUrl + "/feed/currentUser", {headers: {Authorization: `Bearer ${token}`}})
                 .then(response => {
                     
                     this.setState({
@@ -75,7 +75,7 @@ class UserPage extends React.Component {
             });
 
             socket.on("feedPostCommentUpdate", () => {
-                axios.get(localUrl + "/comments/feedComments/"  + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+                axios.get(localUrl + "/comments/feedComments/currentUser", {headers: {Authorization: `Bearer ${token}`}})
                 .then(response => {
                     
                     this.setState({
@@ -100,7 +100,6 @@ class UserPage extends React.Component {
             .then(response => {
                 
                 userId = response.data.userId;
-                console.log(userId)
 
                 this.setState({
                     currentUser: response.data,
@@ -112,8 +111,8 @@ class UserPage extends React.Component {
                     axios.get(localUrl + "/favourites", {headers: {Authorization: `Bearer ${token}`}}),
                     axios.get(localUrl + "/friends", {headers: {Authorization: `Bearer ${token}`}}),
                     axios.get(localUrl + "/requests", {headers: {Authorization: `Bearer ${token}`}}),
-                    axios.get(localUrl + "/feed/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}}),
-                    axios.get(localUrl + "/comments/feedComments/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+                    axios.get(localUrl + "/feed/currentUser", {headers: {Authorization: `Bearer ${token}`}}),
+                    axios.get(localUrl + "/comments/feedComments/currentUser", {headers: {Authorization: `Bearer ${token}`}})
                 ])
             })
             .then(axios.spread((favouritesResponse, friendsResponse, requestsResponse, feedResponse, feedCommentsResponse)=> {
@@ -264,7 +263,7 @@ class UserPage extends React.Component {
 
                 socket.on("feedPostUpdate", () => {
                 
-                    axios.get(localUrl + "/feed/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+                    axios.get(localUrl + "/feed/currentUser", {headers: {Authorization: `Bearer ${token}`}})
                     .then(response => {
                         
                         this.setState({
@@ -274,7 +273,7 @@ class UserPage extends React.Component {
                 })
                 
                 socket.on("feedPostCommentUpdate", () => {
-                    axios.get(localUrl + "/comments/feedComments/"  + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+                    axios.get(localUrl + "/comments/feedComments/currentUser", {headers: {Authorization: `Bearer ${token}`}})
                     .then(response => {
                         
                         this.setState({
@@ -295,9 +294,6 @@ class UserPage extends React.Component {
     
                 axios.get(localUrl + "/users", {headers: {Authorization: `Bearer ${token}`}})
                 .then(response => {
-                    
-                    userId = response.data.userId;
-                    console.log(userId)
     
                     this.setState({
                         currentUser: response.data,
@@ -311,8 +307,8 @@ class UserPage extends React.Component {
                         axios.get(localUrl + "/favourites", {headers: {Authorization: `Bearer ${token}`}}),
                         axios.get(localUrl + "/friends", {headers: {Authorization: `Bearer ${token}`}}),
                         axios.get(localUrl + "/requests", {headers: {Authorization: `Bearer ${token}`}}),
-                        axios.get(localUrl + "/feed/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}}),
-                        axios.get(localUrl + "/comments/feedComments/" + "currentUser", {headers: {Authorization: `Bearer ${token}`}})
+                        axios.get(localUrl + "/feed/currentUser", {headers: {Authorization: `Bearer ${token}`}}),
+                        axios.get(localUrl + "/comments/feedComments/currentUser", {headers: {Authorization: `Bearer ${token}`}})
                     ])
                 })
                 .then(axios.spread((favouritesResponse, friendsResponse, requestsResponse, feedResponse, feedCommentsResponse)=> {
@@ -326,7 +322,7 @@ class UserPage extends React.Component {
                             feed: feedResponse.data,
                             feedComments: feedCommentsResponse.data,
                             isFriend: true
-                        }, () => console.log("yess"))
+                        })
                     }
                     else {
                         this.setState({
@@ -702,6 +698,7 @@ class UserPage extends React.Component {
                                         return (
                                             <TeamCard 
                                                 className="interaction__fav-card" 
+                                                key={team.idTeam}
                                                 taskDisplayTeam={this.taskDisplayTeam}
                                                 strTeamBadge={team.strTeamBadge}
                                                 teamId={team.idTeam} 
@@ -735,6 +732,7 @@ class UserPage extends React.Component {
                                             return (
                                                 <FeedCard 
                                                     className="feed__card"
+                                                    key={feedContent.feedId}
                                                     feedContent={feedContent}
                                                     feedComments={feedComments}
                                                     taskTakeToGamePage={this.taskTakeToGamePage}
@@ -749,14 +747,15 @@ class UserPage extends React.Component {
                             <div className="user__updates updates">
                                 <div className="updates__container">
                                     {pastEvents.map(event => {
-                                        return <EventScore event={event} />
+                                        return <EventScore key={event.idEvent} event={event} />
                                     })}
                                 </div>
                                 <div className="updates__container">
-                                    {articles.map(article => {
+                                    {articles.map((article, i) => {
                                         return (
                                             <NewsArticle 
                                                 className="updates__news-article" 
+                                                key={i}
                                                 newsArticle={article} 
                                             />
                                         )
@@ -772,6 +771,7 @@ class UserPage extends React.Component {
                                                 <Link key={friend.friendId} to={"/user/" + friend.friendId}>
                                                     <ProfileImage 
                                                         className="friends__avatar"
+                                                        key={friend.friendId}
                                                         imgSrc={friend.imgUrl}
                                                     />
                                                 </Link>

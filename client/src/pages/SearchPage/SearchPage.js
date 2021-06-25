@@ -79,6 +79,7 @@ class SearchPage extends React.Component {
                         return(
                             <TeamCard 
                                 className="search__result-card"
+                                key={team.idTeam}
                                 taskDisplayTeam={this.taskDisplayTeam}
                                 strTeamBadge={team.strTeamBadge}
                                 teamId={team.idTeam}

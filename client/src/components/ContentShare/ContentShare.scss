@@ -14,12 +14,12 @@
     align-items: center;
 
     &__wrapper {
-        width: 600px;
-        height: 600px;
+        width: 37.5rem;
+        height: 37.5rem;
         padding: 2rem;
-        border-radius: 25px;
+        border-radius: 1.5625rem;
         background: white;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.9);
+        box-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.9);
         display: flex;
         flex-direction: column;
         position: relative;
@@ -74,7 +74,7 @@
         width: 100%;
         padding: 4rem 2rem 2rem 2rem;
         background: white;
-        border-radius: 25px;
+        border-radius: 1.5625rem;
         display: flex;
         flex-direction: column;
         position: absolute;
@@ -101,7 +101,7 @@
     &__button {
         margin-top: auto;
         padding: 1rem;
-        border-radius: 25px;
+        border-radius: 1.5625rem;
         background: $color-additional2;
         border: none;
         color: white;

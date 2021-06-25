@@ -1,8 +1,8 @@
 @use '../../partials/colors' as *;
 
 .score {
-    font-size: 14px;
-    height: 50px;
+    font-size: 0.875rem;
+    height: 3.125rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,11 +10,11 @@
 
     &__container {
         padding: 0.25rem 1rem 0.25rem 0;
-        border-right: 1px solid $color-additional4;
+        border-right: 0.0625rem solid $color-additional4;
     }
 
     &__team-container {
-        width: 150px;
+        width: 9.375rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -28,11 +28,11 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        width: 120px;
+        width: 7.5rem;
     }
 
     &__date-container {
-        width: 65px;
+        width: 4.0625rem;
         display: flex;
         align-items: center;
         justify-content: center;

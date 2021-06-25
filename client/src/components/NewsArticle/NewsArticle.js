@@ -1,12 +1,11 @@
 import './NewsArticle.scss';
-import {Link} from 'react-router-dom';
 
 function NewsArticle ({className, newsArticle}) {
     
     const {title, image, url} = newsArticle;
 
     return (
-        <a href={url} target="_blank">
+        <a href={url} target="_blank" rel="noopener noreferrer">
             <article className={`${className} article`}>
                 <img className="article__img" src={image} alt="news article"/>           
                 <div className="article__description-container">

@@ -11,14 +11,14 @@
 
     &__wrapper {
         margin: 0 auto;  
-        height: 69px;
+        height: 4.3125rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
     &__logo {
-        height: 50px;
+        height: 3.125rem;
         transition: transform 0.3s, opacity 0.3s;
 
         &:hover {
@@ -40,10 +40,10 @@
         font-size: 1rem;
         color: $color-primary4;
         height: 100%;
-        width: 80px;
+        width: 5rem;
         display: block;
-        border-bottom: 2px solid white;
-        border-top: 2px solid white;
+        border-bottom: 0.125rem solid white;
+        border-top: 0.125rem solid white;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -51,12 +51,12 @@
 
         &:hover {
             color: $color-additional2;
-            border-bottom: 2px solid $color-additional2;
+            border-bottom: 0.125rem solid $color-additional2;
         }
 
         &--highlighted {
             color: $color-additional2;
-            border-bottom: 2px solid $color-additional2;
+            border-bottom: 0.125rem solid $color-additional2;
             font-weight: bold;
         }
     }
@@ -65,7 +65,7 @@
         font-size: 1rem;
         color: $color-primary4;
         height: 100%;
-        width: 80px;
+        width: 5rem;
         display: block;
         display: flex;
         align-items: center;

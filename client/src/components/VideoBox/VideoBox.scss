@@ -4,12 +4,12 @@
 
     &__frame {
         width: 100%;
-        border-radius: 5px;
+        border-radius: 0.3125rem;
         margin-bottom: 0.5rem;
         pointer-events: none;
     }
 
     &__name {
-        font-size: 14px;
+        font-size: 0.875rem;
     }
 }

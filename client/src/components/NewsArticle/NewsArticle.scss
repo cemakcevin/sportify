@@ -1,15 +1,15 @@
 .article {
     display: flex;
     align-items: center;
-    height: 65px;
+    height: 4.0625rem;
 
     &__img {
        height: 100%;
-       width: 60px;
+       width: 3.75rem;
        object-fit: cover;
        object-position: center;
        margin-right: 0.5rem;
-       border-radius: 5px;
+       border-radius: 0.3125rem;
     }
 
     &__description-container {
@@ -22,7 +22,7 @@
 
     &__title {
         height: 100%;
-        font-size: 14px;
+        font-size: 0.875rem;
         padding-bottom: 0.5rem;
         overflow: hidden;
         text-overflow: ellipsis;

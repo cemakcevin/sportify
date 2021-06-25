@@ -20,7 +20,7 @@
     }
 
     &__title {
-        font-size: 14px;
+        font-size: 0.875rem;
         font-weight: 600;
         padding-bottom: 0.5rem;
     }
@@ -43,7 +43,7 @@
         border: none;
         padding: 0.625rem;
         background-color: $color-primary1;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+        box-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.5);
 
         &:focus {
             outline: none;
@@ -58,11 +58,11 @@
     &__button {
         width: 100%;
         padding: 1rem;
-        border-radius: 25px;
+        border-radius: 1.5625rem;
         background: $color-additional2;
         border: none;
         color: white;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+        box-shadow: 0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.5);
         cursor: pointer;
         transition: background 0.3s;
 

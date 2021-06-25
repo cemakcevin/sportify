@@ -235,10 +235,11 @@ class TeamDetails extends React.Component {
                     <div className="team__second-column">
                         <div className="team__news">
                             <h3 className="team__news-title">Top News</h3>
-                            {teamNews.map(newsArticle => {
+                            {teamNews.map((newsArticle, i) => {
                                 return (
                                     <NewsArticle 
                                         className="team__news-article" 
+                                        key={i}
                                         newsArticle={newsArticle} 
                                     />
                                 )

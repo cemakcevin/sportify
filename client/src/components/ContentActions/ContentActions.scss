@@ -2,8 +2,8 @@
 
 .actions {
     display: flex;
-    border-top: 1px solid $color-primary4;
-    border-bottom: 1px solid $color-primary4;
+    border-top: 0.0625rem solid $color-primary4;
+    border-bottom: 0.0625rem solid $color-primary4;
 
     &__icon-container {
         width: calc(100% / 3);
