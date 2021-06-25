@@ -9,6 +9,7 @@ import GamePage from './pages/GamePage/GamePage';
 import UserPage from './pages/UserPage/UserPage';
 
 import Header from './components/Header/Header';
+import Loading from './components/Loading/Loading';
 
 const token = sessionStorage.getItem("token");
 const localUrl = "http://localhost:8686"
@@ -16,7 +17,7 @@ const localUrl = "http://localhost:8686"
 class App extends React.Component {
 
   state = {
-    loggedIn: false,
+    loggedIn: null,
     currentUser: null,
     url: ""
   }
@@ -35,6 +36,12 @@ class App extends React.Component {
           currentUser: response.data
         })
 
+      })
+    }
+    else {
+
+      this.setState({
+        loggedIn: false
       })
     }
 
@@ -92,6 +99,10 @@ class App extends React.Component {
           imgUrl={currentUser && currentUser.imgUrl} 
           url={url}
         />
+        {loggedIn === null 
+        ? 
+        <Loading />
+        :
         <Switch>
             {!loggedIn && <Route path="/login" render={(routerProps) => <LoginPage taskLogin={this.taskLogin} {...routerProps}/> } />}
             {loggedIn && <Route path="/home" render={(routerProps) => <UserPage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
@@ -100,6 +111,7 @@ class App extends React.Component {
             {loggedIn && <Route path="/game/:videoId" render={(routerProps) => <GamePage taskUpdateUrl={this.taskUpdateUrl} {...routerProps}/> } />}
             {loggedIn ? <Redirect to="/home"/> : <Redirect to="/login"/>}
         </Switch>
+        }
       </BrowserRouter>
     );
   } 
