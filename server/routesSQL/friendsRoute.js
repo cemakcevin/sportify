@@ -1,28 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
+const Friend = require('../models/Friend');
 require('dotenv').config();
 
 router.route('/')
     .get((req, res) => {
 
         const userId = req.decode.userId;
-        const friends = readFriends();
 
-        const userFriends = friends.filter(friend => friend.userId === userId);
-
-        return res.status(201).json(userFriends);
+        Friend.where({userId: userId})
+            .fetchAll()
+            .then(userFriends => {
+                return res.status(200).json(userFriends);
+            })
     })
 
 router.route('/:userId')
     .get((req, res) => {
 
         const userId = req.params.userId;
-        const friends = readFriends();
 
-        const userFriends = friends.filter(friend => friend.userId === userId);
-
-        return res.status(201).json(userFriends);
+        Friend.where({userId: userId})
+        .fetchAll()
+        .then(userFriends => {
+            return res.status(200).json(userFriends);
+        })
     })
 
 router.route('/isFriend/:friendId')
@@ -30,22 +33,15 @@ router.route('/isFriend/:friendId')
         
         const userId = req.decode.userId;
         const friendId = req.params.friendId;
-        const friends = readFriends();
 
-        const searchedFriend = friends.find(friend => friend.userId === userId && friend.friendId === friendId);
-
-        if(searchedFriend){
-            return res.status(201).json({isFriend: true});
-        }
-        else {
-            return res.status(201).json({isFriend: false});
-        }
-        
+        Friend.where({userId: userId, friendId: friendId})
+            .fetch()
+            .then(() => {
+                return res.status(201).json({isFriend: true});
+            })
+            .catch(() => {
+                return res.status(201).json({isFriend: false});
+            })
     })
-
-function readFriends() {
-    const friends = fs.readFileSync('./data/friends.json', 'utf-8');
-    return JSON.parse(friends);
-}
 
 module.exports = router;
