@@ -15,7 +15,7 @@ const usersRoute = require('./routes/usersRoute');
 const friendsRoute = require('./routes/friendsRoute');
 const requestsRoute = require('./routes/requestsRoute');
 const feedRoute = require('./routes/feedRoute');
-const { Console } = require('console');
+
 
 require('dotenv').config();
 

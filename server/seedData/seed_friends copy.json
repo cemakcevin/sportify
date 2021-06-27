@@ -1,0 +1,100 @@
+[
+  {
+    "friendshipId": "75b6a66e-ed36-4b25-bb06-59c76e0d40f3",
+    "userId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
+    "friendId": "a5006c58-fe89-4d02-9e2a-b72a4d725055",
+    "friendName": "Can Akcevin",
+    "imgUrl": "http://localhost:8686/profile-pics/can-akcevin-profile.jpeg"
+  },
+  {
+    "friendshipId": "6b558916-8d28-4a24-9ebd-f957acc506ea",
+    "userId": "a5006c58-fe89-4d02-9e2a-b72a4d725055",
+    "friendId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
+    "friendName": "Cem Akcevin",
+    "imgUrl": "http://localhost:8686/profile-pics/cem-akcevin-profile.jpeg"
+  },
+  {
+    "friendshipId": "020d55a4-7302-49db-908d-27fb3ae19415",
+    "userId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
+    "friendId": "596e32a9-98e2-4771-83d8-c5c2e3f091a3",
+    "friendName": "Mike Ozcan",
+    "imgUrl": "http://localhost:8686/profile-pics/mike-ozcan-profile.jpeg"
+  },
+  {
+    "friendshipId": "3481191d-9697-44d6-a722-09e8f830bab6",
+    "userId": "596e32a9-98e2-4771-83d8-c5c2e3f091a3",
+    "friendId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
+    "friendName": "Cem Akcevin",
+    "imgUrl": "http://localhost:8686/profile-pics/cem-akcevin-profile.jpeg"
+  },
+  {
+    "friendshipId": "909890f0-48b9-4ec4-ae7c-2b8b3319e9dc",
+    "userId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
+    "friendId": "4432b2f4-a7d1-4347-8e99-837177a24c3c",
+    "friendName": "Judi Scott",
+    "imgUrl": "http://localhost:8686/profile-pics/judi-scott-profile.jpeg"
+  },
+  {
+    "friendshipId": "5f654876-f303-4126-b5ea-c23ab9761a28",
+    "userId": "4432b2f4-a7d1-4347-8e99-837177a24c3c",
+    "friendId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
+    "friendName": "Cem Akcevin",
+    "imgUrl": "http://localhost:8686/profile-pics/cem-akcevin-profile.jpeg"
+  },
+  {
+    "friendshipId": "4638648d-d2d0-4d9e-9bd7-810456c3a77e",
+    "userId": "cf9dcf5a-3b43-4636-aeb3-1a304e2ca28e",
+    "friendId": "596e32a9-98e2-4771-83d8-c5c2e3f091a3",
+    "friendName": "Mike Ozcan",
+    "imgUrl": "http://localhost:8686/profile-pics/mike-ozcan-profile.jpeg"
+  },
+  {
+    "friendshipId": "f0565d20-6426-4d3e-92de-78f09dc6c72c",
+    "userId": "596e32a9-98e2-4771-83d8-c5c2e3f091a3",
+    "friendId": "cf9dcf5a-3b43-4636-aeb3-1a304e2ca28e",
+    "friendName": "Dave Claire",
+    "imgUrl": "http://localhost:8686/profile-pics/dave-claire-profile.jpeg"
+  },
+  {
+    "friendshipId": "a7d03fa3-859e-4cc7-9249-ea0b23dcdaa2",
+    "userId": "faa3fa7b-6edd-47fd-ac0c-eeb4f911f150",
+    "friendId": "cf9dcf5a-3b43-4636-aeb3-1a304e2ca28e",
+    "friendName": "Dave Claire",
+    "imgUrl": "http://localhost:8686/profile-pics/dave-claire-profile.jpeg"
+  },
+  {
+    "friendshipId": "8c82b3cd-bfee-4562-bdcd-e0653fc0da73",
+    "userId": "cf9dcf5a-3b43-4636-aeb3-1a304e2ca28e",
+    "friendId": "faa3fa7b-6edd-47fd-ac0c-eeb4f911f150",
+    "friendName": "Jordana Kirstin",
+    "imgUrl": "http://localhost:8686/profile-pics/jordana-kirstin-profile.jpeg"
+  },
+  {
+    "friendshipId": "035cf2f6-8ec3-4561-b1c5-1c9f9df34316",
+    "userId": "faa3fa7b-6edd-47fd-ac0c-eeb4f911f150",
+    "friendId": "596e32a9-98e2-4771-83d8-c5c2e3f091a3",
+    "friendName": "Mike Ozcan",
+    "imgUrl": "http://localhost:8686/profile-pics/mike-ozcan-profile.jpeg"
+  },
+  {
+    "friendshipId": "65e455e1-bdeb-4e04-b04f-79c5e39da3b3",
+    "userId": "596e32a9-98e2-4771-83d8-c5c2e3f091a3",
+    "friendId": "faa3fa7b-6edd-47fd-ac0c-eeb4f911f150",
+    "friendName": "Jordana Kirstin",
+    "imgUrl": "http://localhost:8686/profile-pics/jordana-kirstin-profile.jpeg"
+  },
+  {
+    "friendshipId": "4960cf88-d45c-4778-9ff5-cdb69066d4f9",
+    "userId": "460531c2-5492-4bf4-ac4e-d5743057b7a2",
+    "friendId": "a5006c58-fe89-4d02-9e2a-b72a4d725055",
+    "friendName": "Can Akcevin",
+    "imgUrl": "http://localhost:8686/profile-pics/can-akcevin-profile.jpeg"
+  },
+  {
+    "friendshipId": "7e20386e-74f8-4782-bf4c-5608d18ccc0d",
+    "userId": "a5006c58-fe89-4d02-9e2a-b72a4d725055",
+    "friendId": "460531c2-5492-4bf4-ac4e-d5743057b7a2",
+    "friendName": "Sarah Jackson",
+    "imgUrl": "http://localhost:8686/profile-pics/sarah-jackson-profile.jpeg"
+  }
+]
