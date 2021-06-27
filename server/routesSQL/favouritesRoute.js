@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
 const Favourite = require('../models/Favourite');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
