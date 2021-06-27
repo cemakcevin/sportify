@@ -6,7 +6,7 @@ module.exports = {
       host: '127.0.0.1',
       user: 'root',
       password: 'rootroot',
-      database: 'sportify__database',
+      database: 'sportify_database',
       charset: 'utf8',
     },
   };
