@@ -1,59 +1,71 @@
-const { json } = require('express');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const { route } = require('./friendsRoute');
+const Request = require('../models/Request');
+const User = require('../models/User');
+const Friend = require('../models/Friend');
+const {v4 : uuidv4} = require('uuid');
 require('dotenv').config();
 
 router.route('/')
     .get((req,res) => {
 
         const userId = req.decode.userId;
-        const requests = readRequests();
 
-        const userRequests = requests.filter(request => request.userId === userId);
-
-        return res.status(201).json(userRequests);
+        Request.where({userId: userId})
+            .fetchAll()
+            .then(userRequests => {
+                return res.status(201).json(userRequests);
+            })
 
     })
     .post((req, res) => {
         const requestorId = req.decode.userId;
         const {userId} = req.body;
+
+        User.where({userId: requestorId})
+            .fetch()
+            .then(requestor => {
+
+                const requestorData = requestor.toJSON();
+                
+                const requestorName = requestorData.name + " " + requestorData.lastName;
+                const imgUrl = requestorData.imgUrl;
+
+                const newRequest = {
+                    requestId: uuidv4(),
+                    userId,
+                    requestorId,
+                    requestorName,
+                    imgUrl
+                }
+
+                new Request(newRequest)
+                    .save(null, {method: 'insert'})
+                    .then(newReq => {
+                        return res.status(200).json(newReq); 
+                    })
+                    .catch(() => {
+                        return res.status(400).json({error: "problem inserting the request"})
+                    })
+
+            })
+            .catch(() => {
+                return res.status(400).json({error: "couldn't find the requestor in the user database!"})
+            })
         
-        const requests = readRequests();
-        const users = readUsers();
-
-        const requestor = users.find(user => user.userId === requestorId);
-
-        if(!requestor) {
-            return res.status(400).json({error: "couldn't find the requestor in the user database!"})
-        }
-
-        const requestorName = requestor.name + " " + requestor.lastName;
-        const imgUrl = requestor.imgUrl;
-
-        const newRequest = {
-            userId,
-            requestorId,
-            requestorName,
-            imgUrl
-        }
-
-        requests.push(newRequest);
-        writeRequests(requests);
-
-        return res.status(200).json(newRequest);
     })
 
 router.route('/:userId')
     .get((req,res) => {
 
         const userId = req.params.userId;
-        const requests = readRequests();
 
-        const userRequests = requests.filter(request => request.userId === userId);
-
-        return res.status(201).json(userRequests);
+        Request.where({userId: userId})
+            .fetchAll()
+            .then(userRequests => {
+                return res.status(201).json(userRequests);
+            })
 
     })
 
@@ -63,49 +75,61 @@ router.route('/acceptRequest')
         const userId = req.decode.userId;
         const {requestorId} = req.body;
 
-        const requests = readRequests();
-        const searchedRequest = requests.find(request => request.userId === userId && request.requestorId === requestorId);
+        let searchedRequestData;
 
-        if(!searchedRequest) {
-            return res.status(400).json({error: 'Friend request not found!'})
-        }
+        Request.where({userId: userId, requestorId: requestorId})
+            .fetch()
+            .then(searchedRequest => {
+                
+                searchedRequestData = searchedRequest.toJSON();
+                
+                return Request.where({userId: userId, requestorId: requestorId}).destroy()
+            })
+            .then(() => {
 
-        const filteredRequests = requests.filter(request => {
+                let friend1;
+                let friend2 = {
+                    friendshipId: uuidv4(),
+                    userId: searchedRequestData.userId,
+                    friendId: searchedRequestData.requestorId,
+                    friendName: searchedRequestData.requestorName,
+                    imgUrl: searchedRequestData.imgUrl
+                }
+                console.log(friend2)
 
-            if(request.userId === userId && request.requestorId === requestorId){
-                return false
-            }
+                User.where({userId: userId})
+                    .fetch()
+                    .then(searchedUser => {
 
-            return true;
-        })
+                        const searchedUserData = searchedUser.toJSON();
 
-        writeRequests(filteredRequests);
+                        friend1 = {
+                            friendshipId: uuidv4(),
+                            userId: searchedRequestData.requestorId,
+                            friendId: searchedRequestData.userId,
+                            friendName: searchedUserData.name + " " + searchedUserData.lastName,
+                            imgUrl: searchedUserData.imgUrl
+                        }
+                        console.log(friend1)
 
-        const friends = readFriends();
-        const users = readUsers();
+                        return new Friend(friend1).save(null, {method: 'insert'});
+                    })
+                    .then(() => {
+                        return new Friend(friend2).save(null, {method: 'insert'});
+                    })
+                    .then(() => {
+                        return res.status(200).json({message: `Both ${friend1.friendName} and ${friend2.friendName} are now friends!`});
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
 
-        const searchedUser = users.find(user => user.userId === userId);
-
-        const friend1 = {
-            userId: searchedRequest.requestorId,
-            friendId: searchedRequest.userId,
-            friendName: searchedUser.name + " " + searchedUser.lastName,
-            imgUrl: searchedUser.imgUrl
-        }
-
-        const friend2 = {
-            userId: searchedRequest.userId,
-            friendId: searchedRequest.requestorId,
-            friendName: searchedRequest.requestorName,
-            imgUrl: searchedRequest.imgUrl
-        };
-
-        friends.push(friend1);
-        friends.push(friend2);
-
-        writeFriends(friends);
-
-        return res.status(200).json({message: `Both ${friend1.friendName} and ${friend2.friendName} are now friends!`})
+                
+            })
+            .catch(() => {
+                return res.status(400).json({error: 'Friend request not found!'})
+            })
+        
     })
 
 router.route('/isRequestSent/:userId')
@@ -114,16 +138,14 @@ router.route('/isRequestSent/:userId')
         const userId = req.params.userId;
         const requestorId = req.decode.userId;
 
-        const requests = readRequests();
-
-        const searchedRequest = requests.find(request => request.userId === userId && request.requestorId == requestorId)
-
-        if(searchedRequest) {
-            res.status(201).json({isRequestSent: true});
-        }
-        else {
-            res.status(201).json({isRequestSent: false});
-        }
+        Request.where({userId: userId, requestorId: requestorId})
+            .fetch()
+            .then(_searchedRequest => {
+                res.status(201).json({isRequestSent: true});
+            })
+            .catch(_error => {
+                res.status(201).json({isRequestSent: false});
+            })
 
     })
 
@@ -133,42 +155,15 @@ router.route('/isRequestReceived/:requestorId')
         const userId = req.decode.userId;
         const requestorId = req.params.requestorId;
 
-        const requests = readRequests();
-
-        const searchedRequest = requests.find(request => request.userId === userId && request.requestorId == requestorId)
-
-        if(searchedRequest) {
-            res.status(201).json({isRequestReceived: true});
-        }
-        else {
-            res.status(201).json({isRequestReceived: false});
-        }
+        Request.where({userId: userId, requestorId: requestorId})
+            .fetch()
+            .then(_searchedRequest => {
+                res.status(201).json({isRequestSent: true});
+            })
+            .catch(_error => {
+                res.status(201).json({isRequestSent: false});
+            })
 
     })
-
-function readRequests() {
-    const requests = fs.readFileSync('./data/requests.json');
-    return JSON.parse(requests);
-}
-
-function readUsers () {
-    const users = fs.readFileSync('./data/users.json', 'utf-8')
-    return JSON.parse(users);
-}
-
-function readFriends() {
-    const friends = fs.readFileSync('./data/friends.json', 'utf-8');
-    return JSON.parse(friends);
-}
-
-function writeRequests (data) {
-    const requests = JSON.stringify(data);
-    fs.writeFileSync('./data/requests.json', requests);
-}
-
-function writeFriends (data) {
-    const friends = JSON.stringify(data);
-    fs.writeFileSync('./data/friends.json', friends);
-}
 
 module.exports = router;
