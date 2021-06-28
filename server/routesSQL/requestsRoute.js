@@ -95,7 +95,7 @@ router.route('/acceptRequest')
                     friendName: searchedRequestData.requestorName,
                     imgUrl: searchedRequestData.imgUrl
                 }
-                console.log(friend2)
+                
 
                 User.where({userId: userId})
                     .fetch()
@@ -110,7 +110,7 @@ router.route('/acceptRequest')
                             friendName: searchedUserData.name + " " + searchedUserData.lastName,
                             imgUrl: searchedUserData.imgUrl
                         }
-                        console.log(friend1)
+                        
 
                         return new Friend(friend1).save(null, {method: 'insert'});
                     })
@@ -158,10 +158,10 @@ router.route('/isRequestReceived/:requestorId')
         Request.where({userId: userId, requestorId: requestorId})
             .fetch()
             .then(_searchedRequest => {
-                res.status(201).json({isRequestSent: true});
+                res.status(201).json({isRequestReceived: true});
             })
             .catch(_error => {
-                res.status(201).json({isRequestSent: false});
+                res.status(201).json({isRequestReceived: false});
             })
 
     })

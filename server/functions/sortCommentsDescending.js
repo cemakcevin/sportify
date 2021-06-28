@@ -5,4 +5,4 @@ function sortCommentsDescending(comments) {
     return comments;
 }
 
-export default sortCommentsDescending;
+module.exports = sortCommentsDescending;

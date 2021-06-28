@@ -10,7 +10,7 @@
 
     &__container {
         padding: 0.25rem 1rem 0.25rem 0;
-        border-right: 0.0625rem solid $color-additional4;
+        border-right: 0.0625rem solid $color-primary1;
     }
 
     &__team-container {
@@ -18,9 +18,14 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: relative;
 
         &--margin {
             margin-bottom: 0.25rem;
+        }
+
+        &--bold {
+            font-weight: 600;
         }
     }
 
@@ -29,6 +34,12 @@
         overflow: hidden;
         text-overflow: ellipsis;
         width: 7.5rem;
+    }
+
+    &__pointer-icon {
+        height: 0.75rem;
+        position: absolute;
+        right: -1.2rem;
     }
 
     &__date-container {

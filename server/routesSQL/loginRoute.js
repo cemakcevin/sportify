@@ -19,7 +19,7 @@ router.route('/')
     .post((req, res) => {
 
         const{userName, password} = req.body;
-        console.log("user name is", userName);
+        
         User.where({userName: userName, password: password})
         .fetch()
         .then(user => {

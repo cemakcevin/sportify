@@ -6,6 +6,8 @@ const Feed = require('../models/Feed');
 const User = require('../models/User');
 
 const { v4: uuidv4 } = require('uuid');
+const sortCommentsDescending = require('../functions/sortCommentsDescending');
+const sortCommentsAscending = require('../functions/sortCommentsAscending');
 
 
 router.route('/')
@@ -55,8 +57,6 @@ router.route('/')
                     strVideo
                 }
 
-                console.log(feedContent)
-
                 return new Feed(feedContent).save(null, {method: 'insert'});
             })
             .then(() => {
@@ -64,7 +64,10 @@ router.route('/')
                 Feed.where({userId: userId})
                     .fetchAll()
                     .then(userFeed => {
-                        res.status(200).json(userFeed)
+
+                        const userFeedData = sortCommentsDescending(userFeed.toJSON());
+
+                        res.status(200).json(userFeedData)
                     })
             })
             .catch(error => {
@@ -83,7 +86,10 @@ router.route('/:userId')
         Feed.where({userId: userId})
             .fetchAll()
             .then(userFeed => {
-                res.status(200).json(userFeed);
+                
+                const userFeedData = sortCommentsDescending(userFeed.toJSON());
+
+                res.status(200).json(userFeedData)
             })
     })
 

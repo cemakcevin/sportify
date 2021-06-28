@@ -19,8 +19,6 @@ import homeIcon from '../../assets/icons/home-icon.png';
 import locationIcon from '../../assets/icons/location-icon.png';
 
 import timeDifference from '../../functions/timeDifference';
-import sortCommentsAscending from '../../functions/sortCommentsAscending';
-import sortCommentsDescending from '../../functions/sortCommentsDescending';
 
 
 const API__KEY="dd7ed4159ce8b1df6d8cbadaa67c7cdf";
@@ -136,7 +134,7 @@ class UserPage extends React.Component {
                         feed: feedResponse.data,
                         feedComments: feedCommentsResponse.data,
                         isFriend: true
-                    },() =>  console.log("yess"))
+                    })
                     
                 } 
             }))
@@ -168,13 +166,11 @@ class UserPage extends React.Component {
 
             socket.on("friendAcceptUpdate", () => {
 
-                console.log("it is working");
                 axios.all([
                     axios.get(localUrl + "/friends/isFriend/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
                     axios.get(localUrl + "/friends/" + userId, {headers: {Authorization: `Bearer ${token}`}})
                 ])
                 .then(axios.spread((isFriendResponse, friendsResponse) => {
-                    console.log(isFriendResponse.data, friendsResponse.data)
                     
                     this.setState({
                         isFriend: isFriendResponse.data,
@@ -301,8 +297,6 @@ class UserPage extends React.Component {
                         currentUser: response.data,
                         profileInfo: response.data,
                         currentIsProfile: true
-                    }, () => {
-                        console.log(this.state.currentUser)
                     })
     
                     return axios.all([
@@ -314,7 +308,7 @@ class UserPage extends React.Component {
                     ])
                 })
                 .then(axios.spread((favouritesResponse, friendsResponse, requestsResponse, feedResponse, feedCommentsResponse)=> {
-                    console.log(favouritesResponse, friendsResponse, feedResponse, feedCommentsResponse)
+                    
                     if(favouritesResponse.data){
                         this.setState({
                             index: 0,
@@ -366,13 +360,13 @@ class UserPage extends React.Component {
                 });
 
                 socket.on("friendAcceptUpdate", () => {
-                    console.log("it is working");
+                    
                     axios.all([
                         axios.get(localUrl + "/friends/isFriend/" + userId, {headers: {Authorization: `Bearer ${token}`}}),
                         axios.get(localUrl + "/friends/" + userId, {headers: {Authorization: `Bearer ${token}`}})
                     ])
                     .then(axios.spread((isFriendResponse, friendsResponse) => {
-                        console.log(isFriendResponse.data, friendsResponse.data)
+                        
                         this.setState({
                             isFriend: isFriendResponse.data,
                             friends: friendsResponse.data
@@ -649,8 +643,6 @@ class UserPage extends React.Component {
             pastEvents, articles, profileInfo, currentUser, currentIsProfile, friends, requests, isFriend, 
             isRequestSent, isRequestReceived, feed, feedComments} = this.state;
 
-            // sortCommentsDescending(feed);
-            // sortCommentsAscending(feedComments);
 
         return(
             <main className="user">

@@ -5,6 +5,8 @@ const Comment = require('../models/Comment');
 const User = require('../models/User');
 
 const { v4: uuidv4 } = require('uuid');
+const sortCommentsDescending = require('../functions/sortCommentsDescending');
+const sortCommentsAscending = require('../functions/sortCommentsAscending');
 
 
 router.route('/')
@@ -60,7 +62,10 @@ router.route('/feedComments/:userId')
         Comment.where({contentType: "feed", receiverId: userId})
             .fetchAll()
             .then(userFeedComments => {
-                res.status(201).json(userFeedComments);
+
+                const userFeedCommentsData = sortCommentsAscending(userFeedComments.toJSON());
+
+                res.status(201).json(userFeedCommentsData);
             })
 
     })
@@ -69,12 +74,14 @@ router.route('/feedComments/:userId')
 router.route('/:contentType/:contentId')
     .get((req, res) => {
         const {contentId, contentType} = req.params;
-        console.log()
 
         Comment.where({contentId: contentId, contentType: contentType})
             .fetchAll()
             .then(contentComments => {
-                return res.status(201).json(contentComments);
+
+                const contentCommentsData = sortCommentsDescending(contentComments.toJSON());
+
+                return res.status(201).json(contentCommentsData);
             })
 
     })

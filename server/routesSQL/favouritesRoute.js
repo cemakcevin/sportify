@@ -9,7 +9,6 @@ router.route('/')
     .get((req, res) => {
 
         const userId = req.decode.userId;
-        console.log(userId)
 
         Favourite.where({userId: userId})
         .fetchAll()
@@ -51,10 +50,11 @@ router.route('/')
             new Favourite(newFavourite)
                 .save(null, {method: 'insert'})
                 .then(newFav => {
+                    
                     return res.status(201).json(newFav);
                 })
                 .catch((error2) => {
-                    console.log(error2);
+                    
                     return res.status(400).json({message: `Couldn't save the new favourite for user id ${userId}`})
                 })
 
