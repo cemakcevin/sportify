@@ -8,6 +8,9 @@ import VideoInfo from '../../components/VideoInfo/VideoInfo';
 import VideoBox from '../../components/VideoBox/VideoBox';
 import ContentShare from '../../components/ContentShare/ContentShare';
 
+import sortCommentsAscending from '../../functions/sortCommentsAscending';
+import sortCommentsDescending from '../../functions/sortCommentsDescending';
+
 import videoWatchToEmbed from '../../functions/videoWatchToEmbed';
 
 const localUrl = "http://localhost:8686";
@@ -316,6 +319,8 @@ class GamePage extends React.Component {
         const {strVideo, currentEvent, pastLeagueEvents, 
             videoComments, currentUser, videoShare, videoSharePost, 
             searchedValue, filteredFriends, selectedFriend} = this.state;
+
+            // sortCommentsDescending(videoComments);
 
         return (
             <main className="game">

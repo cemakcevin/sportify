@@ -19,6 +19,8 @@ import homeIcon from '../../assets/icons/home-icon.png';
 import locationIcon from '../../assets/icons/location-icon.png';
 
 import timeDifference from '../../functions/timeDifference';
+import sortCommentsAscending from '../../functions/sortCommentsAscending';
+import sortCommentsDescending from '../../functions/sortCommentsDescending';
 
 
 const API__KEY="dd7ed4159ce8b1df6d8cbadaa67c7cdf";
@@ -646,6 +648,9 @@ class UserPage extends React.Component {
         const {favouriteTeams, selectedTeam, detailsEnabled, 
             pastEvents, articles, profileInfo, currentUser, currentIsProfile, friends, requests, isFriend, 
             isRequestSent, isRequestReceived, feed, feedComments} = this.state;
+
+            // sortCommentsDescending(feed);
+            // sortCommentsAscending(feedComments);
 
         return(
             <main className="user">

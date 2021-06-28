@@ -1,5 +1,25 @@
 [
   {
+    "commentId": "49e7d2d6-bc38-453b-a383-0758b975a74a",
+    "contentId": "1135660",
+    "contentType": "game",
+    "userId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
+    "name": "Cem Akcevin",
+    "imgUrl": "http://localhost:8686/profile-pics/cem-akcevin-profile.jpeg",
+    "commentText": "what up",
+    "timestamp": 1624838299326
+  },
+  {
+    "commentId": "4c481506-be04-4e98-9cfb-f7a8ecfde081",
+    "contentId": "1135660",
+    "contentType": "game",
+    "userId": "a7b7b1d4-bb14-4f89-a757-d855b98ccc46",
+    "name": "Cem Akcevin",
+    "imgUrl": "http://localhost:8686/profile-pics/cem-akcevin-profile.jpeg",
+    "commentText": "Heyy everyone",
+    "timestamp": 1624838292185
+  },
+  {
     "commentId": "606b25ce-3d6b-4283-bcf2-5af18a7a7100",
     "contentId": "134867",
     "contentType": "team",
